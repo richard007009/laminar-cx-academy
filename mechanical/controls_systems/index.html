@@ -1421,6 +1421,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1437,38 +1438,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Integral
-            q2: 'c',  // RTD (Pt100)
-            q3: 'c',  // Multi-vendor interoperability
-            q4: 'c',  // Equal percentage
-            q5: 'b',  // Green
-            q6: 'b',  // Eliminate steady-state error
-            q7: 'b',  // Static pressure reset
-            q8: 'c',  // Network segmentation
-            q9: 'b',  // Filter status
-            q10: 'b'  // 0-10 VDC or 4-20 mA
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What does the "I" in PID control stand for?',
+                correctLabel: 'Integral',
+                explanation: 'PID stands for Proportional-Integral-Derivative — the three mathematical terms that make up the control output. The Proportional term responds to the current error, the Integral term accumulates past error over time to eliminate steady-state offset, and the Derivative term reacts to the rate of change of error to damp oscillation. Each term is tuned independently to achieve stable, accurate control for a given system.'
+            },
+            q2: {
+                answer: 'c',
+                question: 'Which temperature sensor type typically has the highest accuracy?',
+                correctLabel: 'RTD (Pt100)',
+                explanation: 'RTDs (Resistance Temperature Detectors), particularly the Pt100 platinum type, offer the highest accuracy and stability of common temperature sensors — typically ±0.1°C or better over their operating range. Their resistance changes linearly and predictably with temperature. Thermistors are highly sensitive but non-linear and suited to narrow ranges. Thermocouples cover extreme temperature ranges but are less accurate in the moderate ranges used in HVAC. Infrared sensors are non-contact but subject to emissivity errors.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'What is the primary advantage of BACnet protocol?',
+                correctLabel: 'Multi-vendor interoperability',
+                explanation: 'BACnet (Building Automation and Control Networks) was specifically developed by ASHRAE as an open, vendor-neutral standard to solve the problem of proprietary, incompatible building control systems. Its primary and defining advantage is multi-vendor interoperability — allowing controllers, sensors, workstations, and software from different manufacturers to communicate and work together on the same network. This prevents vendor lock-in, simplifies integration, and enables competitive procurement of components throughout a system\'s lifecycle.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'What type of control valve characteristic is best for most HVAC applications?',
+                correctLabel: 'Equal percentage',
+                explanation: 'Equal percentage valves provide a consistent percentage change in flow for each increment of valve travel, regardless of the current position. This characteristic compensates for the non-linear pressure drop relationship in hydronic systems — where the pressure available across the valve varies as flow changes. The result is a near-linear relationship between valve position and heat transfer, giving the control loop consistent gain across the full operating range. Quick-opening valves deliver most of their flow at small openings and are unsuitable for modulating control, while linear valves are better suited to systems with constant differential pressure.'
+            },
+            q5: {
+                answer: 'b',
+                question: 'What color typically indicates a running status in BAS graphics?',
+                correctLabel: 'Green',
+                explanation: 'In Building Automation System (BAS) graphical interfaces, the colour green universally represents a running, active, or healthy state — following the same convention as traffic lights and industrial HMI standards. Red indicates a fault, alarm, or tripped condition. Yellow or amber typically signals a warning, standby, or manual override state. Gray generally represents an off, inactive, or unavailable device. These colour conventions are standardised across most BAS platforms to reduce operator error and enable fast status recognition at a glance.'
+            },
+            q6: {
+                answer: 'b',
+                question: 'What is the purpose of integral control in a PID loop?',
+                correctLabel: 'Eliminate steady-state error',
+                explanation: 'The Integral (I) term in a PID controller continuously accumulates the error between setpoint and measured value over time. If a small persistent offset remains after proportional action (e.g., supply air temperature is 0.5°C above setpoint), the integral term grows until it adds enough output to close the gap completely. This eliminates steady-state error — a condition where proportional-only control stabilises at a value slightly different from setpoint. The Derivative term prevents overshoot, and the Proportional term provides the initial fast response.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'Which control strategy typically saves the most energy in VAV systems?',
+                correctLabel: 'Static pressure reset',
+                explanation: 'Static pressure reset (also called supply air static pressure reset) saves the most energy in VAV AHU systems by reducing the duct static pressure setpoint during periods of low demand — when most VAV boxes are only partially open. Lower duct static pressure means the supply fan does less work, consuming significantly less power (fan energy scales with the cube of airflow speed). A fixed static pressure setpoint maintains unnecessary pressure when loads are low. Static pressure reset typically yields 20–30% fan energy savings compared to fixed setpoint operation.'
+            },
+            q8: {
+                answer: 'c',
+                question: 'What is a common cybersecurity practice for BAS?',
+                correctLabel: 'Network segmentation',
+                explanation: 'Network segmentation — placing BAS controllers, sensors, and workstations on a dedicated, isolated network segment (VLAN) separated from IT and corporate networks by firewalls — is the foundational cybersecurity control for building automation systems. BAS protocols like BACnet and Modbus were not designed with security in mind and are vulnerable to eavesdropping and manipulation if exposed on a flat network. Segmentation limits the blast radius of any compromise and prevents attackers who breach the corporate network from directly reaching building controls. Connecting BAS directly to the internet, using default passwords, or disabling firewalls are all serious security vulnerabilities.'
+            },
+            q9: {
+                answer: 'b',
+                question: 'What does a differential pressure sensor typically measure in HVAC?',
+                correctLabel: 'Filter status',
+                explanation: 'In HVAC applications, differential pressure sensors are most commonly installed across air filters and heat exchangers to monitor the pressure drop across them. As a filter accumulates dust and debris, the resistance to airflow increases, raising the differential pressure reading. When the differential pressure exceeds a defined threshold, the BAS generates a filter change alarm. Differential pressure sensors are also used across pumps and fans to confirm operation and measure flow, but filter status monitoring is their most frequent HVAC application. They do not directly measure temperature, absolute pressure, or humidity.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'What is the typical control signal range for analog devices?',
+                correctLabel: '0-10 VDC or 4-20 mA',
+                explanation: '0–10 VDC and 4–20 mA are the two industry-standard analog signal ranges used for HVAC and BAS field devices. 0–10 VDC is common for short cable runs to actuators, dampers, and VFDs. 4–20 mA (a current loop) is preferred for longer cable runs and in environments with electrical noise, because current signals are immune to voltage drop over wire resistance and the 4 mA live-zero allows detection of open-circuit faults (0 mA indicates a wiring fault, not a zero value). 24 VAC is a control power supply voltage, and 120 VAC is line power — neither is an analog control signal range.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1481,43 +1528,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Controls Systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Controls Systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#6a1b9a; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #6a1b9a; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
