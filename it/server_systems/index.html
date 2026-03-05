@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Compliance Training Module - Data Center 101</title>
+    <title>IT Training Module - Server Systems 101</title>
     <style>
         * {
             margin: 0;
@@ -313,15 +313,15 @@
             .container {
                 padding: 10px;
             }
-            
+
             .content-wrapper {
                 padding: 20px;
             }
-            
+
             .header h1 {
                 font-size: 1.8em;
             }
-            
+
             .slide h2 {
                 font-size: 1.5em;
             }
@@ -331,8 +331,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Code Compliance Training Module</h1>
-            <p>Data Center 101 - Fire Safety Codes and Regulatory Requirements</p>
+            <h1>IT Training Module</h1>
+            <p>Server Systems 101 — Architecture, Management, and Best Practices</p>
         </div>
 
         <div class="progress-bar">
@@ -340,989 +340,1194 @@
         </div>
 
         <div class="content-wrapper">
+
             <!-- Slide 1: Welcome -->
             <div class="slide active">
-                <h2>Welcome to Code Compliance Training</h2>
-                <p>Welcome to this comprehensive training module on Fire Safety Code Compliance for data centers. This course will provide you with essential knowledge about the codes, standards, and regulatory requirements that govern fire protection and life safety in data center facilities.</p>
-                
+                <h2>Welcome to Server Systems Training</h2>
+                <p>Welcome to this comprehensive training module on Server Systems fundamentals. This course covers the essential knowledge required to understand, deploy, manage, and maintain enterprise server infrastructure — from physical hardware components through virtualization, storage, operating systems, and operational best practices.</p>
+
                 <div class="info-box">
                     <h3>🎯 Learning Objectives</h3>
                     <ul>
-                        <li>Understand the hierarchy of codes and standards</li>
-                        <li>Learn key NFPA codes for data center fire safety</li>
-                        <li>Recognize building code requirements (IBC/IFC)</li>
-                        <li>Understand local amendments and AHJ requirements</li>
-                        <li>Learn documentation and inspection requirements</li>
-                        <li>Understand ongoing compliance obligations</li>
+                        <li>Understand server form factors and hardware components</li>
+                        <li>Learn CPU, memory, and chipset architecture fundamentals</li>
+                        <li>Understand storage technologies: DAS, NAS, SAN, and NVMe</li>
+                        <li>Learn RAID levels and their trade-offs</li>
+                        <li>Understand virtualization and hypervisor concepts</li>
+                        <li>Learn server operating system basics and roles</li>
+                        <li>Understand high availability, clustering, and redundancy</li>
+                        <li>Learn server security hardening principles</li>
+                        <li>Understand patch management and lifecycle practices</li>
                         <li>Test your knowledge with a comprehensive quiz</li>
                     </ul>
                 </div>
 
-                <p><strong>Duration:</strong> Approximately 30-45 minutes</p>
-                <p><strong>Prerequisites:</strong> Basic understanding of fire safety systems</p>
+                <p><strong>Duration:</strong> Approximately 35–50 minutes</p>
+                <p><strong>Prerequisites:</strong> Basic IT literacy and familiarity with data center concepts</p>
             </div>
 
-            <!-- Slide 2: Code Hierarchy and Authority -->
+            <!-- Slide 2: Server Form Factors -->
             <div class="slide">
-                <h2>Code Hierarchy and Authority</h2>
-                
-                <p>Understanding the hierarchy of codes and standards is essential for ensuring proper compliance in data center fire protection.</p>
+                <h2>Server Form Factors and Hardware Overview</h2>
 
-                <h3>Regulatory Hierarchy</h3>
-                
+                <p>Server hardware comes in several physical form factors, each suited to different deployment environments, density requirements, and workload types. Choosing the right form factor is the first architectural decision in any server deployment.</p>
+
+                <h3>Common Server Form Factors</h3>
+
                 <div class="diagram">
-                    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Code Hierarchy Pyramid -->
-                        <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">Code and Standard Hierarchy</text>
-                        
-                        <!-- Federal Level -->
-                        <polygon points="400,60 250,120 550,120" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
-                        <text x="400" y="95" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Federal</text>
-                        <text x="400" y="110" text-anchor="middle" fill="white" font-size="12">OSHA, EPA</text>
-                        
-                        <!-- State Level -->
-                        <polygon points="250,120 150,200 650,200 550,120" fill="#1E88E5" stroke="#1565C0" stroke-width="2"/>
-                        <text x="400" y="155" text-anchor="middle" fill="white" font-size="14" font-weight="bold">State Codes</text>
-                        <text x="400" y="170" text-anchor="middle" fill="white" font-size="12">State Fire Marshal</text>
-                        
-                        <!-- Local Level -->
-                        <polygon points="150,200 50,280 750,280 650,200" fill="#2196F3" stroke="#1976D2" stroke-width="2"/>
-                        <text x="400" y="235" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Local Codes</text>
-                        <text x="400" y="250" text-anchor="middle" fill="white" font-size="12">City/County Amendments</text>
-                        
-                        <!-- Standards -->
-                        <rect x="50" y="280" width="700" height="80" fill="#64B5F6" stroke="#42A5F5" stroke-width="2"/>
-                        <text x="400" y="310" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Industry Standards</text>
-                        <text x="400" y="330" text-anchor="middle" fill="white" font-size="12">NFPA, ICC, FM Global, UL</text>
-                        <text x="400" y="345" text-anchor="middle" fill="white" font-size="12">Referenced by Codes</text>
-                        
-                        <!-- Arrow showing enforcement -->
-                        <path d="M 100 380 L 100 50" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
-                        <text x="120" y="220" font-size="12" fill="#333" transform="rotate(-90 120 220)">Enforcement Authority</text>
-                        
-                        <!-- Arrowhead marker -->
-                        <defs>
-                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
-                                <polygon points="0 0, 10 5, 0 10" fill="#333"/>
-                            </marker>
-                        </defs>
+                    <svg viewBox="0 0 800 370" xmlns="http://www.w3.org/2000/svg">
+                        <text x="400" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">Server Form Factor Comparison</text>
+
+                        <!-- Tower -->
+                        <rect x="30" y="50" width="160" height="240" rx="8" fill="#1565c0" stroke="#0D47A1" stroke-width="2"/>
+                        <rect x="50" y="70" width="120" height="16" rx="3" fill="#42a5f5"/>
+                        <rect x="50" y="94" width="120" height="16" rx="3" fill="#42a5f5"/>
+                        <rect x="50" y="118" width="120" height="16" rx="3" fill="#64B5F6"/>
+                        <rect x="50" y="200" width="40" height="40" rx="4" fill="#90CAF9"/>
+                        <circle cx="150" cy="260" r="12" fill="#90CAF9"/>
+                        <text x="110" y="315" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Tower</text>
+                        <text x="110" y="333" text-anchor="middle" font-size="11" fill="#666">Standalone / SMB</text>
+                        <text x="110" y="350" text-anchor="middle" font-size="11" fill="#666">Easy to expand</text>
+
+                        <!-- 1U Rack -->
+                        <rect x="220" y="100" width="200" height="38" rx="5" fill="#1976D2" stroke="#1565c0" stroke-width="2"/>
+                        <rect x="230" y="108" width="80" height="22" rx="3" fill="#42a5f5"/>
+                        <circle cx="390" cy="119" r="8" fill="#90CAF9"/>
+                        <text x="320" y="162" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">1U Rack</text>
+                        <text x="320" y="180" text-anchor="middle" font-size="11" fill="#666">High density</text>
+                        <text x="320" y="197" text-anchor="middle" font-size="11" fill="#666">1.75" height</text>
+
+                        <!-- 2U Rack -->
+                        <rect x="220" y="210" width="200" height="72" rx="5" fill="#1E88E5" stroke="#1565c0" stroke-width="2"/>
+                        <rect x="230" y="220" width="80" height="20" rx="3" fill="#42a5f5"/>
+                        <rect x="230" y="248" width="80" height="20" rx="3" fill="#42a5f5"/>
+                        <circle cx="390" cy="246" r="10" fill="#90CAF9"/>
+                        <text x="320" y="307" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">2U Rack</text>
+                        <text x="320" y="325" text-anchor="middle" font-size="11" fill="#666">More drive bays</text>
+                        <text x="320" y="342" text-anchor="middle" font-size="11" fill="#666">GPU / storage workloads</text>
+
+                        <!-- Blade -->
+                        <rect x="560" y="50" width="210" height="270" rx="8" fill="#1565c0" stroke="#0D47A1" stroke-width="2"/>
+                        <text x="665" y="75" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Blade Chassis</text>
+                        <rect x="572" y="85" width="90" height="44" rx="3" fill="#42a5f5"/>
+                        <rect x="672" y="85" width="90" height="44" rx="3" fill="#42a5f5"/>
+                        <rect x="572" y="138" width="90" height="44" rx="3" fill="#42a5f5"/>
+                        <rect x="672" y="138" width="90" height="44" rx="3" fill="#42a5f5"/>
+                        <rect x="572" y="191" width="90" height="44" rx="3" fill="#64B5F6"/>
+                        <rect x="672" y="191" width="90" height="44" rx="3" fill="#64B5F6"/>
+                        <rect x="572" y="244" width="186" height="22" rx="3" fill="#90CAF9"/>
+                        <text x="665" y="342" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Blade</text>
+                        <text x="665" y="360" text-anchor="middle" font-size="11" fill="#666">Shared chassis / max density</text>
                     </svg>
                 </div>
 
-                <h3>Authority Having Jurisdiction (AHJ)</h3>
-                
-                <div class="info-box">
-                    <h4>Key AHJ Entities:</h4>
-                    <ul>
-                        <li><strong>Fire Marshal:</strong> Primary fire code enforcement</li>
-                        <li><strong>Building Official:</strong> Building code compliance</li>
-                        <li><strong>Electrical Inspector:</strong> Electrical code enforcement</li>
-                        <li><strong>Insurance Carrier:</strong> Additional requirements</li>
-                        <li><strong>Federal Agencies:</strong> Special facilities (DOD, DOE)</li>
-                    </ul>
-                </div>
+                <h3>Form Factor Comparison</h3>
 
-                <div class="warning-box">
-                    <h4>⚠️ Important Concepts:</h4>
-                    <ul>
-                        <li>Most restrictive requirement applies</li>
-                        <li>Local amendments can modify model codes</li>
-                        <li>AHJ interpretation is final</li>
-                        <li>Variances require formal approval</li>
-                        <li>Code updates occur on cycles (3-5 years)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Slide 3: NFPA Standards Overview -->
-            <div class="slide">
-                <h2>NFPA Standards for Data Centers</h2>
-                
-                <p>The National Fire Protection Association (NFPA) develops consensus standards that form the basis for most fire codes in the United States.</p>
-
-                <h3>Key NFPA Standards</h3>
-                
                 <table>
                     <tr>
-                        <th>Standard</th>
-                        <th>Title</th>
-                        <th>Key Requirements</th>
+                        <th>Form Factor</th>
+                        <th>Rack Units</th>
+                        <th>Best For</th>
+                        <th>Consideration</th>
                     </tr>
                     <tr>
-                        <td><strong>NFPA 1</strong></td>
-                        <td>Fire Code</td>
-                        <td>General fire safety, maintenance, operations</td>
+                        <td><strong>Tower</strong></td>
+                        <td>N/A (standalone)</td>
+                        <td>SMB, branch office, lab</td>
+                        <td>Not rack-mountable; lower density</td>
                     </tr>
                     <tr>
-                        <td><strong>NFPA 13</strong></td>
-                        <td>Sprinkler Systems</td>
-                        <td>Design, installation, water supplies</td>
+                        <td><strong>1U Rack</strong></td>
+                        <td>1U (1.75")</td>
+                        <td>Web, compute, general purpose</td>
+                        <td>Limited drive bays; high air velocity</td>
                     </tr>
                     <tr>
-                        <td><strong>NFPA 72</strong></td>
-                        <td>Fire Alarm Code</td>
-                        <td>Detection, notification, integration</td>
+                        <td><strong>2U Rack</strong></td>
+                        <td>2U (3.5")</td>
+                        <td>Database, storage, GPU workloads</td>
+                        <td>Balanced density and expandability</td>
                     </tr>
                     <tr>
-                        <td><strong>NFPA 75</strong></td>
-                        <td>IT Equipment Protection</td>
-                        <td>Data center specific requirements</td>
+                        <td><strong>4U Rack</strong></td>
+                        <td>4U (7")</td>
+                        <td>High-capacity storage, GPU farms</td>
+                        <td>Lower rack density; heavy</td>
                     </tr>
                     <tr>
-                        <td><strong>NFPA 101</strong></td>
-                        <td>Life Safety Code</td>
-                        <td>Egress, emergency lighting, exits</td>
-                    </tr>
-                    <tr>
-                        <td><strong>NFPA 2001</strong></td>
-                        <td>Clean Agent Systems</td>
-                        <td>Gaseous suppression design</td>
+                        <td><strong>Blade</strong></td>
+                        <td>Varies per chassis</td>
+                        <td>Large-scale data centers, HPC</td>
+                        <td>High upfront chassis cost; vendor lock-in</td>
                     </tr>
                 </table>
 
-                <h3>NFPA 75 - Data Center Specific</h3>
-                
                 <div class="info-box">
-                    <h4>Critical Requirements:</h4>
+                    <h4>Standard Rack Units (U):</h4>
                     <ul>
-                        <li><strong>Room Construction:</strong> 1-hour fire rating minimum</li>
-                        <li><strong>Detection:</strong> Early warning smoke detection</li>
-                        <li><strong>Suppression:</strong> Automatic suppression required</li>
-                        <li><strong>EPO:</strong> Emergency power off coordination</li>
-                        <li><strong>Cable Management:</strong> Limited combustibles</li>
-                        <li><strong>Documentation:</strong> Risk assessment required</li>
-                    </ul>
-                </div>
-
-                <h3>NFPA 72 Requirements</h3>
-                
-                <div class="success-box">
-                    <h4>Fire Alarm System Requirements:</h4>
-                    <ul>
-                        <li>Smoke detection at return air openings</li>
-                        <li>Heat detection in electrical spaces</li>
-                        <li>Manual pull stations at exits</li>
-                        <li>Audible/visible notification devices</li>
-                        <li>Fire alarm control panel with battery backup</li>
-                        <li>Monitoring by approved central station</li>
+                        <li>A standard rack is <strong>42U</strong> tall (approximately 6 feet / 1.83 m)</li>
+                        <li>1U = 1.75 inches; equipment height is measured in multiples of 1U</li>
+                        <li>Rack depth is typically 600–1000 mm; always verify cable reach and airflow clearance</li>
+                        <li>Plan for a maximum of <strong>80% rack fill</strong> to ensure adequate airflow and cable management</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 4: Building Codes (IBC/IFC) -->
+            <!-- Slide 3: CPU and Memory Architecture -->
             <div class="slide">
-                <h2>International Building and Fire Codes</h2>
-                
-                <p>The International Code Council (ICC) publishes model codes adopted by most US jurisdictions with local amendments.</p>
+                <h2>CPU and Memory Architecture</h2>
 
-                <h3>International Building Code (IBC)</h3>
-                
-                <div class="info-box">
-                    <h4>IBC Chapter 3 - Occupancy Classification:</h4>
-                    <ul>
-                        <li><strong>Group B:</strong> Business occupancy (typical data centers)</li>
-                        <li><strong>Group F-1:</strong> Moderate hazard factory (large facilities)</li>
-                        <li><strong>Mixed Use:</strong> Multiple occupancies in same building</li>
-                        <li><strong>Accessory:</strong> Support spaces <10% of area</li>
-                    </ul>
-                </div>
+                <p>The processor and memory subsystem define a server's compute capability and directly impact application performance. Understanding CPU and memory architecture is critical for right-sizing server deployments.</p>
 
-                <h3>Construction Requirements</h3>
-                
-                <table>
-                    <tr>
-                        <th>Element</th>
-                        <th>Type II-B</th>
-                        <th>Type II-A</th>
-                        <th>Type I-A</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Structural Frame</strong></td>
-                        <td>0 hours</td>
-                        <td>1 hour</td>
-                        <td>3 hours</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exterior Walls</strong></td>
-                        <td>0 hours</td>
-                        <td>1 hour</td>
-                        <td>3 hours</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Floor Construction</strong></td>
-                        <td>0 hours</td>
-                        <td>1 hour</td>
-                        <td>2 hours</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Roof Construction</strong></td>
-                        <td>0 hours</td>
-                        <td>1 hour</td>
-                        <td>1.5 hours</td>
-                    </tr>
-                </table>
+                <h3>Server CPU Fundamentals</h3>
 
-                <h3>International Fire Code (IFC)</h3>
-                
-                <div class="warning-box">
-                    <h4>IFC Operational Requirements:</h4>
-                    <ul>
-                        <li>Fire safety and evacuation plans</li>
-                        <li>Hot work permits and procedures</li>
-                        <li>Hazardous materials management</li>
-                        <li>Fire department access and water supply</li>
-                        <li>Inspection, testing, and maintenance</li>
-                        <li>Emergency planning and drills</li>
-                    </ul>
-                </div>
-
-                <h3>Special Requirements</h3>
-                
-                <div class="success-box">
-                    <h4>High-Rise Provisions (>75 feet):</h4>
-                    <ul>
-                        <li>Fire command center required</li>
-                        <li>Smoke control systems</li>
-                        <li>Stairway pressurization</li>
-                        <li>Emergency voice/alarm system</li>
-                        <li>Fire department communication system</li>
-                        <li>Automatic sprinklers throughout</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Slide 5: Local Amendments and Variations -->
-            <div class="slide">
-                <h2>Local Amendments and Variations</h2>
-                
-                <p>Local jurisdictions often modify model codes to address specific regional concerns, climate conditions, or local practices.</p>
-
-                <h3>Common Local Amendments</h3>
-                
-                <div class="info-box">
-                    <h4>Typical Local Modifications:</h4>
-                    <ul>
-                        <li><strong>Seismic Requirements:</strong> Earthquake bracing and anchorage</li>
-                        <li><strong>Wind Requirements:</strong> Hurricane or tornado provisions</li>
-                        <li><strong>Water Supply:</strong> Local fire flow requirements</li>
-                        <li><strong>Alarm Monitoring:</strong> Direct fire department connection</li>
-                        <li><strong>Permitting:</strong> Additional inspections or approvals</li>
-                        <li><strong>Contractor Licensing:</strong> Local certification requirements</li>
-                    </ul>
-                </div>
-
-                <h3>Regional Examples</h3>
-                
-                <table>
-                    <tr>
-                        <th>Region</th>
-                        <th>Common Amendments</th>
-                        <th>Specific Requirements</th>
-                    </tr>
-                    <tr>
-                        <td><strong>California</strong></td>
-                        <td>Title 24, seismic</td>
-                        <td>Energy efficiency, bracing</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Florida</strong></td>
-                        <td>Wind, flood</td>
-                        <td>Hurricane protection</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Chicago</strong></td>
-                        <td>High-rise</td>
-                        <td>Enhanced fire pumps</td>
-                    </tr>
-                    <tr>
-                        <td><strong>New York City</strong></td>
-                        <td>Local Law 26</td>
-                        <td>Unique sprinkler rules</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Texas</strong></td>
-                        <td>State amendments</td>
-                        <td>Modified egress widths</td>
-                    </tr>
-                </table>
-
-                <h3>Identifying Local Requirements</h3>
-                
-                <div class="warning-box">
-                    <h4>Research Methods:</h4>
-                    <ul>
-                        <li>Contact local fire marshal early in design</li>
-                        <li>Review jurisdiction's adopted codes and amendments</li>
-                        <li>Check for local technical bulletins or interpretations</li>
-                        <li>Attend pre-construction meetings</li>
-                        <li>Consult with local fire protection contractors</li>
-                        <li>Review similar project approvals</li>
-                    </ul>
-                </div>
-
-                <h3>Variance Process</h3>
-                
-                <div class="success-box">
-                    <h4>When Compliance is Challenging:</h4>
-                    <ul>
-                        <li><strong>Equivalency:</strong> Propose alternative methods</li>
-                        <li><strong>Performance-Based:</strong> Engineering analysis</li>
-                        <li><strong>Hardship:</strong> Technical infeasibility</li>
-                        <li><strong>Documentation:</strong> Detailed justification required</li>
-                        <li><strong>Review Process:</strong> Board of appeals hearing</li>
-                        <li><strong>Conditions:</strong> Additional requirements may apply</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Slide 6: Documentation Requirements -->
-            <div class="slide">
-                <h2>Documentation Requirements</h2>
-                
-                <p>Proper documentation is essential for code compliance, from design through ongoing operations.</p>
-
-                <h3>Design Phase Documentation</h3>
-                
-                <div class="info-box">
-                    <h4>Required Submittal Documents:</h4>
-                    <ul>
-                        <li><strong>Site Plan:</strong> Access roads, water supply, building location</li>
-                        <li><strong>Floor Plans:</strong> Occupancy, egress paths, fire ratings</li>
-                        <li><strong>Fire Alarm Drawings:</strong> Device locations, zones, sequences</li>
-                        <li><strong>Sprinkler Drawings:</strong> Hydraulic calculations, coverage</li>
-                        <li><strong>Specifications:</strong> Equipment listings, installation standards</li>
-                        <li><strong>Details:</strong> Penetrations, fire-stopping, rated assemblies</li>
-                    </ul>
-                </div>
-
-                <h3>Construction Documentation</h3>
-                
-                <table>
-                    <tr>
-                        <th>Document Type</th>
-                        <th>Purpose</th>
-                        <th>Retention Period</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Permits</strong></td>
-                        <td>Legal authorization</td>
-                        <td>Life of building</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Inspection Reports</strong></td>
-                        <td>Compliance verification</td>
-                        <td>3-5 years minimum</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Test Reports</strong></td>
-                        <td>System acceptance</td>
-                        <td>Life of system</td>
-                    </tr>
-                    <tr>
-                        <td><strong>As-Built Drawings</strong></td>
-                        <td>Actual installation</td>
-                        <td>Life of building</td>
-                    </tr>
-                    <tr>
-                        <td><strong>O&M Manuals</strong></td>
-                        <td>Maintenance guidance</td>
-                        <td>Life of equipment</td>
-                    </tr>
-                </table>
-
-                <h3>Operational Documentation</h3>
-                
-                <div class="warning-box">
-                    <h4>Ongoing Records:</h4>
-                    <ul>
-                        <li><strong>ITM Records:</strong> Inspection, testing, maintenance logs</li>
-                        <li><strong>Impairment Records:</strong> System outages and restorations</li>
-                        <li><strong>Training Records:</strong> Staff certifications and drills</li>
-                        <li><strong>Incident Reports:</strong> Alarms, activations, false alarms</li>
-                        <li><strong>Change Management:</strong> Modifications and updates</li>
-                    </ul>
-                </div>
-
-                <h3>Record Keeping Best Practices</h3>
-                
-                <div class="success-box">
-                    <h4>Documentation Management:</h4>
-                    <ul>
-                        <li>Maintain both physical and digital copies</li>
-                        <li>Organize by system and date</li>
-                        <li>Ensure accessibility during inspections</li>
-                        <li>Regular review and updates</li>
-                        <li>Secure storage with backup</li>
-                        <li>Clear retention policy</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Slide 7: Inspection and Testing Requirements -->
-            <div class="slide">
-                <h2>Inspection and Testing Requirements</h2>
-                
-                <p>Regular inspection and testing ensures ongoing code compliance and system reliability.</p>
-
-                <h3>Initial Acceptance Testing</h3>
-                
-                <div class="info-box">
-                    <h4>Commissioning Requirements:</h4>
-                    <ul>
-                        <li><strong>100% Testing:</strong> All devices tested at installation</li>
-                        <li><strong>Integrated Testing:</strong> All systems tested together</li>
-                        <li><strong>Witnessed Testing:</strong> AHJ observation required</li>
-                        <li><strong>Documentation:</strong> Detailed test reports</li>
-                        <li><strong>Deficiency Correction:</strong> Before final approval</li>
-                        <li><strong>Certificate of Occupancy:</strong> Final authorization</li>
-                    </ul>
-                </div>
-
-                <h3>Periodic Testing Requirements</h3>
-                
-                <table>
-                    <tr>
-                        <th>System/Component</th>
-                        <th>Frequency</th>
-                        <th>NFPA Reference</th>
-                    </tr>
-                    <tr>
-                        <td><strong>Fire Alarm Panel</strong></td>
-                        <td>Annual</td>
-                        <td>NFPA 72 Ch. 14</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Smoke Detectors</strong></td>
-                        <td>Annual/Semi-annual</td>
-                        <td>NFPA 72 14.4.3</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sprinkler Systems</strong></td>
-                        <td>Quarterly/Annual</td>
-                        <td>NFPA 25</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Fire Pumps</strong></td>
-                        <td>Weekly/Annual</td>
-                        <td>NFPA 25 Ch. 8</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Clean Agent Systems</strong></td>
-                        <td>Semi-annual</td>
-                        <td>NFPA 2001</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Emergency Lighting</strong></td>
-                        <td>Monthly/Annual</td>
-                        <td>NFPA 101</td>
-                    </tr>
-                </table>
-
-                <h3>Testing Documentation</h3>
-                
-                <div class="warning-box">
-                    <h4>Required Test Records:</h4>
-                    <ul>
-                        <li>Date and time of test</li>
-                        <li>Name of person performing test</li>
-                        <li>Components tested</li>
-                        <li>Test results (pass/fail)</li>
-                        <li>Deficiencies found</li>
-                        <li>Corrective actions taken</li>
-                        <li>Signature of qualified person</li>
-                    </ul>
-                </div>
-
-                <h3>Third-Party Inspections</h3>
-                
-                <div class="success-box">
-                    <h4>Special Inspections:</h4>
-                    <ul>
-                        <li><strong>Insurance Carrier:</strong> Risk assessment and requirements</li>
-                        <li><strong>Commissioning Agent:</strong> Independent verification</li>
-                        <li><strong>Special Inspector:</strong> Structural and seismic</li>
-                        <li><strong>Federal Compliance:</strong> OSHA, EPA requirements</li>
-                        <li><strong>Certification Bodies:</strong> Uptime Institute, etc.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Slide 8: Certificate of Occupancy Process -->
-            <div class="slide">
-                <h2>Certificate of Occupancy Process</h2>
-                
-                <p>The Certificate of Occupancy (CO) is the final approval allowing building occupation and operation.</p>
-
-                <h3>Prerequisites for CO</h3>
-                
-                <div class="info-box">
-                    <h4>Required Completions:</h4>
-                    <ul>
-                        <li><strong>All Inspections:</strong> Building, fire, electrical, mechanical</li>
-                        <li><strong>System Testing:</strong> 100% operational verification</li>
-                        <li><strong>Life Safety:</strong> Egress, emergency lighting, exits</li>
-                        <li><strong>Fire Systems:</strong> Detection, suppression, alarms</li>
-                        <li><strong>Documentation:</strong> As-builts, O&M manuals</li>
-                        <li><strong>Corrections:</strong> All deficiencies resolved</li>
-                    </ul>
-                </div>
-
-                <h3>Final Inspection Process</h3>
-                
                 <div class="diagram">
-                    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-                        <!-- CO Process Flow -->
-                        <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565c0">Certificate of Occupancy Process</text>
-                        
-                        <!-- Steps -->
-                        <rect x="50" y="60" width="140" height="60" fill="#1976D2" stroke="#0D47A1" stroke-width="2" rx="5"/>
-                        <text x="120" y="85" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Request Final</text>
-                        <text x="120" y="100" text-anchor="middle" fill="white" font-size="12">Inspections</text>
-                        
-                        <rect x="230" y="60" width="140" height="60" fill="#1E88E5" stroke="#1565C0" stroke-width="2" rx="5"/>
-                        <text x="300" y="85" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Multi-Discipline</text>
-                        <text x="300" y="100" text-anchor="middle" fill="white" font-size="12">Inspections</text>
-                        
-                        <rect x="410" y="60" width="140" height="60" fill="#2196F3" stroke="#1976D2" stroke-width="2" rx="5"/>
-                        <text x="480" y="85" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Deficiency</text>
-                        <text x="480" y="100" text-anchor="middle" fill="white" font-size="12">Resolution</text>
-                        
-                        <rect x="590" y="60" width="140" height="60" fill="#42A5F5" stroke="#2196F3" stroke-width="2" rx="5"/>
-                        <text x="660" y="85" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Final</text>
-                        <text x="660" y="100" text-anchor="middle" fill="white" font-size="12">Approval</text>
-                        
-                        <!-- Arrows -->
-                        <path d="M 190 90 L 230 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                        <path d="M 370 90 L 410 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                        <path d="M 550 90 L 590 90" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
-                        
-                        <!-- Details boxes -->
-                        <rect x="50" y="160" width="140" height="80" fill="#E3F2FD" stroke="#1976D2" stroke-width="1" rx="5"/>
-                        <text x="120" y="180" text-anchor="middle" font-size="11">• Submit request</text>
-                        <text x="120" y="195" text-anchor="middle" font-size="11">• Schedule inspections</text>
-                        <text x="120" y="210" text-anchor="middle" font-size="11">• Prepare documents</text>
-                        <text x="120" y="225" text-anchor="middle" font-size="11">• Notify parties</text>
-                        
-                        <rect x="230" y="160" width="140" height="80" fill="#E3F2FD" stroke="#1976D2" stroke-width="1" rx="5"/>
-                        <text x="300" y="180" text-anchor="middle" font-size="11">• Building official</text>
-                        <text x="300" y="195" text-anchor="middle" font-size="11">• Fire marshal</text>
-                        <text x="300" y="210" text-anchor="middle" font-size="11">• Electrical inspector</text>
-                        <text x="300" y="225" text-anchor="middle" font-size="11">• Health department</text>
-                        
-                        <rect x="410" y="160" width="140" height="80" fill="#E3F2FD" stroke="#1976D2" stroke-width="1" rx="5"/>
-                        <text x="480" y="180" text-anchor="middle" font-size="11">• Correct deficiencies</text>
-                        <text x="480" y="195" text-anchor="middle" font-size="11">• Re-inspection</text>
-                        <text x="480" y="210" text-anchor="middle" font-size="11">• Documentation</text>
-                        <text x="480" y="225" text-anchor="middle" font-size="11">• Sign-offs</text>
-                        
-                        <rect x="590" y="160" width="140" height="80" fill="#E3F2FD" stroke="#1976D2" stroke-width="1" rx="5"/>
-                        <text x="660" y="180" text-anchor="middle" font-size="11">• CO issued</text>
-                        <text x="660" y="195" text-anchor="middle" font-size="11">• Occupancy allowed</text>
-                        <text x="660" y="210" text-anchor="middle" font-size="11">• Operations begin</text>
-                        <text x="660" y="225" text-anchor="middle" font-size="11">• File documents</text>
-                        
-                        <!-- TCO Option -->
-                        <rect x="300" y="280" width="200" height="60" fill="#FFF9C4" stroke="#F9A825" stroke-width="2" rx="5"/>
-                        <text x="400" y="305" text-anchor="middle" font-size="12" font-weight="bold">Temporary CO Option</text>
-                        <text x="400" y="320" text-anchor="middle" font-size="11">Limited occupancy with conditions</text>
-                        
-                        <!-- Arrow marker -->
+                    <svg viewBox="0 0 800 310" xmlns="http://www.w3.org/2000/svg">
+                        <text x="400" y="25" text-anchor="middle" font-size="17" font-weight="bold" fill="#1565c0">Dual-Socket Server Architecture</text>
+
+                        <!-- CPU 0 -->
+                        <rect x="60" y="45" width="280" height="200" rx="8" fill="#1565c0" stroke="#0D47A1" stroke-width="2"/>
+                        <text x="200" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="bold">CPU Socket 0</text>
+                        <!-- Cores grid -->
+                        <rect x="75" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="100" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="135" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="160" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="195" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="220" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="255" y="80" width="70" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="290" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <!-- L3 Cache -->
+                        <rect x="75" y="132" width="250" height="30" rx="4" fill="#1976D2"/>
+                        <text x="200" y="152" text-anchor="middle" fill="white" font-size="12">Shared L3 Cache</text>
+                        <!-- Memory controller -->
+                        <rect x="75" y="175" width="115" height="30" rx="4" fill="#64B5F6"/>
+                        <text x="132" y="194" text-anchor="middle" fill="white" font-size="11">Memory Ctrl</text>
+                        <!-- PCIe -->
+                        <rect x="200" y="175" width="125" height="30" rx="4" fill="#64B5F6"/>
+                        <text x="262" y="194" text-anchor="middle" fill="white" font-size="11">PCIe Controller</text>
+                        <!-- UPI/QPI Link -->
+                        <rect x="75" y="218" width="250" height="22" rx="4" fill="#90CAF9"/>
+                        <text x="200" y="233" text-anchor="middle" fill="#1565c0" font-size="11" font-weight="bold">UPI / QPI Inter-CPU Link</text>
+
+                        <!-- Interconnect arrow -->
+                        <line x1="340" y1="145" x2="460" y2="145" stroke="#ffc107" stroke-width="4" marker-end="url(#arr_cpu)" marker-start="url(#arr_cpu2)"/>
+                        <text x="400" y="135" text-anchor="middle" fill="#ffc107" font-size="12" font-weight="bold">NUMA</text>
                         <defs>
-                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
-                                <polygon points="0 0, 10 5, 0 10" fill="#333"/>
+                            <marker id="arr_cpu" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+                                <polygon points="0 0, 8 4, 0 8" fill="#ffc107"/>
+                            </marker>
+                            <marker id="arr_cpu2" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
+                                <polygon points="8 0, 0 4, 8 8" fill="#ffc107"/>
                             </marker>
                         </defs>
+
+                        <!-- CPU 1 -->
+                        <rect x="460" y="45" width="280" height="200" rx="8" fill="#1565c0" stroke="#0D47A1" stroke-width="2"/>
+                        <text x="600" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="bold">CPU Socket 1</text>
+                        <rect x="475" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="500" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="535" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="560" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="595" y="80" width="50" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="620" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="655" y="80" width="70" height="40" rx="4" fill="#42a5f5"/>
+                        <text x="690" y="105" text-anchor="middle" fill="white" font-size="11">Core</text>
+                        <rect x="475" y="132" width="250" height="30" rx="4" fill="#1976D2"/>
+                        <text x="600" y="152" text-anchor="middle" fill="white" font-size="12">Shared L3 Cache</text>
+                        <rect x="475" y="175" width="115" height="30" rx="4" fill="#64B5F6"/>
+                        <text x="532" y="194" text-anchor="middle" fill="white" font-size="11">Memory Ctrl</text>
+                        <rect x="600" y="175" width="125" height="30" rx="4" fill="#64B5F6"/>
+                        <text x="662" y="194" text-anchor="middle" fill="white" font-size="11">PCIe Controller</text>
+                        <rect x="475" y="218" width="250" height="22" rx="4" fill="#90CAF9"/>
+                        <text x="600" y="233" text-anchor="middle" fill="#1565c0" font-size="11" font-weight="bold">UPI / QPI Inter-CPU Link</text>
+
+                        <!-- DIMM Labels -->
+                        <text x="400" y="285" text-anchor="middle" font-size="12" fill="#555">Each socket controls its own local memory (NUMA node) — remote memory access is slower</text>
                     </svg>
                 </div>
 
-                <h3>Common CO Delays</h3>
-                
+                <h3>Key CPU Specifications</h3>
+
+                <table>
+                    <tr>
+                        <th>Specification</th>
+                        <th>Description</th>
+                        <th>Impact</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Core Count</strong></td>
+                        <td>Physical processing units per socket</td>
+                        <td>Parallel workload throughput</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clock Speed (GHz)</strong></td>
+                        <td>Base and turbo frequency</td>
+                        <td>Single-threaded performance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TDP (Watts)</strong></td>
+                        <td>Thermal Design Power envelope</td>
+                        <td>Cooling and power requirements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>L3 Cache (MB)</strong></td>
+                        <td>Shared last-level cache</td>
+                        <td>Memory latency reduction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Memory Channels</strong></td>
+                        <td>Parallel DIMM access paths</td>
+                        <td>Memory bandwidth</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PCIe Lanes</strong></td>
+                        <td>Available I/O expansion lanes</td>
+                        <td>NIC, GPU, NVMe capacity</td>
+                    </tr>
+                </table>
+
+                <h3>Server Memory (RAM) Fundamentals</h3>
+
+                <div class="info-box">
+                    <h4>DDR5 ECC RDIMM — Enterprise Standard:</h4>
+                    <ul>
+                        <li><strong>ECC (Error Correcting Code):</strong> Detects and corrects single-bit memory errors automatically; mandatory for production servers</li>
+                        <li><strong>RDIMM (Registered DIMM):</strong> Register between controller and DRAM chips; enables higher capacity and stability</li>
+                        <li><strong>LRDIMM:</strong> Load Reduced DIMM; supports higher capacity per channel than RDIMM at some latency cost</li>
+                        <li><strong>Population Rules:</strong> Fill memory channels symmetrically for maximum bandwidth; consult QVL (Qualified Vendor List)</li>
+                        <li><strong>DDR5 vs DDR4:</strong> DDR5 offers higher bandwidth and capacity per DIMM; requires DDR5-capable CPU and motherboard</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ NUMA Awareness:</h4>
+                    <ul>
+                        <li>In dual-socket servers, each CPU owns a local memory bank — this is a NUMA (Non-Uniform Memory Access) architecture</li>
+                        <li>Accessing remote NUMA memory adds latency; OS and hypervisors should be NUMA-aware</li>
+                        <li>Pin VMs and critical workloads to a single NUMA node for predictable latency-sensitive applications</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 4: Storage Technologies -->
+            <div class="slide">
+                <h2>Storage Technologies</h2>
+
+                <p>Storage is often the most performance-critical subsystem in a server environment. Understanding the different storage technologies, interfaces, and architectures enables proper selection for each workload type.</p>
+
+                <h3>Storage Interface Technologies</h3>
+
+                <table>
+                    <tr>
+                        <th>Interface</th>
+                        <th>Max Bandwidth</th>
+                        <th>Latency</th>
+                        <th>Typical Use</th>
+                    </tr>
+                    <tr>
+                        <td><strong>SATA III</strong></td>
+                        <td>600 MB/s</td>
+                        <td>~100 µs</td>
+                        <td>Legacy HDDs, budget SSDs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SAS (12 Gbps)</strong></td>
+                        <td>~1,200 MB/s</td>
+                        <td>~50 µs</td>
+                        <td>Enterprise HDDs, SAS SSDs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NVMe (PCIe 4.0)</strong></td>
+                        <td>~7,000 MB/s</td>
+                        <td>~20 µs</td>
+                        <td>High-performance SSDs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NVMe (PCIe 5.0)</strong></td>
+                        <td>~14,000 MB/s</td>
+                        <td>~10 µs</td>
+                        <td>Next-gen all-flash arrays, AI/ML</td>
+                    </tr>
+                </table>
+
+                <h3>Storage Architectures</h3>
+
+                <div class="diagram">
+                    <svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+                        <text x="400" y="25" text-anchor="middle" font-size="17" font-weight="bold" fill="#1565c0">DAS vs NAS vs SAN</text>
+
+                        <!-- DAS -->
+                        <rect x="30" y="50" width="200" height="60" rx="6" fill="#1565c0"/>
+                        <text x="130" y="85" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Server</text>
+                        <line x1="130" y1="110" x2="130" y2="145" stroke="#555" stroke-width="3"/>
+                        <rect x="55" y="148" width="150" height="45" rx="6" fill="#42a5f5"/>
+                        <text x="130" y="176" text-anchor="middle" fill="white" font-size="13">DAS Storage</text>
+                        <text x="130" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">DAS</text>
+                        <text x="130" y="232" text-anchor="middle" font-size="11" fill="#666">Direct Attached</text>
+                        <text x="130" y="248" text-anchor="middle" font-size="11" fill="#666">SATA/SAS/NVMe</text>
+
+                        <!-- NAS -->
+                        <rect x="295" y="50" width="200" height="60" rx="6" fill="#1565c0"/>
+                        <text x="395" y="85" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Server(s)</text>
+                        <line x1="395" y1="110" x2="395" y2="128" stroke="#555" stroke-width="3"/>
+                        <rect x="320" y="128" width="150" height="28" rx="4" fill="#ffc107"/>
+                        <text x="395" y="147" text-anchor="middle" fill="#333" font-size="11" font-weight="bold">IP Network (Ethernet)</text>
+                        <line x1="395" y1="156" x2="395" y2="170" stroke="#555" stroke-width="3"/>
+                        <rect x="320" y="173" width="150" height="28" rx="6" fill="#42a5f5"/>
+                        <text x="395" y="192" text-anchor="middle" fill="white" font-size="12">NAS Appliance</text>
+                        <text x="395" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">NAS</text>
+                        <text x="395" y="235" text-anchor="middle" font-size="11" fill="#666">Network Attached Storage</text>
+                        <text x="395" y="251" text-anchor="middle" font-size="11" fill="#666">NFS / SMB protocols</text>
+
+                        <!-- SAN -->
+                        <rect x="565" y="50" width="200" height="60" rx="6" fill="#1565c0"/>
+                        <text x="665" y="85" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Server(s)</text>
+                        <line x1="665" y1="110" x2="665" y2="128" stroke="#555" stroke-width="3"/>
+                        <rect x="590" y="128" width="150" height="28" rx="4" fill="#28a745"/>
+                        <text x="665" y="147" text-anchor="middle" fill="white" font-size="11" font-weight="bold">FC / iSCSI Fabric</text>
+                        <line x1="665" y1="156" x2="665" y2="170" stroke="#555" stroke-width="3"/>
+                        <rect x="590" y="173" width="150" height="28" rx="6" fill="#42a5f5"/>
+                        <text x="665" y="192" text-anchor="middle" fill="white" font-size="12">SAN Array</text>
+                        <text x="665" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">SAN</text>
+                        <text x="665" y="235" text-anchor="middle" font-size="11" fill="#666">Storage Area Network</text>
+                        <text x="665" y="251" text-anchor="middle" font-size="11" fill="#666">Block-level storage</text>
+                    </svg>
+                </div>
+
+                <div class="success-box">
+                    <h4>Storage Architecture Selection Guide:</h4>
+                    <ul>
+                        <li><strong>DAS:</strong> Lowest latency; best for single-server workloads like databases with local NVMe</li>
+                        <li><strong>NAS:</strong> File-sharing, home directories, backups — uses NFS (Linux) or SMB/CIFS (Windows)</li>
+                        <li><strong>SAN (FC):</strong> Mission-critical block storage; high performance, low latency; requires FC switches and HBAs</li>
+                        <li><strong>SAN (iSCSI):</strong> Block storage over Ethernet; lower cost than FC; suitable for mid-range workloads</li>
+                        <li><strong>Object Storage:</strong> Unstructured data at scale (S3-compatible); ideal for backups, archives, media</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 5: RAID Levels -->
+            <div class="slide">
+                <h2>RAID Levels and Data Protection</h2>
+
+                <p>RAID (Redundant Array of Independent Disks) combines multiple physical drives into a logical unit to provide performance, capacity, or fault tolerance — or a combination of these goals.</p>
+
+                <h3>Common RAID Levels</h3>
+
+                <table>
+                    <tr>
+                        <th>RAID Level</th>
+                        <th>Method</th>
+                        <th>Min Drives</th>
+                        <th>Fault Tolerance</th>
+                        <th>Usable Capacity</th>
+                        <th>Best For</th>
+                    </tr>
+                    <tr>
+                        <td><strong>RAID 0</strong></td>
+                        <td>Striping</td>
+                        <td>2</td>
+                        <td>None — any drive failure = full data loss</td>
+                        <td>100%</td>
+                        <td>Temp data, scratch disks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RAID 1</strong></td>
+                        <td>Mirroring</td>
+                        <td>2</td>
+                        <td>1 drive failure</td>
+                        <td>50%</td>
+                        <td>OS drives, small critical data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RAID 5</strong></td>
+                        <td>Striping + parity</td>
+                        <td>3</td>
+                        <td>1 drive failure</td>
+                        <td>(N-1)/N</td>
+                        <td>General-purpose storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RAID 6</strong></td>
+                        <td>Striping + dual parity</td>
+                        <td>4</td>
+                        <td>2 drive failures</td>
+                        <td>(N-2)/N</td>
+                        <td>High-capacity arrays, HDDs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RAID 10</strong></td>
+                        <td>Stripe of mirrors</td>
+                        <td>4</td>
+                        <td>1 drive per mirror pair</td>
+                        <td>50%</td>
+                        <td>High I/O databases, VMs</td>
+                    </tr>
+                </table>
+
+                <div class="warning-box">
+                    <h4>⚠️ RAID is Not a Backup:</h4>
+                    <ul>
+                        <li>RAID protects against <strong>drive failure only</strong> — it does not protect against accidental deletion, ransomware, corruption, or controller failure</li>
+                        <li>Always implement a separate <strong>3-2-1 backup strategy</strong>: 3 copies, on 2 different media types, with 1 offsite</li>
+                        <li>With large-capacity HDDs (&gt;8 TB), RAID 5 rebuild windows can take days — increasing risk of a second failure; prefer RAID 6 or RAID 10</li>
+                    </ul>
+                </div>
+
+                <h3>Hardware vs. Software RAID</h3>
+
+                <div class="info-box">
+                    <h4>Choosing the Right RAID Controller:</h4>
+                    <ul>
+                        <li><strong>Hardware RAID:</strong> Dedicated RAID controller with onboard cache and battery backup; best performance; OS-agnostic</li>
+                        <li><strong>Software RAID (OS):</strong> mdadm (Linux), Storage Spaces (Windows); no hardware cost; good for NVMe and ZFS workloads</li>
+                        <li><strong>HBA Pass-through:</strong> Present individual drives to OS; use with ZFS or vSAN for software-defined storage with full disk visibility</li>
+                        <li><strong>Cache (BBU/CPS):</strong> Hardware RAID write-back cache dramatically improves write performance; always use with battery/capacitor backup</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 6: Virtualization and Hypervisors -->
+            <div class="slide">
+                <h2>Virtualization and Hypervisors</h2>
+
+                <p>Server virtualization is the foundation of modern data center efficiency. By abstracting hardware resources, virtualization enables consolidation, flexibility, rapid provisioning, and improved disaster recovery capabilities.</p>
+
+                <h3>Virtualization Architecture</h3>
+
+                <div class="diagram">
+                    <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+                        <text x="400" y="25" text-anchor="middle" font-size="17" font-weight="bold" fill="#1565c0">Type 1 Hypervisor Architecture</text>
+
+                        <!-- Physical Hardware -->
+                        <rect x="40" y="270" width="720" height="40" rx="6" fill="#90CAF9" stroke="#42a5f5" stroke-width="2"/>
+                        <text x="400" y="295" text-anchor="middle" fill="#1565c0" font-size="14" font-weight="bold">Physical Hardware — CPU | RAM | Storage | Network</text>
+
+                        <!-- Hypervisor -->
+                        <rect x="40" y="225" width="720" height="38" rx="6" fill="#1565c0" stroke="#0D47A1" stroke-width="2"/>
+                        <text x="400" y="249" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Type 1 Hypervisor (VMware ESXi / Hyper-V / KVM / Proxmox)</text>
+
+                        <!-- VMs -->
+                        <rect x="50" y="55" width="155" height="162" rx="6" fill="#1976D2" stroke="#1565c0" stroke-width="2"/>
+                        <text x="127" y="78" text-anchor="middle" fill="white" font-size="12" font-weight="bold">VM 1</text>
+                        <rect x="62" y="88" width="131" height="28" rx="4" fill="#42a5f5"/>
+                        <text x="127" y="107" text-anchor="middle" fill="white" font-size="11">Guest OS (Linux)</text>
+                        <rect x="62" y="124" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="127" y="143" text-anchor="middle" fill="white" font-size="11">App: Web Server</text>
+                        <rect x="62" y="160" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="127" y="179" text-anchor="middle" fill="white" font-size="11">vCPU / vRAM</text>
+
+                        <rect x="220" y="55" width="155" height="162" rx="6" fill="#1976D2" stroke="#1565c0" stroke-width="2"/>
+                        <text x="297" y="78" text-anchor="middle" fill="white" font-size="12" font-weight="bold">VM 2</text>
+                        <rect x="232" y="88" width="131" height="28" rx="4" fill="#42a5f5"/>
+                        <text x="297" y="107" text-anchor="middle" fill="white" font-size="11">Guest OS (Windows)</text>
+                        <rect x="232" y="124" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="297" y="143" text-anchor="middle" fill="white" font-size="11">App: SQL Server</text>
+                        <rect x="232" y="160" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="297" y="179" text-anchor="middle" fill="white" font-size="11">vCPU / vRAM</text>
+
+                        <rect x="390" y="55" width="155" height="162" rx="6" fill="#1976D2" stroke="#1565c0" stroke-width="2"/>
+                        <text x="467" y="78" text-anchor="middle" fill="white" font-size="12" font-weight="bold">VM 3</text>
+                        <rect x="402" y="88" width="131" height="28" rx="4" fill="#42a5f5"/>
+                        <text x="467" y="107" text-anchor="middle" fill="white" font-size="11">Guest OS (Linux)</text>
+                        <rect x="402" y="124" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="467" y="143" text-anchor="middle" fill="white" font-size="11">App: Container Host</text>
+                        <rect x="402" y="160" width="131" height="28" rx="4" fill="#64B5F6"/>
+                        <text x="467" y="179" text-anchor="middle" fill="white" font-size="11">vCPU / vRAM</text>
+
+                        <rect x="560" y="55" width="200" height="162" rx="6" fill="#28a745" stroke="#1e7e34" stroke-width="2"/>
+                        <text x="660" y="78" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Management VM</text>
+                        <rect x="572" y="88" width="176" height="28" rx="4" fill="#34ce57"/>
+                        <text x="660" y="107" text-anchor="middle" fill="white" font-size="11">vCenter / SCVMM</text>
+                        <rect x="572" y="124" width="176" height="28" rx="4" fill="#34ce57"/>
+                        <text x="660" y="143" text-anchor="middle" fill="white" font-size="11">Monitoring / Backup</text>
+                        <rect x="572" y="160" width="176" height="28" rx="4" fill="#34ce57"/>
+                        <text x="660" y="179" text-anchor="middle" fill="white" font-size="11">Orchestration</text>
+                    </svg>
+                </div>
+
+                <h3>Hypervisor Comparison</h3>
+
+                <table>
+                    <tr>
+                        <th>Hypervisor</th>
+                        <th>Type</th>
+                        <th>Vendor</th>
+                        <th>Common Use Case</th>
+                    </tr>
+                    <tr>
+                        <td><strong>VMware ESXi / vSphere</strong></td>
+                        <td>Type 1</td>
+                        <td>Broadcom</td>
+                        <td>Enterprise data centers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Microsoft Hyper-V</strong></td>
+                        <td>Type 1</td>
+                        <td>Microsoft</td>
+                        <td>Windows-centric environments</td>
+                    </tr>
+                    <tr>
+                        <td><strong>KVM</strong></td>
+                        <td>Type 1</td>
+                        <td>Open Source</td>
+                        <td>Linux/cloud infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proxmox VE</strong></td>
+                        <td>Type 1</td>
+                        <td>Open Source</td>
+                        <td>SMB, lab, and hybrid environments</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VMware Workstation</strong></td>
+                        <td>Type 2</td>
+                        <td>Broadcom</td>
+                        <td>Developer desktops / testing</td>
+                    </tr>
+                </table>
+
+                <div class="success-box">
+                    <h4>Key Virtualization Features:</h4>
+                    <ul>
+                        <li><strong>Live Migration (vMotion / Live Migration):</strong> Move running VMs between hosts with zero downtime</li>
+                        <li><strong>HA (High Availability):</strong> Automatically restart VMs on a surviving host after a host failure</li>
+                        <li><strong>DRS (Distributed Resource Scheduler):</strong> Balance VM workloads across hosts automatically</li>
+                        <li><strong>Snapshots:</strong> Point-in-time VM state capture; useful for change management — not a backup substitute</li>
+                        <li><strong>vCPU / vRAM Overcommit:</strong> Allocate more virtual resources than physical; monitor carefully to avoid contention</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 7: Server Operating Systems -->
+            <div class="slide">
+                <h2>Server Operating Systems</h2>
+
+                <p>The server operating system is the foundational software layer that manages hardware resources and provides the environment for applications and services. Selecting and hardening the right OS is essential for security, stability, and supportability.</p>
+
+                <h3>Enterprise OS Comparison</h3>
+
+                <table>
+                    <tr>
+                        <th>Operating System</th>
+                        <th>Vendor</th>
+                        <th>Primary Use Case</th>
+                        <th>Support Lifecycle</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Windows Server 2022</strong></td>
+                        <td>Microsoft</td>
+                        <td>AD, Exchange, SQL, .NET apps</td>
+                        <td>10 years (mainstream + extended)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Red Hat Enterprise Linux (RHEL)</strong></td>
+                        <td>Red Hat / IBM</td>
+                        <td>Enterprise Linux, containers, SAP</td>
+                        <td>10 years + ELS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ubuntu Server LTS</strong></td>
+                        <td>Canonical</td>
+                        <td>Cloud, DevOps, web workloads</td>
+                        <td>5 years standard / 10 with ESM</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SUSE Linux Enterprise</strong></td>
+                        <td>SUSE</td>
+                        <td>SAP HANA, HPC, enterprise Linux</td>
+                        <td>10–13 years</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VMware ESXi (vSphere)</strong></td>
+                        <td>Broadcom</td>
+                        <td>Dedicated hypervisor / bare metal</td>
+                        <td>Per vSphere release cycle</td>
+                    </tr>
+                </table>
+
+                <h3>Windows Server Roles</h3>
+
+                <div class="info-box">
+                    <h4>Common Windows Server Roles:</h4>
+                    <ul>
+                        <li><strong>Active Directory Domain Services (AD DS):</strong> Identity and authentication for the enterprise; requires minimum two DCs for HA</li>
+                        <li><strong>DNS / DHCP:</strong> Name resolution and IP address management; typically co-hosted on domain controllers</li>
+                        <li><strong>File and Storage Services:</strong> SMB file shares, DFS namespaces, iSCSI target</li>
+                        <li><strong>Remote Desktop Services (RDS):</strong> Centralized application and desktop delivery</li>
+                        <li><strong>Hyper-V:</strong> Native Type 1 hypervisor role on Windows Server</li>
+                    </ul>
+                </div>
+
+                <h3>Linux Server Best Practices</h3>
+
+                <div class="success-box">
+                    <h4>Linux Hardening Checklist:</h4>
+                    <ul>
+                        <li>Disable root SSH login; use sudo with individual accounts and audit logging</li>
+                        <li>Configure SELinux (RHEL/CentOS) or AppArmor (Ubuntu/Debian) in enforcing mode</li>
+                        <li>Enable and configure firewalld or iptables; deny all inbound by default</li>
+                        <li>Use SSH key-based authentication; disable password authentication in sshd_config</li>
+                        <li>Set automatic security update subscriptions for CVE patching cadence</li>
+                        <li>Implement centralized logging to a remote syslog / SIEM server</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 8: High Availability and Clustering -->
+            <div class="slide">
+                <h2>High Availability and Clustering</h2>
+
+                <p>High Availability (HA) design ensures that critical services remain operational during hardware failures, maintenance windows, or disasters. The goal is to eliminate single points of failure at every layer.</p>
+
+                <h3>Availability Tiers — The "Nines"</h3>
+
+                <table>
+                    <tr>
+                        <th>Availability</th>
+                        <th>Annual Downtime</th>
+                        <th>Monthly Downtime</th>
+                        <th>Typical Use</th>
+                    </tr>
+                    <tr>
+                        <td><strong>99% (2 nines)</strong></td>
+                        <td>87.6 hours</td>
+                        <td>7.2 hours</td>
+                        <td>Dev/test, non-critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>99.9% (3 nines)</strong></td>
+                        <td>8.76 hours</td>
+                        <td>43.8 min</td>
+                        <td>Internal business apps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>99.99% (4 nines)</strong></td>
+                        <td>52.6 minutes</td>
+                        <td>4.4 min</td>
+                        <td>Enterprise ERP, e-commerce</td>
+                    </tr>
+                    <tr>
+                        <td><strong>99.999% (5 nines)</strong></td>
+                        <td>5.26 minutes</td>
+                        <td>26 seconds</td>
+                        <td>Telecom, mission-critical</td>
+                    </tr>
+                </table>
+
+                <h3>HA Design Principles</h3>
+
+                <div class="info-box">
+                    <h4>Eliminating Single Points of Failure:</h4>
+                    <ul>
+                        <li><strong>Dual Power Supplies:</strong> Connect PSUs to separate PDUs on separate UPS/generator circuits</li>
+                        <li><strong>Redundant NICs:</strong> NIC teaming / bonding with LACP for bandwidth and failover</li>
+                        <li><strong>Redundant HBAs:</strong> Dual-path FC or iSCSI connectivity to storage arrays (multipathing)</li>
+                        <li><strong>Clustered Services:</strong> Windows Server Failover Clustering (WSFC), Linux Pacemaker/Corosync</li>
+                        <li><strong>Load Balancing:</strong> Distribute traffic across multiple application servers; remove failed nodes automatically</li>
+                    </ul>
+                </div>
+
+                <h3>Recovery Objectives</h3>
+
+                <div class="warning-box">
+                    <h4>RTO and RPO — Know the Difference:</h4>
+                    <ul>
+                        <li><strong>RTO (Recovery Time Objective):</strong> Maximum acceptable time to restore service after a failure — "how fast must we be back?"</li>
+                        <li><strong>RPO (Recovery Point Objective):</strong> Maximum acceptable amount of data loss measured in time — "how much data can we afford to lose?"</li>
+                        <li><strong>Example:</strong> RTO = 1 hour means services must be restored within 60 minutes; RPO = 15 min means backups must occur at least every 15 minutes</li>
+                        <li>Both RTO and RPO must be defined by the business, documented in the BCP/DRP, and regularly tested through exercises and failover drills</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h4>DR Tier Classification:</h4>
+                    <ul>
+                        <li><strong>Hot Site:</strong> Fully operational mirrored environment; near-zero RTO/RPO; highest cost</li>
+                        <li><strong>Warm Site:</strong> Infrastructure ready but data sync required; hours RTO; moderate cost</li>
+                        <li><strong>Cold Site:</strong> Physical space only; days/weeks to bring online; lowest cost</li>
+                        <li><strong>Cloud DR:</strong> Elastic cloud-based recovery; pay-per-use; growing adoption for SMB and enterprise</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 9: Server Security and Hardening -->
+            <div class="slide">
+                <h2>Server Security and Hardening</h2>
+
+                <p>Server hardening reduces the attack surface of a system by removing unnecessary services, enforcing least privilege, and applying industry-recognized configuration baselines. Security must be built in from the initial deployment, not bolted on after the fact.</p>
+
+                <h3>Hardening Framework — CIS Benchmarks</h3>
+
+                <div class="info-box">
+                    <h4>CIS (Center for Internet Security) Benchmark Levels:</h4>
+                    <ul>
+                        <li><strong>Level 1:</strong> Practical security configurations with minimal performance impact; recommended for all systems</li>
+                        <li><strong>Level 2:</strong> Defense-in-depth configurations for high-security environments; may impact some functionality</li>
+                        <li>CIS Benchmarks are available for Windows Server, RHEL, Ubuntu, VMware ESXi, and many other platforms</li>
+                        <li>Use automated compliance scanning tools (OpenSCAP, CIS-CAT, Nessus) to continuously validate baseline adherence</li>
+                    </ul>
+                </div>
+
+                <h3>Key Hardening Controls</h3>
+
+                <table>
+                    <tr>
+                        <th>Control Area</th>
+                        <th>Action</th>
+                        <th>Priority</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Access Control</strong></td>
+                        <td>Enforce least privilege; disable unused accounts; MFA for admin access</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Patch Management</strong></td>
+                        <td>Apply security patches within defined SLA windows (e.g., critical = 72 hrs)</td>
+                        <td>Critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Services</strong></td>
+                        <td>Disable all unneeded services, ports, and protocols</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Logging &amp; Auditing</strong></td>
+                        <td>Enable audit logging; forward to SIEM; retain per compliance policy</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Encryption</strong></td>
+                        <td>Encrypt data at rest (BitLocker/LUKS) and in transit (TLS 1.2+)</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Firmware</strong></td>
+                        <td>Keep BMC/iDRAC/iLO firmware updated; enable Secure Boot</td>
+                        <td>Medium</td>
+                    </tr>
+                </table>
+
                 <div class="danger-box">
-                    <h4>Typical Issues:</h4>
+                    <h4>🚨 Server Attack Vectors to Mitigate:</h4>
                     <ul>
-                        <li>Incomplete fire alarm testing</li>
-                        <li>Missing emergency lighting</li>
-                        <li>Egress obstructions</li>
-                        <li>Documentation gaps</li>
-                        <li>Outstanding permits</li>
-                        <li>Contractor coordination</li>
+                        <li><strong>Default Credentials:</strong> Always change default usernames and passwords on BMCs, OS, and applications immediately upon deployment</li>
+                        <li><strong>Unpatched Vulnerabilities:</strong> The majority of breaches exploit known CVEs for which patches exist — timely patching is non-negotiable</li>
+                        <li><strong>Excessive Privileges:</strong> Over-privileged service accounts and admin sprawl dramatically increase blast radius of any compromise</li>
+                        <li><strong>Exposed Management Interfaces:</strong> BMC/IPMI/iDRAC should be isolated on a dedicated OOB management VLAN, never exposed to production or internet</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 9: Ongoing Compliance -->
+            <!-- Slide 10: Patch Management and Lifecycle -->
             <div class="slide">
-                <h2>Ongoing Compliance Requirements</h2>
-                
-                <p>Code compliance doesn't end with the Certificate of Occupancy - it requires continuous attention throughout facility operation.</p>
+                <h2>Patch Management and Server Lifecycle</h2>
 
-                <h3>Annual Requirements</h3>
-                
+                <p>A disciplined patch management program and lifecycle management strategy are essential for maintaining a secure, stable, and supported server environment. Unpatched systems are the leading cause of preventable security incidents.</p>
+
+                <h3>Patch Management Process</h3>
+
+                <div class="diagram">
+                    <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                        <text x="400" y="25" text-anchor="middle" font-size="17" font-weight="bold" fill="#1565c0">Patch Management Lifecycle</text>
+
+                        <!-- Boxes -->
+                        <rect x="20" y="55" width="120" height="55" rx="7" fill="#1565c0"/>
+                        <text x="80" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="bold">1. Identify</text>
+                        <text x="80" y="99" text-anchor="middle" fill="white" font-size="11">CVE / Vendor</text>
+
+                        <rect x="170" y="55" width="120" height="55" rx="7" fill="#1976D2"/>
+                        <text x="230" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="bold">2. Assess</text>
+                        <text x="230" y="99" text-anchor="middle" fill="white" font-size="11">CVSS / Impact</text>
+
+                        <rect x="320" y="55" width="120" height="55" rx="7" fill="#1E88E5"/>
+                        <text x="380" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="bold">3. Test</text>
+                        <text x="380" y="99" text-anchor="middle" fill="white" font-size="11">Dev / UAT env</text>
+
+                        <rect x="470" y="55" width="120" height="55" rx="7" fill="#2196F3"/>
+                        <text x="530" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="bold">4. Deploy</text>
+                        <text x="530" y="99" text-anchor="middle" fill="white" font-size="11">Staged rollout</text>
+
+                        <rect x="620" y="55" width="120" height="55" rx="7" fill="#42a5f5"/>
+                        <text x="680" y="81" text-anchor="middle" fill="white" font-size="12" font-weight="bold">5. Verify</text>
+                        <text x="680" y="99" text-anchor="middle" fill="white" font-size="11">Scan &amp; report</text>
+
+                        <!-- Arrows -->
+                        <line x1="140" y1="82" x2="168" y2="82" stroke="#555" stroke-width="2" marker-end="url(#arrowPatch)"/>
+                        <line x1="290" y1="82" x2="318" y2="82" stroke="#555" stroke-width="2" marker-end="url(#arrowPatch)"/>
+                        <line x1="440" y1="82" x2="468" y2="82" stroke="#555" stroke-width="2" marker-end="url(#arrowPatch)"/>
+                        <line x1="590" y1="82" x2="618" y2="82" stroke="#555" stroke-width="2" marker-end="url(#arrowPatch)"/>
+
+                        <defs>
+                            <marker id="arrowPatch" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+                                <polygon points="0 0, 8 4, 0 8" fill="#555"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Patch SLA -->
+                        <text x="80" y="145" text-anchor="middle" font-size="11" fill="#dc3545" font-weight="bold">Critical</text>
+                        <text x="80" y="162" text-anchor="middle" font-size="11" fill="#555">≤ 72 hours</text>
+                        <text x="230" y="145" text-anchor="middle" font-size="11" fill="#ffc107" font-weight="bold">High</text>
+                        <text x="230" y="162" text-anchor="middle" font-size="11" fill="#555">≤ 7 days</text>
+                        <text x="380" y="145" text-anchor="middle" font-size="11" fill="#17a2b8" font-weight="bold">Medium</text>
+                        <text x="380" y="162" text-anchor="middle" font-size="11" fill="#555">≤ 30 days</text>
+                        <text x="530" y="145" text-anchor="middle" font-size="11" fill="#28a745" font-weight="bold">Low</text>
+                        <text x="530" y="162" text-anchor="middle" font-size="11" fill="#555">Next cycle</text>
+                        <text x="680" y="145" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">Scan</text>
+                        <text x="680" y="162" text-anchor="middle" font-size="11" fill="#555">Post-patch</text>
+                    </svg>
+                </div>
+
+                <h3>Server Hardware Lifecycle</h3>
+
                 <div class="info-box">
-                    <h4>Recurring Obligations:</h4>
+                    <h4>Typical Server Lifecycle Phases:</h4>
                     <ul>
-                        <li><strong>Fire Inspections:</strong> Annual fire marshal inspection</li>
-                        <li><strong>System Testing:</strong> Annual fire system testing</li>
-                        <li><strong>Permits:</strong> Operational permit renewals</li>
-                        <li><strong>Training:</strong> Staff fire safety training</li>
-                        <li><strong>Drills:</strong> Evacuation drill requirements</li>
-                        <li><strong>Documentation:</strong> Updated emergency plans</li>
+                        <li><strong>Procurement:</strong> Define hardware standards, obtain quotes, verify vendor support SLAs and warranty terms</li>
+                        <li><strong>Deployment (Year 1–3):</strong> Full vendor support, firmware under active development, covered by hardware warranty</li>
+                        <li><strong>Active Production (Year 3–5):</strong> Standard operational phase; monitor for component health; plan refresh budget</li>
+                        <li><strong>End of Life Planning (Year 5+):</strong> Increased failure risk; higher support costs; begin migration planning</li>
+                        <li><strong>Decommission:</strong> Secure data wipe (NIST 800-88 or physical destruction); asset disposal documentation; CMDB update</li>
                     </ul>
                 </div>
 
-                <h3>Change Management</h3>
-                
                 <div class="warning-box">
-                    <h4>When Permits are Required:</h4>
+                    <h4>⚠️ End of Support Risks:</h4>
                     <ul>
-                        <li>Modifications to fire alarm system</li>
-                        <li>Changes to sprinkler system</li>
-                        <li>Alterations affecting egress</li>
-                        <li>Occupancy changes</li>
-                        <li>Hazardous material storage</li>
-                        <li>Hot work operations</li>
+                        <li>Running <strong>EOS (End of Support)</strong> OS versions means no more security patches — a serious and often compliance-violating risk</li>
+                        <li>Hardware past <strong>EOL (End of Life)</strong> may not be eligible for firmware updates, creating unmitigable vulnerabilities</li>
+                        <li>Maintain a <strong>CMDB (Configuration Management Database)</strong> with support contract expiry dates and OS EOL dates for all assets</li>
+                        <li>Budget for server refresh on a rolling 4–5 year cycle to avoid a "cliff" of simultaneous replacements</li>
                     </ul>
                 </div>
 
-                <h3>Compliance Tracking</h3>
-                
+                <div class="reference-box">
+                    <h4>📋 Key Standards and References</h4>
+                    <ul>
+                        <li>📌 <strong>NIST SP 800-123</strong> — Guide to General Server Security</li>
+                        <li>📌 <strong>NIST SP 800-88</strong> — Guidelines for Media Sanitization</li>
+                        <li>📌 <strong>CIS Benchmarks</strong> — OS-specific hardening baselines</li>
+                        <li>📌 <strong>SNIA</strong> — Storage Networking Industry Association standards</li>
+                        <li>📌 <strong>DMTF / Redfish</strong> — Server management API standard (BMC)</li>
+                        <li>📌 <strong>ITIL v4</strong> — IT Service Management framework (change, lifecycle)</li>
+                        <li>📌 <strong>ISO/IEC 27001</strong> — Information security management controls</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 11: BMC and Out-of-Band Management -->
+            <div class="slide">
+                <h2>Out-of-Band Management and BMC</h2>
+
+                <p>Out-of-Band (OOB) management allows administrators to access and control servers independently of the host operating system — even when the server is powered off, unresponsive, or in a crashed state. This capability is critical for remote data center operations.</p>
+
+                <h3>BMC / IPMI Overview</h3>
+
+                <div class="info-box">
+                    <h4>Baseboard Management Controller (BMC):</h4>
+                    <ul>
+                        <li>A dedicated embedded microcontroller on the server motherboard with its own network port, processor, and firmware</li>
+                        <li>Operates independently of the main CPU and OS — available even when the server is powered off (as long as PSU is connected)</li>
+                        <li><strong>Vendor Names:</strong> Dell iDRAC, HP/HPE iLO, Lenovo XCC, Supermicro IPMI, Cisco CIMC</li>
+                        <li><strong>IPMI:</strong> Intelligent Platform Management Interface — the underlying standard protocol enabling BMC communication</li>
+                    </ul>
+                </div>
+
+                <h3>BMC Capabilities</h3>
+
                 <table>
                     <tr>
-                        <th>Activity</th>
-                        <th>Frequency</th>
-                        <th>Responsible Party</th>
+                        <th>Capability</th>
+                        <th>Description</th>
+                        <th>Benefit</th>
                     </tr>
                     <tr>
-                        <td><strong>System Testing</strong></td>
-                        <td>Per NFPA schedule</td>
-                        <td>Qualified contractor</td>
+                        <td><strong>Remote KVM</strong></td>
+                        <td>Virtual keyboard, video, mouse over network</td>
+                        <td>Full console access without physical presence</td>
                     </tr>
                     <tr>
-                        <td><strong>Staff Training</strong></td>
-                        <td>Annual + new hires</td>
-                        <td>Facility management</td>
+                        <td><strong>Virtual Media</strong></td>
+                        <td>Mount ISO/USB images remotely</td>
+                        <td>OS installation and recovery without physical media</td>
                     </tr>
                     <tr>
-                        <td><strong>Plan Updates</strong></td>
-                        <td>As changes occur</td>
-                        <td>Fire safety director</td>
+                        <td><strong>Power Control</strong></td>
+                        <td>Remote power on/off/reset/cycle</td>
+                        <td>Recover hung servers remotely</td>
                     </tr>
                     <tr>
-                        <td><strong>Inspections</strong></td>
-                        <td>Annual minimum</td>
-                        <td>Fire marshal</td>
+                        <td><strong>Hardware Monitoring</strong></td>
+                        <td>Temperature, fan speed, voltage, PSU health</td>
+                        <td>Proactive failure detection</td>
                     </tr>
                     <tr>
-                        <td><strong>Records</strong></td>
-                        <td>Continuous</td>
-                        <td>Document control</td>
+                        <td><strong>System Event Log (SEL)</strong></td>
+                        <td>Hardware-level event recording</td>
+                        <td>Post-mortem analysis independent of OS</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Firmware Update</strong></td>
+                        <td>Update BIOS/UEFI and component firmware remotely</td>
+                        <td>Centralized lifecycle management</td>
                     </tr>
                 </table>
 
-                <h3>Best Practices</h3>
-                
-                <div class="success-box">
-                    <h4>Maintaining Compliance:</h4>
+                <div class="danger-box">
+                    <h4>🚨 BMC Security — Critical Requirements:</h4>
                     <ul>
-                        <li>Establish compliance calendar with all deadlines</li>
-                        <li>Maintain relationships with AHJ representatives</li>
-                        <li>Use qualified contractors for all work</li>
-                        <li>Document all changes and modifications</li>
-                        <li>Regular internal audits and assessments</li>
-                        <li>Stay current with code updates and changes</li>
+                        <li>Always change the default BMC username and password immediately upon deployment</li>
+                        <li>Isolate BMC interfaces on a dedicated, firewalled OOB management VLAN — never expose to production or internet</li>
+                        <li>Disable IPMI-over-LAN cipher suite 0 (null authentication); use only encrypted cipher suites</li>
+                        <li>Keep BMC firmware updated; BMC firmware vulnerabilities (e.g., iDRAC CVEs) can allow full server compromise</li>
+                        <li>Enforce MFA for BMC web console access where supported</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 10: Data Center Specific Compliance -->
+            <!-- Slide 12: Monitoring and Performance Management -->
             <div class="slide">
-                <h2>Data Center Specific Compliance</h2>
-                
-                <p>Data centers face unique compliance challenges due to their critical nature and specialized systems.</p>
+                <h2>Server Monitoring and Performance Management</h2>
 
-                <h3>Special Considerations</h3>
-                
-                <div class="info-box">
-                    <h4>Data Center Compliance Factors:</h4>
-                    <ul>
-                        <li><strong>24/7 Operations:</strong> Testing and maintenance windows</li>
-                        <li><strong>Security Requirements:</strong> Access for inspections</li>
-                        <li><strong>Clean Agent Systems:</strong> Environmental regulations</li>
-                        <li><strong>EPO Systems:</strong> Coordination with life safety</li>
-                        <li><strong>High Density:</strong> Cooling and fire load calculations</li>
-                        <li><strong>Uptime Requirements:</strong> Impairment procedures</li>
-                    </ul>
-                </div>
+                <p>Comprehensive server monitoring provides visibility into health, performance, and capacity — enabling proactive intervention before issues impact services. A well-designed monitoring stack covers hardware, OS, application, and capacity layers.</p>
 
-                <h3>Regulatory Overlaps</h3>
-                
+                <h3>Key Monitoring Metrics</h3>
+
                 <table>
                     <tr>
-                        <th>Requirement</th>
-                        <th>Fire Code</th>
-                        <th>Other Authority</th>
+                        <th>Layer</th>
+                        <th>Metric</th>
+                        <th>Alert Threshold (Typical)</th>
+                        <th>Tool Examples</th>
                     </tr>
                     <tr>
-                        <td><strong>Halon Systems</strong></td>
-                        <td>NFPA 2001</td>
-                        <td>EPA regulations</td>
+                        <td><strong>Hardware</strong></td>
+                        <td>CPU temp, fan RPM, PSU status, disk SMART</td>
+                        <td>Per-vendor thresholds</td>
+                        <td>iDRAC/iLO, Redfish, IPMI</td>
                     </tr>
                     <tr>
-                        <td><strong>Battery Rooms</strong></td>
-                        <td>IFC hazmat</td>
-                        <td>IEEE standards</td>
+                        <td><strong>OS — CPU</strong></td>
+                        <td>CPU utilization (%)</td>
+                        <td>Warn &gt;80%, Critical &gt;95%</td>
+                        <td>Zabbix, Prometheus, PRTG</td>
                     </tr>
                     <tr>
-                        <td><strong>Fuel Storage</strong></td>
-                        <td>NFPA 110</td>
-                        <td>Environmental permits</td>
+                        <td><strong>OS — Memory</strong></td>
+                        <td>RAM usage, swap utilization</td>
+                        <td>Warn &gt;85%, Critical &gt;95%</td>
+                        <td>Grafana, Datadog, Nagios</td>
                     </tr>
                     <tr>
-                        <td><strong>Security</strong></td>
-                        <td>Egress requirements</td>
-                        <td>Federal standards</td>
+                        <td><strong>OS — Disk</strong></td>
+                        <td>Filesystem usage (%)</td>
+                        <td>Warn &gt;75%, Critical &gt;90%</td>
+                        <td>Zabbix, SolarWinds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OS — Network</strong></td>
+                        <td>NIC utilization, packet errors</td>
+                        <td>Errors &gt;0 per interval</td>
+                        <td>SNMP, NetFlow, PRTG</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Storage</strong></td>
+                        <td>IOPS, latency, throughput</td>
+                        <td>Latency &gt;20 ms (HDD), &gt;1 ms (SSD)</td>
+                        <td>Array native tools, Grafana</td>
                     </tr>
                 </table>
 
-                <h3>Industry Certifications</h3>
-                
+                <h3>Capacity Planning</h3>
+
                 <div class="success-box">
-                    <h4>Beyond Code Compliance:</h4>
+                    <h4>Capacity Management Best Practices:</h4>
                     <ul>
-                        <li><strong>Uptime Institute:</strong> Tier certification requirements</li>
-                        <li><strong>LEED:</strong> Sustainable design credits</li>
-                        <li><strong>DCCA:</strong> Data center standards</li>
-                        <li><strong>ISO 27001:</strong> Security management</li>
-                        <li><strong>SOC 2:</strong> Compliance auditing</li>
+                        <li>Collect and trend 90-day and 12-month utilization baselines for CPU, memory, storage, and network</li>
+                        <li>Plan for a maximum of <strong>70–80% sustained utilization</strong> to leave headroom for spikes and growth</li>
+                        <li>Use predictive trending to forecast when resources will hit thresholds and trigger procurement lead times</li>
+                        <li>Review capacity reports at least quarterly in conjunction with the business demand forecast</li>
+                        <li>Document and review virtual-to-physical ratios in virtualized environments to prevent vCPU/vRAM contention</li>
                     </ul>
                 </div>
 
-                <h3>Compliance Strategy</h3>
-                
                 <div class="warning-box">
-                    <h4>Integrated Approach:</h4>
+                    <h4>Alerting and Escalation:</h4>
                     <ul>
-                        <li>Early engagement with all authorities</li>
-                        <li>Comprehensive compliance matrix</li>
-                        <li>Regular compliance audits</li>
-                        <li>Continuous training program</li>
-                        <li>Proactive code update monitoring</li>
-                        <li>Strong documentation practices</li>
+                        <li>Define clear escalation paths: auto-ticket → NOC on-call → senior engineer → management</li>
+                        <li>Avoid alert fatigue by tuning thresholds and suppressing maintenance window alerts</li>
+                        <li>Integrate monitoring with ITSM (ServiceNow, Jira, Remedy) for automatic incident ticket creation</li>
+                        <li>Conduct regular reviews of unacknowledged and recurring alerts to address root causes</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 11: References -->
+            <!-- Slide 13: Knowledge Check Quiz -->
             <div class="slide">
-                <h2>References and Resources</h2>
-                
-                <p>This training module was developed using authoritative sources on fire safety codes and regulations.</p>
-
-                <div class="reference-box">
-                    <h4>📚 Primary References:</h4>
-                    <ul>
-                        <li>• NFPA 1 - Fire Code (2021 Edition)</li>
-                        <li>• NFPA 13 - Installation of Sprinkler Systems (2022)</li>
-                        <li>• NFPA 72 - National Fire Alarm and Signaling Code (2022)</li>
-                        <li>• NFPA 75 - Fire Protection of Information Technology Equipment (2020)</li>
-                        <li>• NFPA 101 - Life Safety Code (2021)</li>
-                        <li>• International Building Code (2021)</li>
-                        <li>• International Fire Code (2021)</li>
-                    </ul>
-                </div>
-
-                <div class="reference-box">
-                    <h4>🏢 Code Organizations:</h4>
-                    <ul>
-                        <li>• NFPA - National Fire Protection Association</li>
-                        <li>• ICC - International Code Council</li>
-                        <li>• IAPMO - International Association of Plumbing and Mechanical Officials</li>
-                        <li>• NFSA - National Fire Sprinkler Association</li>
-                        <li>• AFAA - Automatic Fire Alarm Association</li>
-                        <li>• NICET - National Institute for Certification in Engineering Technologies</li>
-                    </ul>
-                </div>
-
-                <div class="reference-box">
-                    <h4>📖 Additional Resources:</h4>
-                    <ul>
-                        <li>• "Fire Protection Handbook" - NFPA, 20th Edition</li>
-                        <li>• "Code Compliance for Advanced Technology Facilities" - SFPE</li>
-                        <li>• "Data Center Design and Implementation Best Practices" - BICSI</li>
-                        <li>• State and local fire marshal websites</li>
-                        <li>• ICC code commentary volumes</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <h4>💡 Note on Content Development:</h4>
-                    <p>This training module is based on model codes and standards commonly adopted in the United States. Always verify the specific codes, editions, and local amendments adopted in your jurisdiction. Code requirements can vary significantly between locations and change with new editions.</p>
-                </div>
-            </div>
-
-            <!-- Quiz Slide -->
-            <div class="slide">
-                <h2>Knowledge Assessment Quiz</h2>
-                <p>Test your understanding of Code Compliance. Select the best answer for each question:</p>
+                <h2>Knowledge Check Quiz</h2>
+                <p>Test your understanding of Server Systems 101. You need 80% or higher to pass. Select the best answer for each question.</p>
 
                 <form id="quizForm">
+
                     <div class="quiz-question">
-                        <h4>1. What does AHJ stand for?</h4>
+                        <h4>1. What is the height of a standard enterprise rack enclosure?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="a"> Authorized Hazard Jurisdiction</label>
+                            <label><input type="radio" name="q1" value="a"> 24U</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="b"> Authority Having Jurisdiction</label>
+                            <label><input type="radio" name="q1" value="b"> 36U</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="c"> Administrative Housing Journal</label>
+                            <label><input type="radio" name="q1" value="c"> 42U</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="d"> Annual Hazard Justification</label>
+                            <label><input type="radio" name="q1" value="d"> 48U</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>2. Which NFPA standard specifically addresses data center fire protection?</h4>
+                        <h4>2. Which memory type is mandatory for production servers because it detects and corrects single-bit errors?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="a"> NFPA 13</label>
+                            <label><input type="radio" name="q2" value="a"> UDIMM (Unbuffered)</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="b"> NFPA 72</label>
+                            <label><input type="radio" name="q2" value="b"> SODIMM</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="c"> NFPA 75</label>
+                            <label><input type="radio" name="q2" value="c"> ECC RDIMM</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="d"> NFPA 101</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>3. In the code hierarchy, which typically has the highest enforcement authority?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="a"> Industry standards</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="b"> Federal regulations</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="c"> Local amendments</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="d"> State codes</label>
+                            <label><input type="radio" name="q2" value="d"> Flash-backed DIMM</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>4. What is the typical occupancy classification for a data center under IBC?</h4>
+                        <h4>3. Which RAID level provides the highest write performance with no fault tolerance?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="a"> Group A - Assembly</label>
+                            <label><input type="radio" name="q3" value="a"> RAID 1</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="b"> Group B - Business</label>
+                            <label><input type="radio" name="q3" value="b"> RAID 5</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="c"> Group S - Storage</label>
+                            <label><input type="radio" name="q3" value="c"> RAID 0</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="d"> Group U - Utility</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>5. How often must fire alarm systems typically undergo comprehensive testing?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="a"> Monthly</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="b"> Quarterly</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="c"> Annually</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="d"> Every 5 years</label>
+                            <label><input type="radio" name="q3" value="d"> RAID 6</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>6. What document provides final authorization to occupy a building?</h4>
+                        <h4>4. A Type 1 hypervisor differs from a Type 2 hypervisor in that it:</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="a"> Building permit</label>
+                            <label><input type="radio" name="q4" value="a"> Runs as an application on top of a host operating system</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="b"> Fire marshal approval</label>
+                            <label><input type="radio" name="q4" value="b"> Runs directly on bare metal hardware without a host OS</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="c"> Certificate of Occupancy</label>
+                            <label><input type="radio" name="q4" value="c"> Only supports Windows guest operating systems</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="d"> Construction permit</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>7. When multiple codes apply, which requirement typically governs?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="a"> The oldest code</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="b"> The newest code</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="c"> The most restrictive requirement</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="d"> The least restrictive requirement</label>
+                            <label><input type="radio" name="q4" value="d"> Requires a dedicated GPU for operation</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>8. What is required when making modifications to fire protection systems?</h4>
+                        <h4>5. Which storage protocol provides block-level access over a standard Ethernet network?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="a"> Notification only</label>
+                            <label><input type="radio" name="q5" value="a"> NFS</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="b"> Permit and inspection</label>
+                            <label><input type="radio" name="q5" value="b"> SMB/CIFS</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="c"> Documentation update</label>
+                            <label><input type="radio" name="q5" value="c"> iSCSI</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="d"> No requirements</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>9. How long should fire protection system test records typically be retained?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="a"> 1 year</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="b"> 3-5 years minimum</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="c"> 10 years</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="d"> Not required</label>
+                            <label><input type="radio" name="q5" value="d"> FTP</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>10. What is a variance in code compliance?</h4>
+                        <h4>6. What does RPO (Recovery Point Objective) define?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="a"> A code violation</label>
+                            <label><input type="radio" name="q6" value="a"> The maximum time allowed to restore a service after a failure</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="b"> An approved alternative method</label>
+                            <label><input type="radio" name="q6" value="b"> The maximum acceptable amount of data loss measured in time</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="c"> A temporary permit</label>
+                            <label><input type="radio" name="q6" value="c"> The minimum number of backup copies required</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="d"> An inspection report</label>
+                            <label><input type="radio" name="q6" value="d"> The recovery priority assigned to each server tier</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>7. Which vendor-specific term refers to Dell's out-of-band server management controller?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="a"> iLO</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="b"> XCC</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="c"> CIMC</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="d"> iDRAC</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>8. In a dual-socket server, what architecture describes the fact that each CPU has faster access to its own local memory than to the other socket's memory?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="a"> SMP (Symmetric Multi-Processing)</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="b"> NUMA (Non-Uniform Memory Access)</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="c"> RAID (Redundant Array)</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="d"> HyperThreading</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>9. Which NIST publication provides guidelines for secure media sanitization prior to server decommissioning?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="a"> NIST SP 800-53</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="b"> NIST SP 800-123</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="c"> NIST SP 800-88</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="d"> NIST SP 800-61</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>10. What is the primary reason RAID is NOT considered a backup solution?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="a"> RAID is too slow to use as a backup target</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="b"> RAID only protects against drive failure and does not protect against deletion, corruption, or ransomware</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="c"> RAID requires too many drives to be cost-effective</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="d"> RAID cannot be used on SSDs</label>
                         </div>
                     </div>
 
@@ -1336,8 +1541,11 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
+
         </div>
 
         <div class="navigation">
@@ -1352,38 +1560,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Authority Having Jurisdiction
-            q2: 'c',  // NFPA 75
-            q3: 'b',  // Federal regulations (highest in hierarchy)
-            q4: 'b',  // Group B - Business
-            q5: 'c',  // Annually
-            q6: 'c',  // Certificate of Occupancy
-            q7: 'c',  // The most restrictive requirement
-            q8: 'b',  // Permit and inspection
-            q9: 'b',  // 3-5 years minimum
-            q10: 'b'  // An approved alternative method
+        const quizData = {
+            q1: {
+                answer: 'c',
+                question: 'What is the height of a standard enterprise rack enclosure?',
+                correctLabel: '42U',
+                explanation: 'The industry-standard full-height data center rack is 42U tall, where 1U = 1.75 inches (44.45 mm). This gives a total internal usable height of approximately 73.5 inches (~1.87 m). Best practice is to populate no more than 80% of rack capacity (roughly 34U of active equipment) to ensure adequate airflow and cable management space.'
+            },
+            q2: {
+                answer: 'c',
+                question: 'Which memory type is mandatory for production servers because it detects and corrects single-bit errors?',
+                correctLabel: 'ECC RDIMM',
+                explanation: 'ECC (Error Correcting Code) memory detects and automatically corrects single-bit memory errors in real time, preventing data corruption and silent failures that can cause application crashes or data integrity issues. RDIMMs (Registered DIMMs) add a register between the memory controller and DRAM chips for improved signal integrity and higher capacity support. UDIMM and SODIMM are non-ECC consumer/laptop memory types not suitable for production servers.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'Which RAID level provides the highest write performance with no fault tolerance?',
+                correctLabel: 'RAID 0',
+                explanation: 'RAID 0 (striping) splits data evenly across all drives simultaneously, delivering the highest read and write throughput of any RAID level. However, it offers zero fault tolerance — if any single drive fails, all data in the array is lost. RAID 0 is only appropriate for non-critical, temporary, or easily-replaceable data such as scratch disks, caches, or rendering workloads.'
+            },
+            q4: {
+                answer: 'b',
+                question: 'A Type 1 hypervisor differs from a Type 2 hypervisor in that it:',
+                correctLabel: 'Runs directly on bare metal hardware without a host OS',
+                explanation: 'A Type 1 (bare metal) hypervisor installs directly on physical hardware and manages VMs without an underlying host OS, providing lower overhead and better performance. Examples include VMware ESXi, Hyper-V, KVM, and Proxmox. A Type 2 (hosted) hypervisor runs as an application on top of a standard OS (e.g., VMware Workstation, VirtualBox), adding an extra layer of latency — making it suitable for developer desktops and testing but not production data centers.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'Which storage protocol provides block-level access over a standard Ethernet network?',
+                correctLabel: 'iSCSI',
+                explanation: 'iSCSI (Internet Small Computer Systems Interface) encapsulates SCSI block storage commands over TCP/IP, enabling block-level SAN access over standard Ethernet infrastructure. This makes it a cost-effective alternative to Fibre Channel SAN. NFS and SMB/CIFS are file-level protocols used for NAS, not block storage. FTP is a file transfer protocol with no storage fabric role.'
+            },
+            q6: {
+                answer: 'b',
+                question: 'What does RPO (Recovery Point Objective) define?',
+                correctLabel: 'The maximum acceptable amount of data loss measured in time',
+                explanation: 'RPO defines how much data loss is acceptable if a failure occurs, expressed as a time interval. For example, an RPO of 1 hour means that in the worst case, up to 1 hour of data may be lost — which means backups or replication must occur at least every 60 minutes. RTO (Recovery Time Objective) is the separate metric that defines how quickly services must be restored after a failure.'
+            },
+            q7: {
+                answer: 'd',
+                question: 'Which vendor-specific term refers to Dell\'s out-of-band server management controller?',
+                correctLabel: 'iDRAC',
+                explanation: 'iDRAC (Integrated Dell Remote Access Controller) is Dell\'s proprietary BMC (Baseboard Management Controller) implementation. The equivalent from other vendors are: iLO (Integrated Lights-Out) from HP/HPE, XCC (Lenovo XClarity Controller) from Lenovo, and CIMC (Cisco Integrated Management Controller) from Cisco. All provide remote KVM, power control, hardware monitoring, and firmware management capabilities.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'In a dual-socket server, what architecture describes the fact that each CPU has faster access to its own local memory than to the other socket\'s memory?',
+                correctLabel: 'NUMA (Non-Uniform Memory Access)',
+                explanation: 'In a NUMA (Non-Uniform Memory Access) architecture, each CPU socket has a directly attached local memory bank it can access at full speed. Accessing memory attached to the other socket (remote NUMA access) requires traversing the inter-CPU interconnect (UPI/QPI), adding latency. Hypervisors, databases, and OS schedulers should be NUMA-aware to pin workloads to local memory, especially for latency-sensitive applications.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'Which NIST publication provides guidelines for secure media sanitization prior to server decommissioning?',
+                correctLabel: 'NIST SP 800-88',
+                explanation: 'NIST SP 800-88 (Guidelines for Media Sanitization) defines methods for securely clearing, purging, and destroying storage media to ensure data cannot be recovered after decommissioning. It covers HDDs, SSDs, NVMe, and other media types. NIST SP 800-53 covers security controls, SP 800-123 covers general server security, and SP 800-61 covers incident response — none of which address media sanitization.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'What is the primary reason RAID is NOT considered a backup solution?',
+                correctLabel: 'RAID only protects against drive failure and does not protect against deletion, corruption, or ransomware',
+                explanation: 'RAID provides hardware redundancy against physical drive failure only. It mirrors or distributes data in real time, which means any logical event — such as accidental file deletion, ransomware encryption, filesystem corruption, or a RAID controller failure — is immediately replicated across all drives in the array. A proper backup strategy (3-2-1: 3 copies, 2 media types, 1 offsite) is always required in addition to RAID, not instead of it.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
+
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1393,49 +1647,97 @@
             showSlide(currentSlide);
         }
 
-        // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Code Compliance.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Server Systems fundamentals.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1565c0; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1565c0; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data = quizData[question];
+                const userAns = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label') ? selectedInput.closest('label').textContent.trim() : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon = isCorrect ? '✅' : '❌';
+                const statusText = isCorrect ? 'Correct' : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745' : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            // Scroll to results
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
-        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowLeft' && currentSlide > 0) {
                 changeSlide(-1);
@@ -1444,7 +1746,6 @@
             }
         });
 
-        // Initialize
         showSlide(currentSlide);
     </script>
 </body>
