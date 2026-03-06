@@ -1199,6 +1199,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1215,38 +1216,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'c',  // 13.8kV
-            q2: 'b',  // Power Distribution Unit
-            q3: 'c',  // Complete duplicate power paths
-            q4: 'c',  // Change voltage levels
-            q5: 'b',  // <5%
-            q6: 'c',  // Air Circuit Breaker (ACB)
-            q7: 'c',  // 30%
-            q8: 'b',  // Lockout/Tagout
-            q9: 'c',  // 98-99%
-            q10: 'c'  // 20%
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'c',
+                question: 'What is the typical utility service voltage for large data centers?',
+                correctLabel: '13.8kV',
+                explanation: 'Large data centers are typically served by the utility at medium voltage — commonly 13.8kV (13,800 volts), though 11kV, 12.47kV, 15kV, and 33kV are also used depending on regional utility standards. Receiving power at medium voltage is far more efficient than low voltage for large facilities because it dramatically reduces cable sizes, current magnitudes, and associated I²R (resistive) losses over long distribution runs. The medium voltage is then stepped down by on-site transformers to the working voltages needed within the facility — typically 480V for mechanical plant and UPS input, then further to 208V or 120V for IT equipment. Smaller data centers and edge sites may receive power at 480V directly from a utility pad-mount transformer.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What does PDU stand for in data center power distribution?',
+                correctLabel: 'Power Distribution Unit',
+                explanation: 'PDU stands for Power Distribution Unit — a device that receives power from an upstream source (typically a UPS output or a switchboard breaker) at a higher voltage and distributes it to multiple downstream circuits serving IT equipment. In large data centers, floor-mounted PDUs (also called RPPs — Remote Power Panels) typically receive 480V three-phase power and include an integral step-down transformer to produce 208V output, branch circuit breakers, metering, and monitoring capability. Rack-mounted PDUs (rPDUs or intelligent PDUs) plug into the 208V circuits and distribute power to individual servers within the rack, often with per-outlet metering, remote switching, and environmental monitoring. PDUs are a critical point of capacity management and power monitoring in the data center.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'In a 2N power distribution system, what does "2N" represent?',
+                correctLabel: 'Complete duplicate power paths',
+                explanation: '2N (pronounced "two-N") is the highest common redundancy configuration for data center power distribution. It means that every piece of critical IT equipment is served by two completely independent, fully capable power paths — each path (A-side and B-side) sized to carry 100% of the load on its own. Every component in the distribution chain is duplicated: two utility feeds, two transformer sets, two UPS systems, two switchboards, two PDUs per rack, and dual power supply units in every server. This means any single component, path, or system can fail or be taken offline for maintenance while the other path continues to serve the full load without any interruption. 2N is the topology required for Uptime Institute Tier IV certification.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'What is the main purpose of a transformer in power distribution?',
+                correctLabel: 'Change voltage levels',
+                explanation: 'Transformers change (step up or step down) AC voltage levels using the principle of electromagnetic induction between two or more coils wound on a common magnetic core. The voltage ratio between primary and secondary windings is equal to the turns ratio. In data center power distribution, transformers serve multiple voltage conversion purposes: utility medium voltage (e.g., 13.8kV) is stepped down to 480V for distribution to mechanical equipment and UPS systems; 480V is stepped down to 208V/120V for IT equipment by PDU transformers; and isolation transformers provide galvanic separation between power system segments for safety and noise rejection. Transformers cannot generate, store, or directly measure power — those functions belong to generators, batteries, and metering instruments respectively.'
+            },
+            q5: {
+                answer: 'b',
+                question: 'What is the acceptable Total Harmonic Distortion (THD) limit for voltage?',
+                correctLabel: '<5%',
+                explanation: 'IEEE Standard 519 (Recommended Practice and Requirements for Harmonic Control in Electric Power Systems) sets the acceptable voltage Total Harmonic Distortion (THD) limit at less than 5% at the point of common coupling for most power systems. THD measures the distortion of the voltage waveform from a pure sinusoid, caused by the presence of harmonic frequencies (multiples of the fundamental 50/60Hz). In data centers, non-linear loads such as switched-mode power supplies in servers, VFDs, and UPS rectifiers are major sources of harmonic current injection. Excessive voltage THD causes overheating in transformers and motors, nuisance tripping of sensitive equipment, reduced power factor, and interference with power quality monitoring. Harmonic mitigation techniques include passive filters, active filters, and 12-pulse or 18-pulse UPS rectifier configurations.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'What type of circuit breaker is typically used for main switchgear applications?',
+                correctLabel: 'Air Circuit Breaker (ACB)',
+                explanation: 'Air Circuit Breakers (ACBs) are the standard protection device for main switchgear applications in data center power distribution, typically used for current ratings from 630A up to 6,300A or more. ACBs use air as the arc-quenching medium and are designed for draw-out (withdrawable) installation, allowing them to be safely isolated and removed for maintenance while the switchgear remains energised. They incorporate sophisticated electronic trip units providing adjustable overcurrent (long-time, short-time, instantaneous) and ground fault protection, with zone-selective interlocking (ZSI) for coordinated selective tripping. Miniature Circuit Breakers (MCBs) are used for small branch circuits up to ~100A; Moulded Case Circuit Breakers (MCCBs) cover the mid-range; GFCIs and RCDs protect against earth fault shock hazards rather than overloads.'
+            },
+            q7: {
+                answer: 'c',
+                question: 'What percentage of electrical failures are caused by loose connections?',
+                correctLabel: '30%',
+                explanation: 'Loose electrical connections are responsible for approximately 30% of electrical failures in power distribution systems — making them the single largest preventable cause of electrical faults in data centers. Loose connections create resistance at the joint, which generates heat proportional to I²R. This localised heating accelerates insulation degradation, causes further oxidation and loosening in a self-reinforcing cycle, and can eventually result in arcing, fire, and catastrophic failure. The primary detection tools are infrared (IR) thermography during live operation — which reveals hot spots at loose connections before they fail — and torque verification during maintenance. NFPA 70B (Recommended Practice for Electrical Equipment Maintenance) recommends annual thermographic surveys of all energised electrical distribution equipment.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What does LOTO stand for in electrical safety?',
+                correctLabel: 'Lockout/Tagout',
+                explanation: 'LOTO stands for Lockout/Tagout — the mandatory energy isolation safety procedure governed by OSHA Standard 29 CFR 1910.147 (Control of Hazardous Energy). Before any maintenance, inspection, or testing work on electrical equipment, all energy sources must be identified, isolated (switched off), locked in the de-energised position with a physical padlock (Lockout), and labelled with a danger tag identifying the worker and prohibiting re-energisation (Tagout). Each worker applying locks must use their own personal lock — the equipment cannot be re-energised until every worker\'s lock has been removed. In addition to the isolation lock, the worker must verify zero energy by testing with a voltage meter before treating the equipment as safe to work on. LOTO violations are among the most cited OSHA electrical safety infringements and a leading cause of electrical fatalities.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What is the typical efficiency of modern transformers at full load?',
+                correctLabel: '98-99%',
+                explanation: 'Modern power distribution transformers achieve very high efficiencies of 98–99% at full load — meaning only 1–2% of power throughput is lost as heat. Transformer losses consist of two components: core (iron) losses, which are constant regardless of load and caused by magnetic hysteresis and eddy currents in the core; and copper (winding) losses, which vary with the square of load current (I²R). Energy-efficient transformers — such as those meeting the DOE 2016 efficiency standards (TP-1) or European EcoDesign Tier 2 requirements — use improved core materials (amorphous metal or high-grade silicon steel) and optimised winding designs to minimise both loss components. Despite their high efficiency, large data center transformers handling megawatts of throughput can still dissipate tens of kilowatts of heat that must be managed by the facility cooling system.'
+            },
+            q10: {
+                answer: 'c',
+                question: 'What is the recommended minimum headroom for capacity management?',
+                correctLabel: '20%',
+                explanation: 'A minimum of 20% capacity headroom should be maintained across all power distribution components — switchgear, transformers, UPS systems, PDUs, and branch circuits — as a standard capacity management practice. This 20% buffer serves multiple purposes: it provides margin for load growth and new equipment additions without immediate infrastructure upgrades; it reduces thermal stress and extends component lifespan (transformers and cables run cooler and more efficiently at 80% load vs. 100%); it maintains safe operating margins against load spikes and imbalance; and it ensures compliance with NEC Article 220 requirements for branch circuit and feeder design. Operating consistently at or above 80% loading without planned headroom is considered a capacity risk condition requiring a capacity upgrade project to be initiated. DCIM (Data Center Infrastructure Management) tools are used to monitor and forecast capacity headroom across all infrastructure tiers.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1259,43 +1306,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Power Distribution systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Power Distribution systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1e3c72; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1e3c72; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
