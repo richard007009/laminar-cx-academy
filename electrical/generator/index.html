@@ -1098,6 +1098,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1114,38 +1115,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Provide standby power during utility outages
-            q2: 'b',  // Diesel
-            q3: 'b',  // 10-15 seconds
-            q4: 'b',  // One redundant generator
-            q5: 'c',  // 24-72 hours
-            q6: 'b',  // Alternator
-            q7: 'b',  // Weekly
-            q8: 'b',  // Starting batteries
-            q9: 'c',  // Automatic Transfer Switch (ATS)
-            q10: 'b'  // 35-45%
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What is the primary function of a generator in a data center?',
+                correctLabel: 'Provide standby power during utility outages',
+                explanation: 'Generators serve as the second line of defence in a data center\'s power resilience chain — behind the UPS batteries. Their primary function is to provide sustained standby power during utility outages, taking over from the UPS batteries after they have bridged the first 10–30 seconds while the generator starts and stabilises. Generators are not designed for continuous 24/7 operation; they are standby assets rated for emergency and maintenance use. While some facilities do use generators for peak shaving or demand response to reduce electricity costs, this is a secondary and optional use case. Their fundamental role is ensuring uninterrupted power to critical IT loads for as long as fuel is available.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'Which fuel type is most commonly used in data center generators?',
+                correctLabel: 'Diesel',
+                explanation: 'Diesel is the overwhelmingly dominant fuel choice for data center standby generators for several practical reasons: diesel fuel has a very high energy density, it can be stored on-site in large quantities without the infrastructure requirements of natural gas pipelines, diesel engines are robust and proven across decades of standby power applications, and diesel generators start reliably across a wide range of ambient temperatures. Natural gas is growing in adoption, particularly where on-site storage is constrained or emissions regulations are stringent, but it introduces dependency on an uninterruptible gas supply — which may itself be affected during major disasters. Gasoline has poor storage life and propane requires large pressurised vessels, making both impractical at data center scale.'
+            },
+            q3: {
+                answer: 'b',
+                question: 'What is the typical start-up time for a diesel generator?',
+                correctLabel: '10-15 seconds',
+                explanation: 'A well-maintained diesel standby generator typically reaches stable rated voltage and frequency — ready to accept load — within 10–15 seconds of receiving a start signal. This is the critical timing window that UPS batteries must bridge: from the moment utility power fails, through ATS detection, generator start signal, engine cranking, acceleration to rated speed (typically 1,500 RPM for 50Hz or 1,800 RPM for 60Hz systems), and voltage/frequency stabilisation. Some fast-start generators achieve readiness in under 10 seconds. The UPS battery runtime must comfortably exceed this start-up time with adequate margin for multiple start attempts and any engine warm-up requirements before full load is applied.'
+            },
+            q4: {
+                answer: 'b',
+                question: 'In an N+1 generator configuration, what does the "+1" represent?',
+                correctLabel: 'One redundant generator',
+                explanation: 'In an N+1 generator configuration, N represents the number of generators required to serve the full design load, and the "+1" is one additional redundant generator. This means that if any single generator fails to start, is undergoing maintenance, or trips under load, the remaining N generators can still carry the entire critical load without any capacity shortfall. For example, a facility with a 3MW critical load using 1MW generators requires N=3 to meet demand; with N+1, it installs 4 generators. This configuration is the minimum redundancy standard for Tier III and Tier IV data centers per the Uptime Institute topology standards. More stringent configurations such as 2N (full parallel redundancy) install twice the required capacity.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'What is the recommended minimum on-site fuel storage for data centers?',
+                correctLabel: '24-72 hours',
+                explanation: 'Industry best practice and standards such as the Uptime Institute Tier Standards recommend a minimum of 24–72 hours of on-site fuel storage for data center standby generators. This range reflects the realistic time required to arrange emergency fuel deliveries during a widespread regional utility outage — when fuel suppliers may be overwhelmed with competing demand from other critical facilities, hospitals, and emergency services. Tier III facilities typically target 12 hours minimum, while Tier IV and mission-critical hyperscale facilities commonly store 72 hours or more. Many operators extend storage to 7+ days for extreme resilience. Fuel storage must be combined with contractual fuel delivery priority agreements to ensure resupply before tanks reach their low-level alarm threshold.'
+            },
+            q6: {
+                answer: 'b',
+                question: 'What component converts mechanical energy to electrical energy?',
+                correctLabel: 'Alternator',
+                explanation: 'The alternator (also called the synchronous generator or genhead) is the component that converts the mechanical rotational energy produced by the diesel engine into alternating current (AC) electrical energy. It works on the principle of electromagnetic induction: a rotating magnetic field (rotor) induces a voltage in stationary windings (stator), producing AC output. The alternator is directly coupled to the engine shaft, so engine speed directly determines output frequency — 1,500 RPM produces 50Hz; 1,800 RPM produces 60Hz. The Automatic Voltage Regulator (AVR) within the alternator maintains stable output voltage as load varies. The engine converts fuel energy to shaft torque; the alternator converts that torque to electrical power; the governor maintains engine speed under varying load conditions.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'How often should generators typically be exercised with no load?',
+                correctLabel: 'Weekly',
+                explanation: 'NFPA 110 (Standard for Emergency and Standby Power Systems) and most generator manufacturers recommend weekly no-load exercise runs of at least 30 minutes. This regular exercise serves several critical purposes: it lubricates engine components, circulates and conditions the coolant, charges the starting batteries, exercises the mechanical systems, and — most importantly — verifies that the generator will actually start when needed. Generators that sit idle for extended periods are significantly more likely to fail on demand due to fuel degradation, battery discharge, sticking fuel injectors, or coolant system issues. Monthly or quarterly exercise alone is insufficient to maintain operational readiness. Load bank testing (applying actual electrical load) should be performed at least annually to verify full-load performance and prevent wet-stacking.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What causes approximately 30% of generator failures?',
+                correctLabel: 'Starting batteries',
+                explanation: 'Starting (cranking) batteries are responsible for approximately 30% of generator failures to start — making them the single largest cause of generator non-starts. Unlike UPS batteries which are kept on continuous float charge, generator starting batteries undergo a different stress cycle and are susceptible to sulphation, plate corrosion, and electrolyte loss, particularly if the generator is not exercised frequently enough to maintain battery charge. Starting battery failures are entirely preventable through a rigorous maintenance programme: regular load testing of starting batteries, monitoring battery voltage and specific gravity, replacing batteries on a scheduled cycle (typically every 2–3 years regardless of apparent condition), and ensuring battery chargers are functioning correctly. Given the critical nature of generator reliability, starting batteries are often considered a low-cost insurance item that should never be deferred.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What device detects utility power failure and signals the generator to start?',
+                correctLabel: 'Automatic Transfer Switch (ATS)',
+                explanation: 'The Automatic Transfer Switch (ATS) is the control and switching device that monitors utility supply voltage and frequency, detects when power falls outside acceptable limits, signals the generator to start, waits for the generator to reach stable rated output, then transfers the load from utility to generator supply. On utility restoration, the ATS executes a retransfer sequence — often with a time delay to confirm utility stability — then returns the load to utility and signals the generator to cool down before shutting off. The ATS is a safety-critical component; its failure can result in load not being transferred to generator during an outage. ATS devices are available in open transition (brief interruption during transfer) and closed transition (make-before-break, seamless transfer) configurations.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'What is the typical efficiency range for diesel generators?',
+                correctLabel: '35-45%',
+                explanation: 'Diesel reciprocating engine generators typically convert 35–45% of the fuel\'s chemical energy into electrical energy at full load — the remainder is rejected as heat through the exhaust (approximately 30–35%), the cooling system (approximately 20–25%), and radiation losses. This is consistent with the theoretical efficiency limits of the diesel thermodynamic cycle (the Diesel cycle). Efficiency is highest near full load and drops significantly at partial loads — a key reason why generators should be sized to operate at 70–80% of rated capacity during normal standby operation, and why load bank testing at full rated load is important. Some facilities implement Combined Heat and Power (CHP) or cogeneration systems to capture and utilise exhaust and jacket water heat, raising overall fuel utilisation to 70–85%.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1158,43 +1205,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Generator systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Generator systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1e3c72; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1e3c72; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
