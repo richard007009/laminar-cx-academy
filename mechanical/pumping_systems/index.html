@@ -382,21 +382,21 @@
                         <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">Centrifugal Pump Operation</text>
                         
                         <!-- Pump Housing -->
-                        <circle cx="200" cy="200" r="80" fill="#42a5f5" stroke="#1976d2" stroke-width="3"/>
-                        <text x="200" y="205" text-anchor="middle" fill="white" font-size="14" font-weight="bold">PUMP</text>
+                        <circle cx="220" cy="200" r="70" fill="#42a5f5" stroke="#1976d2" stroke-width="3"/>
+                        <text x="220" y="205" text-anchor="middle" fill="white" font-size="14" font-weight="bold">PUMP</text>
                         
                         <!-- Impeller -->
-                        <circle cx="200" cy="200" r="40" fill="none" stroke="white" stroke-width="2" stroke-dasharray="5,5"/>
+                        <circle cx="220" cy="200" r="35" fill="none" stroke="white" stroke-width="2" stroke-dasharray="5,5"/>
                         
                         <!-- Suction -->
                         <rect x="20" y="180" width="80" height="40" fill="#64b5f6" stroke="#1976d2" stroke-width="2"/>
                         <text x="60" y="205" text-anchor="middle" fill="white" font-size="12">Suction</text>
-                        <path d="M 100 200 L 120 200" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                        <path d="M 100 200 L 150 200" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
                         
                         <!-- Discharge -->
-                        <rect x="300" y="130" width="80" height="40" fill="#2196f3" stroke="#1976d2" stroke-width="2"/>
-                        <text x="340" y="155" text-anchor="middle" fill="white" font-size="12">Discharge</text>
-                        <path d="M 280 200 L 280 150 L 300 150" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+                        <rect x="300" y="100" width="80" height="40" fill="#2196f3" stroke="#1976d2" stroke-width="2"/>
+                        <text x="340" y="125" text-anchor="middle" fill="white" font-size="12">Discharge</text>
+                        <path d="M 290 200 L 340 200 L 340 140" stroke="#333" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
                         
                         <!-- System Curve -->
                         <g transform="translate(450, 100)">
@@ -1390,6 +1390,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1406,38 +1407,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'c',  // Power is proportional to speed cubed
-            q2: 'b',  // 80-110% of BEP
-            q3: 'b',  // To provide hydraulic separation between loops
-            q4: 'c',  // Eccentric reducer with flat on top
-            q5: 'c',  // 30-50%
-            q6: 'b',  // Net Positive Suction Head
-            q7: 'b',  // 5 pipe diameters
-            q8: 'b',  // Insufficient NPSH available
-            q9: 'c',  // 75-85%
-            q10: 'c'  // Variable frequency drives
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'c',
+                question: 'What is the relationship between pump speed and power consumption according to the affinity laws?',
+                correctLabel: 'Power is proportional to speed cubed',
+                explanation: 'The Pump Affinity Laws (also called the Fan Laws) define the mathematical relationships between speed, flow, head, and power for centrifugal pumps. The three key laws are: (1) Flow is proportional to speed (Q ∝ N), (2) Head is proportional to speed squared (H ∝ N²), and (3) Power is proportional to speed cubed (P ∝ N³). The cubic relationship between speed and power is the most important from an energy standpoint — it means that reducing pump speed by just 20% cuts power consumption by nearly 50% (0.8³ = 0.512). This is why Variable Frequency Drives (VFDs) deliver such dramatic energy savings: even modest speed reductions translate to large power reductions.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What is the recommended operating range relative to a pump\'s Best Efficiency Point (BEP)?',
+                correctLabel: '80-110% of BEP',
+                explanation: 'A pump\'s Best Efficiency Point (BEP) is the flow rate at which the pump operates at its highest hydraulic efficiency for a given impeller diameter and speed. The Hydraulic Institute (HI) Standard 9.6.3 recommends operating centrifugal pumps within 80–110% of BEP flow to ensure acceptable mechanical reliability and efficiency. Operating significantly outside this range — especially at very low flows (below 50% BEP) — causes recirculation within the impeller, elevated vibration, increased radial loads on the shaft and bearings, accelerated mechanical seal wear, and elevated noise. Selection of pump size and impeller diameter during design should place the operating point as close to BEP as possible.'
+            },
+            q3: {
+                answer: 'b',
+                question: 'In a primary-secondary pumping system, what is the purpose of the decoupler?',
+                correctLabel: 'To provide hydraulic separation between loops',
+                explanation: 'In a primary-secondary pumping system, the decoupler (also called a common pipe or bypass bridge) is a short pipe segment connecting the primary supply and return headers between the two pumping loops. Its purpose is to provide hydraulic separation — allowing the primary loop (which maintains constant flow through chillers or boilers) and the secondary loop (which varies flow to meet building demand) to operate at different and independently controlled flow rates. Without hydraulic separation, interactions between the two pump circuits would cause pressure interference, making stable control of either loop extremely difficult. Flow through the decoupler indicates whether the system is in a supply-surplus or supply-deficit condition.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'What type of reducer should be used on the suction side of a pump?',
+                correctLabel: 'Eccentric reducer with flat on top',
+                explanation: 'An eccentric reducer installed with the flat side on top (flat-top orientation) is required on the suction side of a centrifugal pump. This orientation keeps the top of the pipe run level, preventing air pockets from forming at the high point of a concentric reducer — air entrapment on the suction side causes vapour locking, reduced flow, cavitation, and loss of prime. With the flat on top, any air present can travel back along the top of the pipe and be vented at an upstream high point. A concentric reducer, or an eccentric reducer installed flat-on-bottom, would create a high point on the suction line where air accumulates and cannot escape, disrupting pump operation.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'What is the typical energy savings from adding VFDs to pumps?',
+                correctLabel: '30-50%',
+                explanation: 'Installing Variable Frequency Drives (VFDs) on centrifugal pumps in hydronic systems typically delivers energy savings of 30–50% compared to constant-speed operation with throttling valve control. The savings come directly from the Pump Affinity Laws: reducing pump speed reduces power consumption with the cube of the speed ratio, while throttling valves waste energy by artificially increasing system resistance while keeping the pump running at full speed. The actual savings depend on the load profile — systems that spend significant time at partial load (typical in data centers with variable IT load) achieve savings toward the upper end of this range. VFDs also reduce mechanical wear, extend pump and seal life, and enable soft starting.'
+            },
+            q6: {
+                answer: 'b',
+                question: 'What is NPSH?',
+                correctLabel: 'Net Positive Suction Head',
+                explanation: 'NPSH stands for Net Positive Suction Head — the pressure available at the pump suction inlet above the vapour pressure of the liquid being pumped. It is expressed in feet or metres of head. There are two related values: NPSHa (available) is determined by the system piping design — the actual pressure at the pump suction; NPSHr (required) is a characteristic of the pump design, published by the manufacturer, representing the minimum suction head required to prevent cavitation. The fundamental design requirement is that NPSHa must always exceed NPSHr by an adequate safety margin (typically 1.0–1.5 metres minimum). If NPSHa falls below NPSHr, the liquid vaporises at the impeller eye, causing cavitation.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What is the recommended minimum straight pipe run on the suction side of a pump?',
+                correctLabel: '5 pipe diameters',
+                explanation: 'A minimum straight pipe run of 5 pipe diameters (5D) is required on the suction side of a centrifugal pump, measured from the nearest upstream fitting (elbow, tee, valve) to the pump suction flange. This straight length allows the turbulent, swirling flow created by upstream fittings to reattach and develop into a uniform, axially symmetric velocity profile before entering the pump impeller. Non-uniform inlet flow — caused by elbows or valves too close to the pump suction — creates uneven loading on the impeller vanes, increased radial thrust, elevated vibration, reduced efficiency, and accelerated bearing and seal wear. For installations with elbows in two planes close to the suction, 10D or more may be required.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What causes cavitation in pumps?',
+                correctLabel: 'Insufficient NPSH available',
+                explanation: 'Cavitation occurs when the pressure at the pump suction or within the impeller passages drops below the vapour pressure of the liquid, causing the liquid to locally vaporise and form vapour bubbles. These bubbles are carried into higher-pressure zones downstream of the impeller eye, where they collapse (implode) violently, releasing intense localised energy. The symptoms are characteristic crackling or popping noise (similar to gravel in the pump), vibration, reduced flow and head, and — with sustained cavitation — severe erosion pitting of the impeller and pump casing. Insufficient NPSHa is the root cause: insufficient static suction head, excessive suction pipe friction losses, high liquid temperature, or operating at flows far above BEP can all reduce NPSHa below the pump\'s NPSHr requirement.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What is the typical efficiency range for premium centrifugal pumps?',
+                correctLabel: '75-85%',
+                explanation: 'Premium efficiency centrifugal pumps used in data center and HVAC hydronic applications typically achieve hydraulic efficiencies of 75–85% at their Best Efficiency Point (BEP). Large, high-flow pumps (above 1,000 GPM) can reach the upper end or slightly exceed this range due to favourable hydraulic scaling effects. Smaller pumps (below 100 GPM) typically achieve lower efficiencies of 60–75% due to the increasing relative impact of internal leakage and disc friction losses at smaller scales. Pump efficiency is defined as hydraulic power output (flow × head) divided by shaft power input. The remaining 15–25% of input power is dissipated as heat through hydraulic losses, mechanical friction, and volumetric (leakage) losses within the pump.'
+            },
+            q10: {
+                answer: 'c',
+                question: 'Which control method typically provides the most energy savings?',
+                correctLabel: 'Variable frequency drives',
+                explanation: 'Variable Frequency Drives (VFDs) provide the greatest energy savings of any pump control method because they reduce pump speed to match actual system demand, exploiting the cubic relationship between speed and power (Affinity Law 3). Throttling valves artificially increase system resistance while the pump continues running at full speed — all the energy saved by reducing flow is wasted as pressure drop across the valve rather than being eliminated from the motor. Bypass control (recirculating flow back to the suction) is even more wasteful, as the pump does full work but only a fraction reaches the system. On/off control avoids partial-load inefficiency but causes pressure transients, water hammer, and accelerated mechanical wear from frequent starts. VFDs eliminate all these penalties while also providing soft starting and detailed motor protection.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1450,43 +1497,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Pumping Systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Pumping Systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1976d2; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1976d2; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
