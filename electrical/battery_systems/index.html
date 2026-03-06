@@ -1299,6 +1299,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1315,38 +1316,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Provide instantaneous backup power during outages
-            q2: 'b',  // VRLA (Valve Regulated Lead Acid)
-            q3: 'b',  // 77°F (25°C)
-            q4: 'c',  // Reduces life by 50%
-            q5: 'b',  // 3-5 years
-            q6: 'c',  // Below 80%
-            q7: 'c',  // Hydrogen
-            q8: 'b',  // 2.0V
-            q9: 'c',  // Impedance testing
-            q10: 'c'  // 20-30%
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What is the primary function of batteries in a data center UPS system?',
+                correctLabel: 'Provide instantaneous backup power during outages',
+                explanation: 'In a UPS (Uninterruptible Power Supply) system, batteries serve one critical function: to provide immediate, seamless backup power to IT equipment the instant utility power fails or degrades below acceptable levels. The transition is virtually instantaneous — typically less than 4 milliseconds for an online double-conversion UPS — preventing any power interruption to connected loads. The battery runtime is designed to bridge the gap between utility failure and generator start-up and stabilisation, which typically takes 10–30 seconds. Batteries are not intended for long-term energy storage; that role belongs to generators. Their value is in the first critical seconds and minutes of a power event.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What type of battery is most commonly used in data centers?',
+                correctLabel: 'VRLA (Valve Regulated Lead Acid)',
+                explanation: 'VRLA (Valve Regulated Lead Acid) batteries are the dominant battery technology in data center UPS systems, accounting for the vast majority of installed capacity. Their widespread adoption is due to several practical advantages: they are maintenance-free (no need to add water), sealed (so they can be installed in the same room as IT equipment without special ventilation requirements for normal operation), cost-effective at scale, and have a well-understood failure mode. They come in two subtypes: AGM (Absorbent Glass Mat) and Gel. While lithium-ion adoption is growing rapidly due to longer lifespan and smaller footprint, VRLA remains the most commonly installed technology due to lower upfront cost and decades of established operational practice.'
+            },
+            q3: {
+                answer: 'b',
+                question: 'What is the optimal temperature for battery room operation?',
+                correctLabel: '77°F (25°C)',
+                explanation: 'Battery manufacturers rate VRLA battery capacity and service life at a reference temperature of 77°F (25°C). This temperature represents the optimal balance between electrochemical activity (which increases with temperature) and degradation rate (which also accelerates with temperature). Operating consistently at 77°F maximises the battery\'s rated capacity and achieves the manufacturer\'s stated design life. All battery capacity ratings, charge voltage specifications, and life expectancy figures published by manufacturers assume this reference temperature. Deviating from 77°F in either direction has measurable negative consequences — excessive cold reduces available capacity, while excess heat accelerates ageing and thermal runaway risk.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'How does a 15°F temperature increase affect battery life?',
+                correctLabel: 'Reduces life by 50%',
+                explanation: 'The Arrhenius equation, applied to lead-acid battery chemistry, shows that every 15°F (approximately 8.3°C) increase above the reference temperature of 77°F (25°C) reduces VRLA battery service life by approximately 50%. This is sometimes called the "10-degree rule" (halving of life per 10°C increase). For example, a battery rated for a 5-year design life at 77°F would only last approximately 2.5 years if consistently operated at 92°F, and just over 1 year at 107°F. This relationship makes temperature control the single most impactful factor in battery longevity. Battery room HVAC systems must be maintained with high reliability, and temperature trending should be monitored as a key battery health indicator.'
+            },
+            q5: {
+                answer: 'b',
+                question: 'What is the typical design life of VRLA batteries in data centers?',
+                correctLabel: '3-5 years',
+                explanation: 'Standard VRLA (AGM) batteries used in data center UPS systems are typically rated for a design life of 3–5 years at the reference temperature of 77°F (25°C). This is the manufacturer\'s expected service life under ideal conditions — it does not mean the batteries will fail exactly at this point, but that capacity degradation and failure probability increase significantly beyond this age. Some premium VRLA products carry 5-year or even 10-year design life ratings. Lithium-ion UPS batteries typically offer 8–10+ year design lives. Data center operators should begin capacity testing and plan replacement budgets as batteries approach the end of their rated design life, rather than waiting for actual failures.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'What percentage indicates a battery should be replaced during capacity testing?',
+                correctLabel: 'Below 80%',
+                explanation: 'IEEE Standard 1188 (Recommended Practice for Maintenance, Testing, and Replacement of Valve-Regulated Lead-Acid Batteries for Stationary Applications) specifies that a VRLA battery string should be replaced when its measured capacity falls below 80% of its rated capacity. At this threshold, the battery can no longer reliably deliver the full rated backup runtime under emergency conditions, creating unacceptable risk to critical load protection. A battery at 80% capacity has also typically entered an accelerated degradation phase — capacity loss tends to accelerate rapidly beyond this point. Individual cells or modules testing below 80% of the string average should be replaced even if overall string capacity appears acceptable.'
+            },
+            q7: {
+                answer: 'c',
+                question: 'What gas is produced by batteries that creates an explosion hazard?',
+                correctLabel: 'Hydrogen',
+                explanation: 'Lead-acid batteries produce hydrogen gas (H₂) during charging — particularly during overcharge or equalisation charging — through electrolysis of water in the electrolyte. Hydrogen is extremely flammable and has a wide explosive range in air (4–75% by volume), making even small accumulations a serious explosion and fire risk if ignition sources are present. VRLA batteries are designed to recombine the majority of generated gases internally through their sealed, valve-regulated construction, which is why they can be installed in occupied spaces. However, the pressure relief valves can release hydrogen under fault conditions such as overcharge, thermal runaway, or cell venting. Battery rooms must maintain adequate ventilation calculated to keep hydrogen concentration well below the 1% lower explosive limit (LEL) safety threshold, which is 25% of the 4% explosive limit.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What is the nominal voltage of a lead-acid cell?',
+                correctLabel: '2.0V',
+                explanation: 'The nominal (open-circuit) voltage of a single lead-acid electrochemical cell is 2.0 volts, determined by the electrochemical potential difference between the lead dioxide (PbO₂) positive plate and the lead (Pb) negative plate in sulphuric acid electrolyte. This is a fundamental property of the lead-acid chemistry. A standard 12V VRLA battery module contains 6 cells in series (6 × 2.0V = 12V). Large data center UPS strings are constructed by connecting multiple 12V modules or individual 2V cells in series to achieve the required DC bus voltage — commonly 240V, 480V, or higher. Understanding cell voltage is essential for interpreting battery monitoring data and identifying weak or failed cells within a string.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What type of testing can detect battery problems without taking them offline?',
+                correctLabel: 'Impedance testing',
+                explanation: 'Impedance (or conductance) testing injects a small AC signal into each battery cell or module and measures its internal impedance — the resistance to current flow. As batteries age and degrade, their internal impedance increases. By tracking impedance trends over time and comparing individual cell readings against baseline and against other cells in the string, technicians can identify weak or failing cells well before they cause a capacity failure — all without interrupting the UPS or discharging the battery. This is the standard predictive maintenance technique recommended by IEEE 1188. Capacity testing (full discharge testing) is the definitive performance verification but requires either taking the load offline or using a bypass, carries risk of stranding the load without protection, and is typically performed annually or biannually rather than as a routine check.'
+            },
+            q10: {
+                answer: 'c',
+                question: 'What percentage of UPS failures are battery-related?',
+                correctLabel: '20-30%',
+                explanation: 'Industry studies and UPS manufacturer data consistently show that batteries are responsible for approximately 20–30% of all UPS failures in data centers — making battery failure the single largest cause of UPS-related incidents. This statistic underscores why proactive battery maintenance, regular impedance testing, capacity testing, temperature monitoring, and timely replacement are not optional maintenance activities but critical risk management practices. The remaining UPS failures are caused by capacitor degradation, fan failures, control board faults, and other electronic component failures. Given that a UPS battery failure during a real power outage could result in a complete loss of critical load protection, battery maintenance programmes must receive appropriate priority and budget allocation.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1359,43 +1406,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Battery systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Battery systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1e3c72; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1e3c72; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
