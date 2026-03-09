@@ -1498,6 +1498,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1514,38 +1515,83 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'c',  // Pre-action sprinkler
-            q2: 'b',  // 6.25-8.7% by volume
-            q3: 'c',  // 10 minutes
-            q4: 'b',  // 10-12%
-            q5: 'b',  // 10 seconds
-            q6: 'c',  // Novec 1230
-            q7: 'b',  // 30-60 seconds
-            q8: 'b',  // Detection AND sprinkler activation required
-            q9: 'b',  // Monthly
-            q10: 'b' // Door fan test
+        const quizData = {
+            q1: {
+                answer: 'c',
+                question: 'What type of sprinkler system is preferred for data center server rooms?',
+                correctLabel: 'Pre-action sprinkler',
+                explanation: 'Pre-action sprinkler systems are the preferred water-based suppression choice for data center server rooms because they provide two independent safeguards against accidental water discharge — the single greatest concern when protecting IT equipment. In a double-interlock pre-action system, water cannot enter the dry sprinkler piping unless two separate events occur simultaneously: the fire detection system must activate (detecting smoke or heat), AND a sprinkler head must fuse from heat. Either event alone leaves the piping dry. This dual-confirmation requirement makes accidental flooding from a mechanical pipe failure, a leaking sprinkler head, or a single detector false alarm virtually impossible. By contrast, a wet pipe system keeps pressurised water in the pipes at all times — a single corroded or mechanically damaged sprinkler head will immediately discharge water onto IT equipment. Dry pipe systems eliminate standing water in pipes but still discharge on a single sprinkler activation, providing less protection against accidental release than pre-action.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What is the typical design concentration for FM-200?',
+                correctLabel: '6.25-8.7% by volume',
+                explanation: 'FM-200 (HFC-227ea, heptafluoropropane) is designed to achieve a concentration of 6.25% to 8.7% by volume within the protected enclosure to extinguish Class A, B, and C fires. The minimum design concentration for Class A surface fires is 6.25% (with a safety factor typically bringing design concentration to 7–8%), while Class B flammable liquid fires require higher concentrations up to 8.7%. FM-200 extinguishes fire primarily through a thermal/physical mechanism — the agent absorbs heat from the combustion reaction faster than the fire can sustain itself — with a secondary chemical contribution that interferes with the free radical chain reaction of combustion. These concentrations are well below the NOAEL (No Observable Adverse Effect Level) of 9% and the LOAEL (Lowest Observable Adverse Effect Level) of 10.5%, meaning the design concentrations are safe for occupied spaces with prompt evacuation, though personnel should not remain in a discharged atmosphere.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'How long must a room hold clean agent after discharge?',
+                correctLabel: '10 minutes',
+                explanation: 'NFPA 2001 (Standard on Clean Agent Fire Extinguishing Systems) requires that a protected enclosure maintain the design concentration of clean agent for a minimum of 10 minutes following discharge. This 10-minute hold time is critical for two reasons: first, it allows sufficient time for deep-seated Class A fire materials — which may retain burning embers within a solid mass — to be extinguished completely, not just surface flames suppressed; second, it provides time for the fire brigade or emergency response team to arrive, assess the situation, and ensure the fire is fully out before ventilation is initiated. The room must be demonstrated capable of holding the required concentration for 10 minutes through a door fan (enclosure integrity) test before the system is accepted. Significant leakage through unsealed penetrations, gaps around doors, or open cable trays will cause the concentration to drop below extinguishing levels before the 10-minute period expires, resulting in fire re-ignition.'
+            },
+            q4: {
+                answer: 'b',
+                question: 'What oxygen level do inert gas systems typically maintain?',
+                correctLabel: '10-12%',
+                explanation: 'Inert gas suppression systems — which use nitrogen (IG-100), argon (IG-01), or blended inert gases such as Inergen (IG-541: 52% nitrogen, 40% argon, 8% CO₂) or Argonite (IG-55: 50% nitrogen, 50% argon) — work by displacing oxygen from the protected enclosure to a level that will not support combustion while remaining survivable for personnel during emergency egress. Inert gas systems typically reduce oxygen concentration from the normal atmospheric level of approximately 20.9% down to 10–12% by volume. Most materials cannot sustain combustion below approximately 15% oxygen, and inert gas systems target 10–12% to ensure reliable suppression with a safety margin. Human consciousness and physical function are maintained down to approximately 10% oxygen with brief exposure, which is why inert gas systems include pre-discharge warning times to allow evacuation before discharge and are designed not to drop oxygen below 10% to protect any personnel who may remain in the space.'
+            },
+            q5: {
+                answer: 'b',
+                question: 'What is the maximum discharge time for clean agents?',
+                correctLabel: '10 seconds',
+                explanation: 'NFPA 2001 requires that clean agent fire suppression systems discharge the full design quantity of agent into the protected enclosure within a maximum of 10 seconds. This rapid discharge requirement is fundamental to the effectiveness of clean agent systems: fire grows exponentially with time, and a slow discharge would allow the fire to intensify and potentially spread beyond the initial ignition point before extinguishing concentration is achieved. Achieving full design concentration within 10 seconds demands careful hydraulic engineering of the system — correctly sized cylinder banks, distribution piping, and nozzles must be calculated to deliver the required agent mass at sufficient flow rate. The 10-second limit also relates to the thermal extinguishing mechanism of chemical clean agents: the agent must absorb heat from the fire zone faster than the combustion reaction generates it, requiring a minimum concentration to be established rapidly and uniformly throughout the enclosure.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'Which agent has the lowest Global Warming Potential (GWP)?',
+                correctLabel: 'Novec 1230',
+                explanation: 'Novec 1230 (3M™ Novec™ 1230 Fire Protection Fluid, chemically FK-5-1-12) has by far the lowest Global Warming Potential (GWP) of any fluorinated clean agent in common use — a GWP of just 1, which means it has essentially the same warming impact as carbon dioxide over a 100-year timeframe. This compares favourably with FM-200 (HFC-227ea), which has a GWP of 3,220, and Halon 1301, which is no longer produced due to its ozone depletion potential (ODP) of 10. Carbon dioxide has a GWP of 1 by definition but presents a lethal asphyxiation hazard at fire extinguishing concentrations (34–75% for total flooding) and is therefore restricted to normally unoccupied spaces. Novec 1230 also has an atmospheric lifetime of only around 5 days compared to FM-200\'s 36.5 years, and zero ozone depletion potential. These environmental credentials make Novec 1230 the preferred long-term choice for new data center clean agent installations worldwide, particularly in jurisdictions with tightening F-gas regulations.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What is the typical pre-discharge warning time?',
+                correctLabel: '30-60 seconds',
+                explanation: 'Clean agent and inert gas suppression systems are designed to provide a pre-discharge warning period of typically 30 to 60 seconds between the confirmed fire alarm (cross-zone activation or equivalent) and the actual discharge of suppression agent. During this pre-discharge period, audible and visual warning devices — distinct from general fire alarm sounders — activate inside the protected enclosure to alert any personnel present that a suppression discharge is imminent and that they must evacuate immediately. The abort button (manual abort station) can be pressed during this period to halt the countdown if the alarm is confirmed as false. The 30–60 second window must balance two competing needs: it must be long enough to allow orderly and complete evacuation of the protected space, but short enough that the fire has not grown beyond the system\'s extinguishing capability by the time discharge occurs. Longer abort times may be used in larger spaces or where access/egress paths are complex, subject to AHJ approval.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What is double interlock in a pre-action system?',
+                correctLabel: 'Detection AND sprinkler activation required',
+                explanation: 'Double interlock pre-action is the most protective pre-action configuration, requiring two independent events to occur simultaneously before water is allowed to enter the sprinkler piping and discharge: (1) the automatic fire detection system must activate — typically a smoke or heat detector in the same protected space — AND (2) a sprinkler head must thermally fuse and open from the heat of a fire. Both conditions must be satisfied concurrently; neither alone will cause water to enter the system. This double-confirmation architecture is designed specifically for environments where accidental water discharge would cause catastrophic damage to the protected assets — primarily data center server rooms and other IT equipment spaces. A single-interlock pre-action system requires only the detector to activate before water fills the piping (though the fused sprinkler head is still required for discharge), making it less protective against false alarms or detector malfunctions. A non-interlock pre-action system fills on either a detector activation or a sprinkler activation, providing the least protection against accidental discharge.'
+            },
+            q9: {
+                answer: 'b',
+                question: 'How often should clean agent pressure be checked?',
+                correctLabel: 'Monthly',
+                explanation: 'NFPA 2001 and manufacturer maintenance requirements specify that clean agent cylinder pressure (and weight, where applicable) must be checked on a monthly basis. Monthly pressure inspection is critical because clean agent cylinders are pressurised vessels — FM-200 cylinders are typically stored at 360 psi (24.8 bar) nitrogen super-pressurised, and Novec 1230 cylinders at 150 psi (10.3 bar) — and small leaks or seal degradation can result in a gradual loss of agent quantity that would not be visible externally. If the pressure gauge reading shows a loss of more than 5% from the specified charge pressure (or weight loss exceeds 5% for non-gauged cylinders), the cylinder must be taken out of service and recharged. Monthly checks also verify that the cylinder valve is in the correct operational position (open), the actuator is properly connected, and no physical damage has occurred. A system that has silently lost agent due to a slow leak will fail to achieve design concentration during a real fire event.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'What test verifies room integrity for gaseous systems?',
+                correctLabel: 'Door fan test',
+                explanation: 'The door fan test (also called an enclosure integrity test or room pressurisation test) is the accepted method for verifying that a protected enclosure can maintain the required clean agent or inert gas concentration for the specified hold time — typically 10 minutes per NFPA 2001. A calibrated fan unit is temporarily installed in a door or opening of the protected enclosure and used to pressurise and then depressurise the room. By measuring the airflow required to maintain specific differential pressures, the test calculates the total equivalent leakage area of the enclosure. This leakage area is then used — together with the enclosure volume, design concentration, and agent quantity — to calculate the predicted retention time using the methodology in ISO 14520 or NFPA 2001. If predicted retention time is less than 10 minutes, the enclosure requires remediation (sealing of cable penetrations, door seals, raised floor plenums, etc.) before the suppression system can be accepted. The door fan test must be performed at commissioning and repeated after any significant modifications to the protected space.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1558,43 +1604,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Fire Suppression Systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Fire Suppression Systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1976d2; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1976d2; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
