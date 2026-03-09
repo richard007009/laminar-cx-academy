@@ -1377,6 +1377,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1393,38 +1394,84 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'c',  // VESDA/Aspirating systems
-            q2: 'b',  // Alert → Action → Fire 1 → Fire 2
-            q3: 'd',  // Annually
-            q4: 'c',  // Heat detector
-            q5: 'c',  // 24 hours
-            q6: 'c',  // Hydrogen
-            q7: 'b',  // Signaling Line Circuit
-            q8: 'b',  // 135°F
-            q9: 'c',  // Two detectors must activate for alarm
-            q10: 'c'  // 1000x more sensitive
+        // Quiz data: correct answers, correct label text, and explanations
+        const quizData = {
+            q1: {
+                answer: 'c',
+                question: 'Which detection technology provides the earliest warning in data centers?',
+                correctLabel: 'VESDA/Aspirating systems',
+                explanation: 'Very Early Smoke Detection Apparatus (VESDA) — also known as Air Sampling Smoke Detection (ASD) or Aspirating Smoke Detection (ASD) — provides the earliest possible fire warning of any detection technology available. Rather than waiting for smoke particles to passively drift to a detector, VESDA systems actively draw air samples through a network of sampling pipes using a fan, passing the collected air through a highly sensitive laser-based detection chamber. This active sampling approach means the system is continuously and proactively analysing the air throughout the protected space, allowing it to detect combustion products at concentrations thousands of times lower than spot detectors. In data centers, this means VESDA can detect the characteristic smoke signature of an overheating circuit board or power supply many minutes or even hours before visible smoke or heat develops — providing maximum time for investigation and intervention before suppression is triggered.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What is the typical alarm sequence for VESDA systems?',
+                correctLabel: 'Alert → Action → Fire 1 → Fire 2',
+                explanation: 'VESDA systems (manufactured by Xtralis/Honeywell) use a four-level programmable alarm sequence: Alert → Action → Fire 1 → Fire 2, each corresponding to progressively higher smoke obscuration levels measured as percentage per metre (%/m) or percentage per foot (%/ft). Alert is set at a very low threshold, typically triggering an investigation response without activating suppression — personnel investigate to determine whether the reading represents a genuine fire precursor or a nuisance condition. Action is set higher and may trigger more urgent notification. Fire 1 corresponds to a confirmed alarm level that can trigger suppression pre-discharge warning (abort) sequences. Fire 2 is the highest level, typically triggering full suppression discharge and evacuation. The programmability of these four thresholds is one of the key advantages of VESDA systems — they can be tuned to the specific environment to balance early warning with false alarm immunity.'
+            },
+            q3: {
+                answer: 'd',
+                question: 'How often should smoke detectors be functionally tested per NFPA 72?',
+                correctLabel: 'Annually',
+                explanation: 'NFPA 72, National Fire Alarm and Signalling Code, requires that smoke detectors receive a functional test — verifying that each detector will respond to a test stimulus and report correctly to the fire alarm control panel — on an annual basis. Functional testing of smoke detectors involves using listed aerosol test spray, canned smoke, or similar approved test methods to introduce simulated combustion products into the detector chamber and confirm alarm activation. Some smoke detector technologies, particularly intelligent/addressable detectors, can report their own sensitivity through panel diagnostics — this sensitivity monitoring can supplement but does not replace the required physical functional test. Photoelectric and ionization detectors also require sensitivity testing at installation and again within the first year, then every other year thereafter per NFPA 72 Table 14.4.5.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'What type of detector is best for areas with high dust or steam?',
+                correctLabel: 'Heat detector',
+                explanation: 'Heat detectors are the correct choice for environments with high dust, steam, fumes, or other airborne contaminants that would cause smoke detectors to generate frequent false alarms. Both photoelectric and ionization smoke detectors respond to airborne particles — dust, steam condensate, aerosols, and cooking fumes can all scatter or attenuate the sensing element and trigger unwanted alarms. Heat detectors, by contrast, respond only to actual temperature change and are completely immune to airborne contaminants, making them suitable for dusty plant rooms, kitchens, unventilated storage areas, generator rooms, and battery areas where gassing may occur. The trade-off is that heat detectors respond later in the fire development sequence than smoke detectors — heat generation indicates a more advanced fire stage. In clean data halls, smoke detection (particularly VESDA) is preferred; in ancillary support areas with contamination risk, heat detectors provide reliable protection without nuisance alarms.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'What is the minimum battery backup time required for fire alarm systems?',
+                correctLabel: '24 hours',
+                explanation: 'NFPA 72 requires fire alarm systems to be equipped with a secondary (standby) power supply — typically sealed lead-acid batteries — capable of operating the system in normal supervisory mode for a minimum of 24 hours following loss of primary (AC mains) power. After the 24-hour standby period, the system must still be capable of operating all notification appliances (horns, strobes, voice evacuation) at their full alarm load for a minimum of 5 minutes. This 24-hour standby requirement is designed to ensure the fire alarm system remains operational through extended power outages. Some applications — such as high-rise buildings or critical facilities — require longer standby periods. Data center operators should verify that installed battery capacity is regularly tested and that batteries are replaced on schedule (typically every 3–5 years for sealed lead-acid), as degraded batteries may not deliver the full 24-hour standby despite appearing charged at rest voltage.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'Which gas is commonly monitored in battery rooms?',
+                correctLabel: 'Hydrogen',
+                explanation: 'Hydrogen gas (H₂) is the primary gas monitored in battery rooms because lead-acid batteries — both vented (flooded) and VRLA types under fault or overcharge conditions — produce hydrogen through electrolysis of water in the battery electrolyte during charging. Hydrogen is extremely hazardous: it is colourless, odourless, highly flammable, and has a very wide explosive range in air of 4–75% by volume. Even VRLA (sealed) batteries, which are designed to recombine internally generated gases, can vent hydrogen through their pressure relief valves during overcharge, thermal runaway, or cell failure. Hydrogen detectors are typically set to alarm at concentrations of 10–25% of the Lower Explosive Limit (LEL), which is 0.4–1.0% by volume, to provide adequate warning time before concentrations approach the 4% LEL. Battery room ventilation systems are also designed and sized to dilute and exhaust hydrogen generation under worst-case conditions.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What does SLC stand for in fire alarm systems?',
+                correctLabel: 'Signaling Line Circuit',
+                explanation: 'SLC stands for Signaling Line Circuit — the two-wire communication loop used in addressable fire alarm systems to connect the fire alarm control panel (FACP) to all addressable initiating devices (detectors, modules) and notification appliance circuits on that loop. Unlike conventional (zone) wiring where all devices in a zone share a single pair of wires and only zone-level information is available, an SLC allows the FACP to individually address and communicate with each device on the loop, receiving not just alarm status but also device identification, sensitivity readings, and fault conditions. A single SLC typically supports 99–250 addressable devices depending on the panel manufacturer. Class A (Style 6/7) SLC wiring provides a redundant return path so that a single wire break does not disable any device on the loop — critical for data center applications where survivability under fire conditions is essential.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What is the typical temperature rating for a fixed temperature detector in a data center?',
+                correctLabel: '135°F',
+                explanation: 'Fixed temperature heat detectors used in data center environments are typically rated at 135°F (57°C) — designated as the "ordinary" or "low" temperature rating classification under UL 521 and NFPA 72. This rating means the detector will activate when the surrounding air temperature reaches 135°F. This threshold is chosen to be significantly higher than the maximum expected ambient temperature in the protected space (which in a data center is typically 65–80°F / 18–27°C for occupied areas) to avoid nuisance alarms due to normal temperature fluctuations, while still activating early enough in a fire event to provide effective protection. Areas with higher normal ambient temperatures — such as generator rooms, mechanical plant rooms, or UPS rooms — may require detectors with higher temperature ratings (175°F or 200°F) to avoid false alarms from normal operating heat.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What is cross-zoning in fire detection?',
+                correctLabel: 'Two detectors must activate for alarm',
+                explanation: 'Cross-zoning is a fire alarm system design strategy that requires two separate detectors — from two different detection zones or circuits — to activate before the system will initiate a suppression discharge or a full building alarm. A single detector activation triggers only a pre-alarm or investigative alert, which prompts personnel to verify the condition. Only when a second detector in the adjacent or overlapping zone also activates does the system treat the event as a confirmed fire and initiate full response. Cross-zoning is widely used in data centers to prevent accidental or false-alarm activation of clean agent suppression systems, which are expensive to recharge, disruptive to operations, and potentially hazardous to personnel. The trade-off is a slightly slower response compared to single-detector activation, so the spacing and sensitivity of cross-zoned detectors must be carefully designed to ensure timely confirmed detection of genuine fire events.'
+            },
+            q10: {
+                answer: 'c',
+                question: 'How much more sensitive is VESDA compared to spot detectors?',
+                correctLabel: '1000x more sensitive',
+                explanation: 'VESDA aspirating smoke detection systems are approximately 1,000 times more sensitive than conventional spot smoke detectors. A standard photoelectric spot detector typically has a sensitivity threshold in the range of 1–4% obscuration per foot (%/ft) before it will trigger an alarm. VESDA systems can detect smoke at concentrations as low as 0.0015% obscuration per metre — approximately 0.00046% per foot — which is orders of magnitude below what any spot detector can sense. This extraordinary sensitivity is achieved through the combination of active air sampling (drawing air directly to the detection chamber rather than waiting for passive diffusion), a highly stable and sensitive laser-based detection chamber, and sophisticated signal processing that can distinguish genuine combustion products from environmental background particles. In data centers, where the goal is to detect the earliest signs of component overheating — long before visible smoke — this sensitivity advantage is operationally critical.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1437,43 +1484,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Fire Detection Systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Fire Detection Systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#d32f2f; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #d32f2f; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
