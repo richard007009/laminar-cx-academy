@@ -1383,6 +1383,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1399,38 +1400,83 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Total Facility Power / IT Power
-            q2: 'c',  // < 1.2
-            q3: 'b',  // 4%
-            q4: 'b',  // IT equipment
-            q5: 'a',  // Data Center Infrastructure Efficiency
-            q6: 'c',  // 60-80%
-            q7: 'b',  // Revenue-grade meters
-            q8: 'c',  // Free cooling
-            q9: 'b',  // Carbon usage effectiveness
-            q10: 'b'  // Financial incentives
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What is the formula for calculating PUE?',
+                correctLabel: 'Total Facility Power / IT Power',
+                explanation: 'PUE (Power Usage Effectiveness) is calculated by dividing Total Facility Power by IT Power: PUE = Total Facility Power ÷ IT Equipment Power. Total Facility Power is the total electrical energy entering the data center boundary — measured at the utility meter — and includes all energy consumed by IT equipment, cooling systems, power distribution losses, lighting, and any other facility support loads. IT Equipment Power is the energy delivered specifically to the IT load — servers, storage, and networking equipment — typically measured at the output of the UPS or PDU supplying the IT racks. Because Total Facility Power is always greater than or equal to IT Power, PUE is always ≥ 1.0, and a lower PUE is better. The inverse of PUE — IT Power divided by Total Facility Power — gives the Data Center Infrastructure Efficiency (DCiE) expressed as a percentage, where a higher percentage is better. It is a common mistake to invert the formula: IT Power / Total Facility Power produces DCiE, not PUE, and would yield a value less than 1.0 rather than greater than 1.0.'
+            },
+            q2: {
+                answer: 'c',
+                question: 'What PUE value indicates world-class efficiency?',
+                correctLabel: '< 1.2',
+                explanation: 'A PUE below 1.2 is the benchmark for world-class data center energy efficiency. The Uptime Institute\'s annual global data center survey and The Green Grid\'s PUE classification scheme both recognise PUE < 1.2 as representing the highest tier of efficiency achievement — a level attained by the most advanced hyperscale operators such as Google, Microsoft, and Meta, whose flagship facilities regularly report PUEs in the 1.06 to 1.15 range. Achieving PUE < 1.2 typically requires a combination of highly efficient cooling architecture (free cooling, direct evaporative cooling, or liquid cooling), hot/cold aisle containment, high-efficiency UPS systems operating near their optimal load point, variable speed drives on all fans and pumps, and aggressive cooling setpoint management. By contrast, PUE < 2.0 is considered baseline acceptable performance; PUE < 1.5 represents good efficiency typical of well-optimised enterprise facilities; and PUE < 1.0 is physically impossible since it would imply the facility uses less energy than its IT equipment alone consumes. The industry average PUE for new data centers has improved from approximately 2.5 in 2006 to around 1.5 today.'
+            },
+            q3: {
+                answer: 'b',
+                question: 'What percentage of energy savings can result from raising cooling setpoint by 1°F?',
+                correctLabel: '4%',
+                explanation: 'Raising the cooling supply air temperature setpoint by 1°F (approximately 0.56°C) typically delivers around 4% reduction in cooling energy consumption — a well-established rule of thumb in data center energy management supported by ASHRAE research and field measurements across numerous facilities. The energy saving comes from two related mechanisms: first, a higher chilled water or supply air temperature reduces the temperature differential the refrigeration cycle must overcome, directly improving chiller coefficient of performance (COP) and compressor efficiency; second, a higher supply temperature significantly increases the number of hours per year during which free cooling (economiser mode) can be used, avoiding compressor operation entirely whenever outdoor conditions are favourable. ASHRAE A2 thermal guidelines allow inlet temperatures up to 95°F (35°C), and many data centers operating under conservative legacy setpoints of 55°F (13°C) supply air have substantial room to raise setpoints incrementally. Each 1°F increment captures approximately 4% savings, meaning a facility that raises its setpoint from 55°F to 65°F could theoretically save up to 40% of its cooling energy — making setpoint optimisation one of the highest-return, lowest-cost energy efficiency measures available.'
+            },
+            q4: {
+                answer: 'b',
+                question: 'Which component typically consumes the most energy in a data center?',
+                correctLabel: 'IT equipment',
+                explanation: 'IT equipment — comprising servers, storage arrays, and networking hardware — is consistently the single largest energy consumer in a data center, typically accounting for 40–60% of total facility energy consumption. This is by design: the entire purpose of the facility\'s power and cooling infrastructure is to deliver energy to and remove heat from the IT load, making IT equipment the primary load around which all other systems are sized. Cooling systems are the second largest consumer, typically representing 30–40% of total facility energy, followed by power distribution losses in UPS systems and switchgear (5–15%), and lighting (typically less than 1–2%). Understanding that IT equipment is the dominant load has important strategic implications: improvements in IT energy efficiency through server virtualisation, hardware refresh cycles, and workload optimisation directly reduce the overall facility energy bill and also reduce the cooling load proportionally. This is why server utilisation improvement — reducing the number of underutilised "zombie" servers consuming power without delivering useful compute — is often identified as the highest-priority energy efficiency intervention in many data centers, ahead of mechanical and electrical infrastructure improvements.'
+            },
+            q5: {
+                answer: 'a',
+                question: 'What does DCiE stand for?',
+                correctLabel: 'Data Center Infrastructure Efficiency',
+                explanation: 'DCiE stands for Data Center Infrastructure Efficiency — the reciprocal metric to PUE, expressed as a percentage rather than a ratio. DCiE is calculated as: DCiE = (IT Equipment Power ÷ Total Facility Power) × 100%. Where PUE of 1.5 means the facility uses 1.5 watts of total power for every 1 watt delivered to IT equipment, the equivalent DCiE is 1 ÷ 1.5 = 0.667, or 66.7% — meaning 66.7% of all facility energy actually reaches the IT load, while 33.3% is consumed by infrastructure overhead. DCiE and PUE are mathematically equivalent and convey exactly the same information, but some operators and executives find DCiE more intuitive because a higher percentage is clearly better (analogous to fuel efficiency or process yield), whereas PUE requires familiarity with the convention that lower is better. DCiE was introduced alongside PUE by The Green Grid as an alternative representation, though PUE has become the dominant industry standard metric. A world-class DCiE of > 83% corresponds to a PUE of < 1.2.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'What is the target server utilization rate for efficiency?',
+                correctLabel: '60-80%',
+                explanation: 'The target server utilisation rate for energy efficiency is 60–80% of CPU capacity. This range represents the optimal balance between energy efficiency and operational headroom: at utilisation levels above this range, servers approach capacity limits that reduce responsiveness and increase the risk of performance degradation during demand spikes; at utilisation levels below this range, servers are consuming significant idle power without delivering proportional useful work. Modern x86 servers exhibit a highly non-linear power consumption profile — an idle server typically consumes 30–60% of its peak power draw, meaning a server running at 10% utilisation consumes far more energy per unit of useful work performed than one running at 70%. Increasing utilisation from an industry-average of approximately 15–20% (common in enterprise data centers with legacy over-provisioning) to 60–80% through server virtualisation and workload consolidation is one of the most impactful energy efficiency strategies available — it allows the same IT workload to be handled by fewer, more heavily loaded servers, dramatically reducing the number of servers powered and the associated cooling demand.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What type of metering provides the highest accuracy?',
+                correctLabel: 'Revenue-grade meters',
+                explanation: 'Revenue-grade meters (also called utility-grade or fiscal meters) provide the highest measurement accuracy of any metering technology used in data centers, achieving accuracy classes of 0.2% or better (Class 0.2S under IEC 62053-22). They are called "revenue-grade" because utilities and regulators accept their readings as legally binding for billing and financial settlement purposes — a standard that requires NIST-traceable calibration, tamper-evident sealing, rigorous type testing, and maintained calibration records. In data center energy management, revenue-grade meters are deployed at the facility utility intake point to measure total facility consumption for PUE calculation, at major tenant demarcation points for colocation billing, and at large load points where accuracy directly affects financial reporting. Branch circuit monitoring, smart PDUs, and current transformer (CT) clamp measurements offer much lower accuracy — typically ±1–5% — which is acceptable for operational monitoring and capacity planning but not for billing or regulatory reporting. The choice of metering technology should be matched to the use case: high-accuracy revenue-grade meters where financial or compliance accuracy is required; lower-accuracy branch circuit monitoring and smart PDUs for operational granularity and trend analysis.'
+            },
+            q8: {
+                answer: 'c',
+                question: 'Which cooling optimization typically provides the highest energy savings?',
+                correctLabel: 'Free cooling',
+                explanation: 'Free cooling — also called economiser cooling or natural cooling — typically provides the highest energy savings of any cooling optimisation strategy because it eliminates compressor-based mechanical refrigeration entirely during favourable ambient conditions, replacing it with the effectively free energy of the outdoor environment. When outdoor air temperature (for direct air economisers) or outdoor wet-bulb temperature (for indirect/evaporative cooling towers) is sufficiently low, the data center can reject heat without running compressors — which are by far the largest energy consumers in the cooling system, typically accounting for 50–70% of cooling system power. In cooler climates, data centers can achieve 60–100% of operating hours in full or partial free cooling mode. By comparison, hot/cold aisle containment typically saves 20–40% of cooling energy by eliminating recirculation; blanking panels provide 5–15% savings by reducing bypass airflow; and variable speed fans on CRACs/CRAHs typically save 20–50% of fan energy (but fan energy is a smaller fraction of total cooling energy than compressor energy). While all these measures are valuable and complementary, free cooling addresses the highest-energy component of the cooling system and is therefore the highest single-measure energy savings opportunity.'
+            },
+            q9: {
+                answer: 'b',
+                question: 'What does CUE measure?',
+                correctLabel: 'Carbon usage effectiveness',
+                explanation: 'CUE stands for Carbon Usage Effectiveness — a metric defined by The Green Grid to measure the carbon dioxide equivalent (CO₂e) emissions intensity of a data center, expressed as the total CO₂e emissions produced per unit of IT equipment energy consumed. CUE = Total CO₂e Emissions (kg) ÷ IT Equipment Energy (kWh). A CUE of 0 represents a carbon-neutral facility powered entirely by zero-carbon energy sources. Unlike PUE — which measures energy efficiency but is indifferent to the carbon intensity of the energy source — CUE captures both the facility\'s energy efficiency and the carbon intensity of its energy supply. A highly efficient data center (PUE 1.1) powered by coal-generated electricity could have a far higher CUE than a less efficient facility (PUE 1.5) powered entirely by renewable energy. CUE has become increasingly important as data center operators face regulatory carbon disclosure requirements, corporate net-zero commitments, and customer sustainability expectations. Strategies that reduce CUE include improving PUE (reducing energy consumption), procuring renewable energy through Power Purchase Agreements (PPAs), purchasing Renewable Energy Certificates (RECs), and locating data centers in regions with low-carbon electricity grids.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'What is the primary benefit of demand response programs?',
+                correctLabel: 'Financial incentives',
+                explanation: 'The primary benefit of demand response (DR) programs for data center operators is financial incentives — payments or bill credits provided by utilities and grid operators to participants who voluntarily reduce or shift their electrical demand during periods of grid stress or peak demand. Data centers are highly attractive demand response participants because they are large, predictable, controllable loads with sophisticated energy management systems, and can often curtail non-critical loads (such as pre-cooling buildings before a DR event, temporarily raising cooling setpoints, deferring battery charging, or reducing lighting) without impacting IT service delivery. Financial benefits take several forms: capacity payments for being available to curtail on request; energy payments for actual curtailment provided; and bill reductions through demand charge management, where avoiding peak demand periods directly reduces the facility\'s maximum demand charge — often one of the largest line items on a data center electricity bill. While demand response also contributes to grid reliability and can be framed as a sustainability initiative, the financial incentives are the primary driver of participation for most data center operators, with programmes in mature markets such as PJM in the US, National Grid ESO in the UK, and various Australian NEM regions offering significant revenue potential for large flexible loads.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1443,43 +1489,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Energy Management.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Energy Management.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1e88e5; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1e88e5; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
