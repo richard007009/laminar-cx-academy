@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPS Systems Training Module - Data Center 101</title>
+    <title>Electrical Testing Procedures Training Module - Data Center 101</title>
     <style>
         * {
             margin: 0;
@@ -285,8 +285,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>UPS Systems Training Module</h1>
-            <p>Data Center 101 - Essential Knowledge for Critical Power Systems</p>
+            <h1>Electrical Testing Procedures Training Module</h1>
+            <p>Data Center 101 - Essential Knowledge for Electrical Safety and Verification</p>
         </div>
 
         <div class="progress-bar">
@@ -294,448 +294,473 @@
         </div>
 
         <div class="content-wrapper">
+
             <!-- Slide 1: Welcome -->
             <div class="slide active">
-                <h2>Welcome to UPS Systems Training</h2>
-                <p>Welcome to this comprehensive training module on Uninterruptible Power Supply (UPS) systems for data centers. This course will provide you with essential knowledge about UPS technology, its critical importance in data center operations, and best practices for ensuring reliable power protection.</p>
-                
+                <h2>Welcome to Electrical Testing Procedures Training</h2>
+                <p>Welcome to this comprehensive training module on Electrical Testing Procedures for data centers. This course will equip you with the essential knowledge and skills to safely and effectively perform electrical testing across all aspects of a data center's power infrastructure — from incoming utility supply through to rack-level distribution.</p>
+
                 <div class="info-box">
                     <h3>🎯 Learning Objectives</h3>
                     <ul>
-                        <li>Understand what UPS systems are and how they work</li>
-                        <li>Learn about different types of UPS technologies</li>
-                        <li>Recognize the critical importance of UPS in data centers</li>
-                        <li>Understand UPS components and architecture</li>
-                        <li>Learn about testing, maintenance, and best practices</li>
+                        <li>Understand the purpose and scope of electrical testing in data centers</li>
+                        <li>Learn the critical safety rules and standards governing electrical testing</li>
+                        <li>Understand the main categories of electrical testing and when to apply them</li>
+                        <li>Learn correct use of test instruments and measurement techniques</li>
+                        <li>Understand testing documentation, reporting, and pass/fail criteria</li>
                         <li>Test your knowledge with a comprehensive quiz</li>
                     </ul>
                 </div>
 
-                <p><strong>Duration:</strong> Approximately 30-45 minutes</p>
-                <p><strong>Prerequisites:</strong> Basic understanding of electrical systems</p>
+                <p><strong>Duration:</strong> Approximately 30–45 minutes</p>
+                <p><strong>Prerequisites:</strong> Basic understanding of electrical systems and data center operations</p>
             </div>
 
-            <!-- Slide 2: What is a UPS? -->
+            <!-- Slide 2: Why Electrical Testing Matters -->
             <div class="slide">
-                <h2>What is a UPS System?</h2>
-                
-                <p>An <strong>Uninterruptible Power Supply (UPS)</strong> is a critical power protection device that provides emergency power to connected equipment when the input power source fails or drops to an unacceptable voltage level.</p>
+                <h2>Why Electrical Testing Matters</h2>
 
-                <h3>Key Functions of a UPS:</h3>
+                <p><strong>Electrical testing</strong> is the systematic process of verifying that all electrical systems, components, and protective devices perform correctly, safely, and in accordance with design specifications — before, during, and throughout a data center's operational life.</p>
+
+                <h3>Key Reasons to Test:</h3>
                 <ul>
-                    <li><strong>Power Continuity:</strong> Provides instantaneous power during utility failures</li>
-                    <li><strong>Power Conditioning:</strong> Filters and regulates incoming power</li>
-                    <li><strong>Surge Protection:</strong> Protects equipment from voltage spikes</li>
-                    <li><strong>Voltage Regulation:</strong> Maintains stable output voltage</li>
-                    <li><strong>Frequency Regulation:</strong> Stabilizes power frequency</li>
+                    <li><strong>Safety Assurance:</strong> Confirms that protection devices operate correctly to protect personnel and equipment</li>
+                    <li><strong>Reliability Verification:</strong> Validates that systems will perform under real operational conditions</li>
+                    <li><strong>Commissioning Confidence:</strong> Ensures new installations meet design intent before going live</li>
+                    <li><strong>Compliance:</strong> Satisfies statutory, insurance, and standards obligations</li>
+                    <li><strong>Preventive Maintenance:</strong> Identifies deteriorating equipment before failure occurs</li>
                 </ul>
 
                 <div class="diagram">
                     <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Utility Power -->
-                        <rect x="20" y="100" width="120" height="80" fill="#e74c3c" stroke="#c0392b" stroke-width="2" rx="5"/>
-                        <text x="80" y="145" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Utility Power</text>
-                        
-                        <!-- Arrow -->
-                        <path d="M 140 140 L 200 140" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
-                        
-                        <!-- UPS -->
-                        <rect x="200" y="50" width="200" height="180" fill="#1e3c72" stroke="#16325c" stroke-width="3" rx="5"/>
-                        <text x="300" y="90" text-anchor="middle" fill="white" font-size="20" font-weight="bold">UPS System</text>
-                        <rect x="220" y="110" width="160" height="30" fill="#2a5298" rx="3"/>
-                        <text x="300" y="130" text-anchor="middle" fill="white" font-size="14">Battery Backup</text>
-                        <rect x="220" y="150" width="160" height="30" fill="#2a5298" rx="3"/>
-                        <text x="300" y="170" text-anchor="middle" fill="white" font-size="14">Power Conditioning</text>
-                        
-                        <!-- Arrow -->
-                        <path d="M 400 140 L 460 140" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
-                        
-                        <!-- IT Equipment -->
-                        <rect x="460" y="100" width="120" height="80" fill="#27ae60" stroke="#229954" stroke-width="2" rx="5"/>
-                        <text x="520" y="145" text-anchor="middle" fill="white" font-size="16" font-weight="bold">IT Equipment</text>
-                        
-                        <!-- Arrowhead marker -->
                         <defs>
-                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
                                 <polygon points="0 0, 10 5, 0 10" fill="#333"/>
                             </marker>
                         </defs>
+                        <!-- Step 1 -->
+                        <rect x="20" y="100" width="130" height="70" fill="#1e3c72" rx="6"/>
+                        <text x="85" y="131" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Plan &amp; Prepare</text>
+                        <text x="85" y="152" text-anchor="middle" fill="white" font-size="11">Risk assess, LOTO</text>
+                        <!-- Arrow -->
+                        <path d="M 150 135 L 185 135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+                        <!-- Step 2 -->
+                        <rect x="185" y="100" width="130" height="70" fill="#2a5298" rx="6"/>
+                        <text x="250" y="131" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Isolate &amp; Verify</text>
+                        <text x="250" y="152" text-anchor="middle" fill="white" font-size="11">Dead test first</text>
+                        <!-- Arrow -->
+                        <path d="M 315 135 L 350 135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+                        <!-- Step 3 -->
+                        <rect x="350" y="100" width="130" height="70" fill="#1e3c72" rx="6"/>
+                        <text x="415" y="131" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Test &amp; Measure</text>
+                        <text x="415" y="152" text-anchor="middle" fill="white" font-size="11">Record results</text>
+                        <!-- Arrow -->
+                        <path d="M 480 135 L 515 135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+                        <!-- Step 4 -->
+                        <rect x="515" y="100" width="130" height="70" fill="#2a5298" rx="6"/>
+                        <text x="580" y="131" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Analyse &amp; Report</text>
+                        <text x="580" y="152" text-anchor="middle" fill="white" font-size="11">Pass/fail verdict</text>
+                        <!-- Arrow -->
+                        <path d="M 645 135 L 680 135" stroke="#333" stroke-width="2.5" marker-end="url(#arrow)"/>
+                        <!-- Step 5 -->
+                        <rect x="680" y="100" width="100" height="70" fill="#28a745" rx="6"/>
+                        <text x="730" y="131" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Restore &amp;</text>
+                        <text x="730" y="150" text-anchor="middle" fill="white" font-size="13" font-weight="bold">Sign Off</text>
+                        <p style="margin-top: 15px; font-style: italic;"></p>
                     </svg>
-                    <p style="margin-top: 15px; font-style: italic;">Basic UPS System Flow: Utility Power → UPS → Protected Equipment</p>
+                    <p style="margin-top: 15px; font-style: italic;">The Electrical Testing Lifecycle: Plan → Isolate → Test → Report → Restore</p>
                 </div>
             </div>
 
-            <!-- Slide 3: How Does a UPS Work? -->
+            <!-- Slide 3: Safety Standards and Regulations -->
             <div class="slide">
-                <h2>How Does a UPS Work?</h2>
-                
-                <p>A UPS system operates by continuously monitoring the incoming power supply and automatically switching to battery power when it detects problems.</p>
+                <h2>Safety Standards and Regulations</h2>
 
-                <h3>Basic Operating Principles:</h3>
-                
+                <p>All electrical testing in data centers must be conducted in strict accordance with applicable safety standards and regulatory requirements. These are non-negotiable and form the legal framework for safe working.</p>
+
+                <h3>Key Standards and Regulations:</h3>
+
                 <div class="info-box">
-                    <h4>1. Normal Operation (Utility Power Available)</h4>
+                    <h4>International and UK Standards</h4>
                     <ul>
-                        <li>AC power from utility feeds the UPS</li>
-                        <li>Rectifier converts AC to DC power</li>
-                        <li>DC power charges batteries and feeds the inverter</li>
-                        <li>Inverter converts DC back to clean AC power</li>
-                        <li>Critical load receives conditioned power</li>
+                        <li><strong>IET Wiring Regulations (BS 7671):</strong> Requirements for electrical installations — the UK foundation standard</li>
+                        <li><strong>BS EN 61010:</strong> Safety requirements for electrical test equipment</li>
+                        <li><strong>IEC 60364:</strong> International low-voltage electrical installation standard</li>
+                        <li><strong>NFPA 70E (USA):</strong> Standard for electrical safety in the workplace — arc flash</li>
+                        <li><strong>IEEE 1584:</strong> Guide for arc flash hazard calculations</li>
+                        <li><strong>OSHA 29 CFR 1910.147:</strong> Control of hazardous energy (Lockout/Tagout)</li>
                     </ul>
                 </div>
 
                 <div class="warning-box">
-                    <h4>2. Battery Operation (Utility Power Failed)</h4>
+                    <h4>⚠️ Lockout/Tagout (LOTO) — Mandatory Before All Testing</h4>
                     <ul>
-                        <li>UPS detects power failure instantaneously</li>
-                        <li>Battery supplies DC power to the inverter</li>
-                        <li>Inverter continues providing AC power to load</li>
-                        <li>No interruption to critical equipment</li>
-                        <li>Runtime depends on battery capacity and load</li>
+                        <li>Identify all energy sources to the equipment under test</li>
+                        <li>Isolate every source — electrical, stored energy, mechanical</li>
+                        <li>Apply personal padlock(s) and danger tag to every isolation point</li>
+                        <li>Prove dead with an approved voltage indicator before touching</li>
+                        <li>Each technician applies their own lock — equipment cannot be re-energised until ALL locks are removed</li>
                     </ul>
                 </div>
 
-                <h3>Key Components:</h3>
+                <h3>Personal Protective Equipment (PPE):</h3>
                 <ul>
-                    <li><strong>Rectifier/Charger:</strong> Converts AC to DC and charges batteries</li>
-                    <li><strong>Battery Bank:</strong> Stores energy for backup power</li>
-                    <li><strong>Inverter:</strong> Converts DC to clean AC power</li>
-                    <li><strong>Static Bypass Switch:</strong> Provides alternate power path for maintenance</li>
-                    <li><strong>Control System:</strong> Monitors and manages all operations</li>
+                    <li><strong>Arc Flash Protection:</strong> Rated PPE based on incident energy analysis at the point of work</li>
+                    <li><strong>Insulated Gloves:</strong> Voltage-rated (Class 00 minimum for LV work)</li>
+                    <li><strong>Face Shield / Arc Flash Hood:</strong> Full face protection during live testing</li>
+                    <li><strong>Insulated Tools:</strong> 1000V-rated hand tools for all LV work</li>
+                    <li><strong>Safety Footwear:</strong> Insulated, steel toe-capped boots</li>
                 </ul>
             </div>
 
-            <!-- Slide 4: Types of UPS Systems -->
+            <!-- Slide 4: Types of Electrical Tests -->
             <div class="slide">
-                <h2>Types of UPS Systems</h2>
-                
-                <p>There are three main types of UPS systems, each with different characteristics and applications:</p>
+                <h2>Types of Electrical Tests</h2>
 
-                <h3>1. Standby (Offline) UPS</h3>
+                <p>Electrical testing falls into three broad categories, each serving a distinct purpose in the data center environment:</p>
+
+                <h3>1. Dead (De-energised) Testing</h3>
                 <div class="info-box">
                     <ul>
-                        <li><strong>Operation:</strong> Normally runs on utility power, switches to battery on failure</li>
-                        <li><strong>Transfer Time:</strong> 4-10 milliseconds</li>
-                        <li><strong>Efficiency:</strong> 95-98%</li>
-                        <li><strong>Cost:</strong> Lowest</li>
-                        <li><strong>Application:</strong> Personal computers, small office equipment</li>
-                        <li><strong>Data Center Use:</strong> Not recommended for critical applications</li>
+                        <li><strong>Definition:</strong> Tests carried out with the circuit fully isolated and de-energised</li>
+                        <li><strong>Examples:</strong> Insulation resistance, continuity, earth loop impedance (injected), dielectric testing</li>
+                        <li><strong>Risk Level:</strong> Lowest — preferred method wherever possible</li>
+                        <li><strong>When Used:</strong> Commissioning, post-maintenance, fault finding after isolation</li>
+                        <li><strong>Prerequisite:</strong> Full LOTO isolation, proven dead before testing begins</li>
                     </ul>
                 </div>
 
-                <h3>2. Line-Interactive UPS</h3>
-                <div class="info-box">
+                <h3>2. Live (Energised) Testing</h3>
+                <div class="warning-box">
                     <ul>
-                        <li><strong>Operation:</strong> Provides voltage regulation without battery use</li>
-                        <li><strong>Transfer Time:</strong> 2-4 milliseconds</li>
-                        <li><strong>Efficiency:</strong> 90-96%</li>
-                        <li><strong>Cost:</strong> Moderate</li>
-                        <li><strong>Application:</strong> Small servers, network equipment</li>
-                        <li><strong>Data Center Use:</strong> Edge computing, non-critical loads</li>
+                        <li><strong>Definition:</strong> Tests carried out with the circuit energised under controlled, justified conditions</li>
+                        <li><strong>Examples:</strong> Power quality analysis, load measurement, thermographic scanning, voltage/current measurement</li>
+                        <li><strong>Risk Level:</strong> Highest — requires documented justification, competent persons only</li>
+                        <li><strong>When Used:</strong> Power quality assessment, load monitoring, thermal imaging surveys</li>
+                        <li><strong>Prerequisite:</strong> Specific risk assessment, full arc-flash PPE, two-person rule</li>
                     </ul>
                 </div>
 
-                <h3>3. Double-Conversion (Online) UPS</h3>
+                <h3>3. Functional Testing</h3>
                 <div class="success-box">
                     <ul>
-                        <li><strong>Operation:</strong> Continuously converts AC→DC→AC</li>
-                        <li><strong>Transfer Time:</strong> Zero (no transfer needed)</li>
-                        <li><strong>Efficiency:</strong> 85-94% (up to 99% in ECO mode)</li>
-                        <li><strong>Cost:</strong> Highest</li>
-                        <li><strong>Application:</strong> Critical servers, data centers</li>
-                        <li><strong>Data Center Use:</strong> Industry standard for critical loads</li>
+                        <li><strong>Definition:</strong> Testing that verifies correct operation of complete systems and their protection functions</li>
+                        <li><strong>Examples:</strong> ATS transfer testing, UPS bypass testing, generator start/load testing, trip testing of circuit breakers</li>
+                        <li><strong>Risk Level:</strong> Medium — involves controlled switching operations on live systems</li>
+                        <li><strong>When Used:</strong> Commissioning, post-maintenance verification, periodic operational testing</li>
+                        <li><strong>Prerequisite:</strong> Method statement, permits, communication with operations team</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 5: Insulation Resistance Testing -->
+            <div class="slide">
+                <h2>Insulation Resistance Testing</h2>
+
+                <p>Insulation Resistance (IR) testing is one of the most fundamental and commonly performed electrical tests in data center maintenance. It verifies the integrity of electrical insulation between live conductors and earth.</p>
+
+                <h3>Purpose:</h3>
+                <ul>
+                    <li>Detect insulation deterioration due to moisture, heat, mechanical damage, or ageing</li>
+                    <li>Confirm new installations are free from wiring faults before energisation</li>
+                    <li>Establish baseline readings for ongoing trend monitoring</li>
+                    <li>Comply with BS 7671 and IEC 60364 requirements for periodic inspection</li>
+                </ul>
+
+                <h3>Test Equipment and Voltages:</h3>
+                <div class="info-box">
+                    <h4>Standard IR Test Voltages (BS 7671 Table 61):</h4>
+                    <ul>
+                        <li><strong>SELV / PELV circuits (up to 50V AC):</strong> 250V DC test voltage — minimum IR: 0.5 MΩ</li>
+                        <li><strong>Low voltage circuits (up to 500V AC):</strong> 500V DC test voltage — minimum IR: 1.0 MΩ</li>
+                        <li><strong>Low voltage circuits (500V–1000V AC):</strong> 1000V DC test voltage — minimum IR: 1.0 MΩ</li>
+                        <li><strong>Medium voltage cables:</strong> Higher voltage meggers per manufacturer specification</li>
                     </ul>
                 </div>
 
-                <p><strong>Recommendation:</strong> Double-conversion UPS systems are the gold standard for data center applications due to zero transfer time and superior power conditioning.</p>
-            </div>
-
-            <!-- Slide 5: Why UPS is Critical for Data Centers -->
-            <div class="slide">
-                <h2>Why UPS is Critical for Data Centers</h2>
-                
-                <p>UPS systems are absolutely essential for data center operations. Here's why:</p>
-
-                <h3>1. Business Continuity</h3>
+                <h3>Procedure:</h3>
                 <ul>
-                    <li><strong>Downtime Cost:</strong> Average $5,600 per minute (up to $540,000/hour for large enterprises)</li>
-                    <li><strong>Service Availability:</strong> Maintains 99.999% uptime requirements</li>
-                    <li><strong>Data Protection:</strong> Prevents data loss and corruption</li>
-                    <li><strong>Customer Trust:</strong> Ensures service reliability</li>
+                    <li>Confirm circuit is fully isolated and locked out</li>
+                    <li>Disconnect sensitive electronic equipment that cannot withstand test voltage</li>
+                    <li>Connect line terminals together and test between combined conductors and earth</li>
+                    <li>Apply test voltage for a minimum of 60 seconds and record stable reading</li>
+                    <li>Discharge the circuit through the instrument before removing connections</li>
                 </ul>
 
-                <h3>2. Equipment Protection</h3>
-                <ul>
-                    <li><strong>Voltage Regulation:</strong> Protects against surges and sags</li>
-                    <li><strong>Clean Power:</strong> Filters harmful harmonics and noise</li>
-                    <li><strong>Graceful Shutdown:</strong> Allows proper equipment shutdown</li>
-                    <li><strong>Extended Lifespan:</strong> Reduces equipment stress and failures</li>
-                </ul>
-
-                <h3>3. Power Quality Issues in Data Centers</h3>
                 <div class="warning-box">
-                    <h4>Common Power Problems:</h4>
+                    <h4>⚠️ Critical Precautions:</h4>
                     <ul>
-                        <li><strong>Power Outages:</strong> Complete loss of utility power (1-2 per year average)</li>
-                        <li><strong>Voltage Sags:</strong> Brief voltage drops (50-200 per year)</li>
-                        <li><strong>Voltage Spikes:</strong> Sudden voltage increases (can damage equipment)</li>
-                        <li><strong>Frequency Variations:</strong> Deviations from 50/60 Hz</li>
-                        <li><strong>Harmonic Distortion:</strong> Power waveform distortion</li>
-                        <li><strong>Electrical Noise:</strong> EMI/RFI interference</li>
+                        <li>Never IR test circuits connected to UPS outputs, surge protectors, or electronic equipment without disconnecting them first — these will be damaged</li>
+                        <li>Always discharge cables after testing — high voltage can remain stored in cable capacitance</li>
+                        <li>Record temperature and humidity — these significantly affect IR readings</li>
                     </ul>
                 </div>
-
-                <h3>4. Compliance Requirements</h3>
-                <ul>
-                    <li>Uptime Institute Tier Standards require UPS for Tier II and above</li>
-                    <li>Many regulatory standards mandate backup power</li>
-                    <li>Insurance requirements often specify UPS protection</li>
-                </ul>
             </div>
 
-            <!-- Slide 6: UPS System Architecture in Data Centers -->
+            <!-- Slide 6: Continuity and Earth Testing -->
             <div class="slide">
-                <h2>UPS System Architecture in Data Centers</h2>
-                
-                <p>Data centers employ various UPS configurations to achieve different levels of reliability and availability:</p>
+                <h2>Continuity and Earth Testing</h2>
 
-                <h3>1. N Configuration (No Redundancy)</h3>
+                <p>Continuity and earth testing verifies the integrity of protective conductors, equipotential bonding, and the overall earthing system — critical for both personnel safety and equipment protection in data centers.</p>
+
+                <h3>1. Protective Conductor Continuity</h3>
                 <div class="info-box">
                     <ul>
-                        <li>Single UPS system supports the critical load</li>
-                        <li>No redundancy - single point of failure</li>
-                        <li>Suitable for Tier I data centers</li>
-                        <li>Availability: ~99.67%</li>
+                        <li><strong>Purpose:</strong> Confirms that protective earth (PE) conductors are continuous and not broken</li>
+                        <li><strong>Test Method:</strong> Low-resistance ohmmeter between the MET (Main Earthing Terminal) and each point requiring earth</li>
+                        <li><strong>Pass Criterion:</strong> Resistance must not exceed values calculated from conductor cross-section and length (R1+R2 check)</li>
+                        <li><strong>Typical Values:</strong> Less than 1Ω for most branch circuits; busbar/bonding conductors typically &lt;0.1Ω</li>
                     </ul>
                 </div>
 
-                <h3>2. N+1 Configuration (Redundancy)</h3>
+                <h3>2. Earth Fault Loop Impedance (Zs)</h3>
                 <div class="info-box">
                     <ul>
-                        <li>One additional UPS unit for redundancy</li>
-                        <li>Can handle single UPS failure</li>
-                        <li>Common in Tier II/III data centers</li>
-                        <li>Availability: ~99.99%</li>
+                        <li><strong>Purpose:</strong> Confirms that in the event of a fault to earth, sufficient fault current will flow to operate the protective device within the required disconnection time</li>
+                        <li><strong>Formula:</strong> Zs = Ze + (R1 + R2), where Ze is external impedance and R1+R2 is circuit conductor impedance</li>
+                        <li><strong>Pass Criterion:</strong> Zs must not exceed the maximum value tabulated in BS 7671 for the protective device type and rating</li>
+                        <li><strong>Testing in Data Centers:</strong> Typically measured using low-current injection method (non-trip) to avoid disrupting live loads</li>
                     </ul>
                 </div>
 
-                <h3>3. 2N Configuration (Full Redundancy)</h3>
-                <div class="success-box">
-                    <ul>
-                        <li>Complete duplicate UPS systems (A & B side)</li>
-                        <li>Each system can carry full load</li>
-                        <li>Required for Tier IV data centers</li>
-                        <li>Availability: ~99.995%</li>
-                    </ul>
-                </div>
-
-                <h3>4. Distributed Redundant (DR)</h3>
-                <div class="info-box">
-                    <ul>
-                        <li>Multiple UPS modules with shared redundancy</li>
-                        <li>Higher efficiency than 2N</li>
-                        <li>Complex but very reliable</li>
-                        <li>Availability: ~99.9999%</li>
-                    </ul>
-                </div>
-
-                <h3>Key Design Considerations:</h3>
+                <h3>3. Main Earthing System Testing</h3>
                 <ul>
-                    <li><strong>Load Requirements:</strong> Current and future capacity needs</li>
-                    <li><strong>Runtime Requirements:</strong> Battery capacity for desired backup time</li>
-                    <li><strong>Efficiency Goals:</strong> Operating efficiency targets</li>
-                    <li><strong>Physical Space:</strong> UPS and battery room requirements</li>
-                    <li><strong>Cooling Requirements:</strong> Heat rejection from UPS systems</li>
+                    <li><strong>Earth Electrode Resistance:</strong> Measured using fall-of-potential method or stakeless clamp technique</li>
+                    <li><strong>Target Values:</strong> Less than 1Ω for data center earth electrodes; less than 10Ω for general installations</li>
+                    <li><strong>Bonding Verification:</strong> All metallic infrastructure (cable trays, raised floors, structural steel) must be confirmed bonded to MET</li>
+                    <li><strong>Test Frequency:</strong> Annual for critical data center earthing systems; after any modification to earthing infrastructure</li>
                 </ul>
+
+                <div class="diagram">
+                    <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arr2" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+                                <polygon points="0 0, 10 5, 0 10" fill="#555"/>
+                            </marker>
+                        </defs>
+                        <!-- MET box -->
+                        <rect x="320" y="20" width="160" height="60" fill="#1e3c72" rx="6"/>
+                        <text x="400" y="47" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Main Earthing</text>
+                        <text x="400" y="67" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Terminal (MET)</text>
+                        <!-- Down line -->
+                        <line x1="400" y1="80" x2="400" y2="120" stroke="#555" stroke-width="2.5"/>
+                        <!-- Earth electrode -->
+                        <rect x="350" y="120" width="100" height="50" fill="#7f8c8d" rx="4"/>
+                        <text x="400" y="150" text-anchor="middle" fill="white" font-size="13">Earth Electrode</text>
+                        <!-- Left branch: Switchgear -->
+                        <line x1="320" y1="50" x2="160" y2="50" stroke="#555" stroke-width="2"/>
+                        <path d="M 160 50 L 160 110" stroke="#555" stroke-width="2"/>
+                        <rect x="80" y="110" width="160" height="50" fill="#2a5298" rx="4"/>
+                        <text x="160" y="140" text-anchor="middle" fill="white" font-size="13">Main Switchgear</text>
+                        <!-- Right branch: Cable Trays -->
+                        <line x1="480" y1="50" x2="640" y2="50" stroke="#555" stroke-width="2"/>
+                        <path d="M 640 50 L 640 110" stroke="#555" stroke-width="2"/>
+                        <rect x="560" y="110" width="160" height="50" fill="#2a5298" rx="4"/>
+                        <text x="640" y="140" text-anchor="middle" fill="white" font-size="13">Cable Trays / Steel</text>
+                        <!-- Bottom labels -->
+                        <text x="400" y="210" text-anchor="middle" fill="#555" font-size="12" font-style="italic">All paths verified by continuity test back to MET</text>
+                        <!-- Measurement icons -->
+                        <text x="225" y="95" text-anchor="middle" fill="#e74c3c" font-size="20">Ω</text>
+                        <text x="575" y="95" text-anchor="middle" fill="#e74c3c" font-size="20">Ω</text>
+                        <text x="400" y="105" text-anchor="middle" fill="#e74c3c" font-size="20">Ω</text>
+                    </svg>
+                    <p style="margin-top: 15px; font-style: italic;">Earthing system verification — continuity tested from each point back to the MET</p>
+                </div>
             </div>
 
-            <!-- Slide 7: UPS Components Deep Dive -->
+            <!-- Slide 7: Power Quality Testing -->
             <div class="slide">
-                <h2>UPS Components Deep Dive</h2>
-                
-                <h3>1. Battery Systems</h3>
+                <h2>Power Quality Testing</h2>
+
+                <p>Power quality testing analyses the characteristics of the electrical supply to ensure it meets the needs of sensitive data center equipment and complies with applicable standards.</p>
+
+                <h3>Key Power Quality Parameters:</h3>
+
                 <div class="info-box">
-                    <h4>Battery Types:</h4>
+                    <h4>Voltage Parameters</h4>
                     <ul>
-                        <li><strong>VRLA (Valve Regulated Lead Acid):</strong> Most common, 3-5 year life</li>
-                        <li><strong>Flooded/Wet Cell:</strong> Longer life (20+ years), requires maintenance</li>
-                        <li><strong>Lithium-Ion:</strong> Emerging technology, longer life, smaller footprint</li>
-                    </ul>
-                    
-                    <h4>Key Specifications:</h4>
-                    <ul>
-                        <li><strong>Runtime:</strong> Typically 5-30 minutes at full load</li>
-                        <li><strong>Temperature:</strong> Optimal at 77°F (25°C)</li>
-                        <li><strong>Monitoring:</strong> Individual cell/jar monitoring recommended</li>
+                        <li><strong>Voltage Magnitude:</strong> Nominal ±10% steady-state; ±5% preferred for IT equipment</li>
+                        <li><strong>Voltage Unbalance:</strong> Less than 2% between phases (IEC 61000-3-13)</li>
+                        <li><strong>Voltage Sags/Swells:</strong> Frequency, depth, and duration recorded per CBEMA/ITIC curve</li>
+                        <li><strong>Transients:</strong> Peak impulse voltage — must be within equipment withstand ratings</li>
                     </ul>
                 </div>
 
-                <h3>2. Power Modules</h3>
+                <div class="info-box">
+                    <h4>Frequency and Harmonics</h4>
+                    <ul>
+                        <li><strong>Frequency:</strong> 50Hz ±1% steady-state; ±2% for brief excursions</li>
+                        <li><strong>Total Harmonic Distortion (THD-V):</strong> Less than 5% at point of common coupling (IEEE 519)</li>
+                        <li><strong>Total Harmonic Distortion (THD-I):</strong> Measured at UPS input; high THD-I impacts upstream transformers</li>
+                        <li><strong>Individual Harmonics:</strong> 3rd, 5th, 7th order typically dominant in data center environments</li>
+                    </ul>
+                </div>
+
+                <h3>Test Equipment:</h3>
                 <ul>
-                    <li><strong>Rectifier:</strong> 6-pulse or 12-pulse design, converts AC to DC</li>
-                    <li><strong>Inverter:</strong> IGBT-based, converts DC to clean AC output</li>
-                    <li><strong>Static Switch:</strong> Transfers load between inverter and bypass in <4ms</li>
+                    <li><strong>Power Quality Analyser:</strong> Fluke 435/437, Hioki PQ3198 — records all parameters simultaneously</li>
+                    <li><strong>Power Logger:</strong> Extended trending over days/weeks to capture intermittent events</li>
+                    <li><strong>Oscilloscope:</strong> For detailed waveform capture of transient events</li>
+                    <li><strong>Current Clamps:</strong> True-RMS clamp meters for non-invasive current measurement</li>
                 </ul>
 
-                <h3>3. Control Systems</h3>
-                <ul>
-                    <li><strong>Display Panel:</strong> Local monitoring and control</li>
-                    <li><strong>Communication Cards:</strong> SNMP, Modbus, BACnet protocols</li>
-                    <li><strong>EPO (Emergency Power Off):</strong> Safety shutdown system</li>
-                    <li><strong>Monitoring Software:</strong> Remote management capabilities</li>
-                </ul>
-
-                <h3>4. Cooling Systems</h3>
                 <div class="warning-box">
-                    <p><strong>Important:</strong> UPS systems generate significant heat and require proper cooling:</p>
+                    <h4>⚠️ Live Work Precautions for Power Quality Testing:</h4>
                     <ul>
-                        <li>Typical efficiency: 94% (6% lost as heat)</li>
-                        <li>500kW UPS generates ~30kW of heat</li>
-                        <li>Requires dedicated CRAC/CRAH units</li>
+                        <li>Full arc flash PPE must be worn when making connections to energised switchgear</li>
+                        <li>Use CAT III or CAT IV rated test leads appropriate for the voltage being tested</li>
+                        <li>Ensure voltage clamps are connected before current clamps — remove in reverse order</li>
+                        <li>Two-person rule applies — never work alone on energised equipment</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 8: Testing and Maintenance -->
+            <!-- Slide 8: Protective Device Testing -->
             <div class="slide">
-                <h2>Testing and Maintenance</h2>
-                
-                <p>Regular testing and maintenance are crucial for UPS reliability. Here are the key procedures:</p>
+                <h2>Protective Device Testing</h2>
 
-                <h3>1. Commissioning Tests</h3>
+                <p>Protective device testing verifies that circuit breakers, fuses, relays, and associated protection schemes will operate correctly under fault conditions — the most critical safety verification in the data center electrical system.</p>
+
+                <h3>1. Circuit Breaker Testing</h3>
                 <div class="info-box">
+                    <h4>Primary Injection Testing (ACBs and MCCBs):</h4>
                     <ul>
-                        <li><strong>Factory Witness Test:</strong> Verify performance before shipment</li>
-                        <li><strong>Site Acceptance Test:</strong> Full load bank testing on-site</li>
-                        <li><strong>Integrated System Test:</strong> Test with actual IT load</li>
-                        <li><strong>Battery Discharge Test:</strong> Verify runtime capacity</li>
+                        <li>High current injected through the breaker at primary level to verify trip unit operation at each protection element (long-time, short-time, instantaneous, ground fault)</li>
+                        <li>Tests the complete protection chain including current transformers and trip coil</li>
+                        <li>Pass criterion: Trip time within manufacturer's ±10% tolerance of published time-current characteristic</li>
+                        <li>Required at commissioning and every 3–5 years for critical distribution breakers</li>
                     </ul>
                 </div>
 
-                <h3>2. Regular Maintenance Schedule</h3>
+                <div class="info-box">
+                    <h4>Secondary Injection Testing:</h4>
+                    <ul>
+                        <li>Low-level signal injected into the secondary side of the current transformer or trip unit directly</li>
+                        <li>Tests the trip unit and relay electronics without requiring high primary current</li>
+                        <li>Faster and lower risk than primary injection — used for annual verification of relay settings</li>
+                        <li>Does not verify the current transformer or primary wiring — full primary injection still required periodically</li>
+                    </ul>
+                </div>
+
+                <h3>2. Regular Testing Schedule</h3>
                 <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                     <tr style="background: #1e3c72; color: white;">
                         <th style="padding: 10px; border: 1px solid #ddd;">Frequency</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">Activities</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Test Activity</th>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Daily</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Visual inspection, alarm check, log readings</td>
-                    </tr>
-                    <tr style="background: #f8f9fa;">
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Monthly</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Battery visual inspection, connection check</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Quarterly</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Battery impedance testing, thermal scanning</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Visual inspection, alarm checks, RCD push-button test</td>
                     </tr>
                     <tr style="background: #f8f9fa;">
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>Quarterly</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Thermographic scan of live switchgear; torque spot-check of connections</td>
+                    </tr>
+                    <tr>
                         <td style="padding: 10px; border: 1px solid #ddd;"><strong>Annual</strong></td>
-                        <td style="padding: 10px; border: 1px solid #ddd;">Full PM, capacity testing, component replacement</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Secondary injection trip testing; insulation resistance; earth loop impedance</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 10px; border: 1px solid #ddd;"><strong>3–5 Years</strong></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">Primary injection testing; full breaker overhaul; contact resistance measurement</td>
                     </tr>
                 </table>
-
-                <h3>3. Common Testing Procedures</h3>
-                <ul>
-                    <li><strong>Load Bank Testing:</strong> Verify UPS capacity and performance</li>
-                    <li><strong>Transfer Testing:</strong> Verify static switch operation</li>
-                    <li><strong>Battery Runtime Test:</strong> Confirm backup time capacity</li>
-                    <li><strong>Harmonic Analysis:</strong> Check power quality output</li>
-                </ul>
 
                 <div class="warning-box">
                     <h4>⚠️ Safety Considerations:</h4>
                     <ul>
-                        <li>Always follow lockout/tagout procedures</li>
-                        <li>Use proper PPE (arc flash protection)</li>
-                        <li>Never work alone on energized equipment</li>
-                        <li>Ensure proper ventilation in battery rooms</li>
+                        <li>Always follow lockout/tagout procedures before opening switchgear for testing</li>
+                        <li>Use arc flash PPE rated to the incident energy at each switchgear location</li>
+                        <li>Never defeat or override protection relay settings without authorised method statement</li>
+                        <li>Ensure operations team is informed before any trip tests — confirm loads on maintenance bypass</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Slide 9: Best Practices and L2L Integration -->
+            <!-- Slide 9: Thermographic and Functional Testing -->
             <div class="slide">
-                <h2>Best Practices and L2L Integration</h2>
-                
-                <h3>UPS Best Practices for Data Centers</h3>
-                
+                <h2>Thermographic and Functional Testing</h2>
+
+                <h3>1. Infrared (IR) Thermographic Surveys</h3>
+
                 <div class="success-box">
-                    <h4>1. Design Best Practices</h4>
+                    <h4>What Thermography Detects:</h4>
                     <ul>
-                        <li>Size UPS for future growth (typically 125% of initial load)</li>
-                        <li>Implement proper redundancy based on criticality</li>
-                        <li>Ensure adequate cooling and ventilation</li>
-                        <li>Plan for maintenance bypass capabilities</li>
-                        <li>Consider modular UPS for scalability</li>
+                        <li><strong>Loose connections:</strong> Resistance heating at terminals and bus bar joints</li>
+                        <li><strong>Overloaded conductors:</strong> Cables running above their current rating</li>
+                        <li><strong>Failing circuit breakers:</strong> Internal contact degradation producing localised hot spots</li>
+                        <li><strong>Unbalanced loads:</strong> Phase imbalance visible as unequal temperature across phases</li>
+                        <li><strong>Failing UPS modules or battery cells:</strong> Elevated temperature indicates internal failure</li>
                     </ul>
                 </div>
 
-                <h3>2. Operational Best Practices</h3>
+                <h3>Thermographic Survey Procedure:</h3>
                 <ul>
-                    <li><strong>Monitoring:</strong> Implement 24/7 remote monitoring</li>
-                    <li><strong>Documentation:</strong> Maintain detailed operational procedures</li>
-                    <li><strong>Training:</strong> Ensure staff are properly trained</li>
-                    <li><strong>Spare Parts:</strong> Keep critical spares on-site</li>
-                    <li><strong>Service Contracts:</strong> Maintain vendor support agreements</li>
+                    <li>Equipment must be under representative load — minimum 30% of rated load for meaningful results</li>
+                    <li>Infrared camera operator must hold a minimum ITC Level 1 thermography qualification</li>
+                    <li>All switchgear doors must be opened for access — arc flash PPE mandatory during scan</li>
+                    <li>Temperature difference (ΔT) classification: &lt;10°C monitor; 10–35°C plan remediation; &gt;35°C immediate action</li>
+                    <li>Report with photographic evidence and GPS coordinates for every finding; re-scan after remediation to confirm clearance</li>
                 </ul>
 
-                <h3>3. L2L (Lessons Learned) System Integration</h3>
+                <h3>2. Functional System Testing</h3>
                 <div class="info-box">
-                    <h4>Common L2L Topics for UPS Systems:</h4>
+                    <h4>Critical Functional Tests in Data Centers:</h4>
                     <ul>
-                        <li><strong>Battery Failures:</strong> Temperature management, aging issues</li>
-                        <li><strong>Capacity Issues:</strong> Undersizing, growth planning</li>
-                        <li><strong>Maintenance Windows:</strong> Bypass procedures, risk mitigation</li>
-                        <li><strong>Integration Problems:</strong> Generator compatibility, transfer issues</li>
-                        <li><strong>Human Errors:</strong> EPO activation, procedure violations</li>
+                        <li><strong>ATS Transfer Test:</strong> Simulate utility failure; verify transfer time &lt;15 seconds and load transfer without interruption</li>
+                        <li><strong>Generator Load Test:</strong> Full-load bank test at 100% rated kW for minimum 4 hours; verify voltage, frequency, and temperature stability</li>
+                        <li><strong>UPS Bypass Test:</strong> Transfer load to static bypass; verify zero-interruption transfer and correct return to inverter</li>
+                        <li><strong>EPO Test:</strong> Verify Emergency Power Off function de-energises all UPS outputs within required time</li>
+                        <li><strong>ASTS Tie-Breaker Interlocking:</strong> Confirm A-side and B-side cannot be paralleled unintentionally</li>
                     </ul>
                 </div>
 
-                <h3>4. Industry Trends</h3>
-                <ul>
-                    <li><strong>Lithium-Ion Batteries:</strong> Smaller footprint, longer life</li>
-                    <li><strong>Modular Designs:</strong> Pay-as-you-grow scalability</li>
-                    <li><strong>Higher Efficiency:</strong> ECO modes, 96%+ efficiency</li>
-                    <li><strong>AI/ML Integration:</strong> Predictive maintenance</li>
-                    <li><strong>Grid-Interactive UPS:</strong> Energy storage and grid support</li>
-                </ul>
+                <h3>3. Best Practices and L2L Integration</h3>
+                <div class="info-box">
+                    <h4>Common Lessons Learned from Electrical Testing:</h4>
+                    <ul>
+                        <li><strong>Loose Connections:</strong> Responsible for ~30% of electrical failures — thermography finds these before failure</li>
+                        <li><strong>Skipped Tests:</strong> Commissioning test gaps are a leading cause of in-service failures during the first year</li>
+                        <li><strong>Documentation Gaps:</strong> Untested or unrecorded protection settings create unknown risk during fault conditions</li>
+                        <li><strong>Frequency Drift:</strong> Generator frequency deviations undetected without power quality monitoring cause UPS transfers</li>
+                        <li><strong>Human Error:</strong> Over 40% of electrical incidents during testing involve procedure non-compliance</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Slide 10: Summary -->
             <div class="slide">
                 <h2>Module Summary</h2>
-                
+
                 <h3>Key Takeaways</h3>
-                
+
                 <div class="success-box">
                     <h4>✅ What You've Learned:</h4>
                     <ul>
-                        <li>UPS systems provide critical power protection for data centers</li>
-                        <li>Double-conversion UPS is the standard for critical applications</li>
-                        <li>Redundancy configurations (N+1, 2N) ensure high availability</li>
-                        <li>Battery systems are crucial components requiring regular maintenance</li>
-                        <li>Proper testing and maintenance ensure reliable operation</li>
-                        <li>Integration with facility systems is essential</li>
+                        <li>Electrical testing is essential for safety, compliance, and reliability in data centers</li>
+                        <li>All testing must be underpinned by LOTO isolation, risk assessment, and correct PPE</li>
+                        <li>Dead testing (insulation resistance, continuity, earth) is performed with systems isolated</li>
+                        <li>Live testing (power quality, thermography) requires full arc flash protection and justification</li>
+                        <li>Protective device testing confirms the safety net will work when needed most</li>
+                        <li>All test results must be documented, trended, and acted upon</li>
                     </ul>
                 </div>
 
                 <h3>Remember:</h3>
                 <ul>
-                    <li><strong>UPS = Insurance:</strong> It's there when you need it most</li>
-                    <li><strong>Maintenance is Key:</strong> Regular testing prevents failures</li>
-                    <li><strong>Plan for Growth:</strong> Size systems for future expansion</li>
-                    <li><strong>Safety First:</strong> Always follow proper procedures</li>
+                    <li><strong>Safety First:</strong> Prove dead before touching — every time, no exceptions</li>
+                    <li><strong>Document Everything:</strong> An untested and unrecorded test never happened</li>
+                    <li><strong>Trend Your Data:</strong> Single readings are less valuable than trend history over time</li>
+                    <li><strong>Act on Findings:</strong> A test result that triggers no action provides no value</li>
                 </ul>
 
                 <div class="info-box">
                     <h4>Next Steps:</h4>
                     <ul>
-                        <li>Review your facility's UPS documentation</li>
-                        <li>Schedule hands-on training with your UPS systems</li>
-                        <li>Participate in maintenance activities</li>
-                        <li>Stay updated on new technologies and best practices</li>
+                        <li>Review your facility's electrical testing schedule and last test records</li>
+                        <li>Confirm your personal arc flash PPE rating matches the incident energy at your switchgear</li>
+                        <li>Participate in the next scheduled thermographic survey or functional test</li>
+                        <li>Review your site's LOTO procedure and ensure you can apply it correctly</li>
                     </ul>
                 </div>
 
@@ -746,166 +771,166 @@
             <!-- Quiz Slide -->
             <div class="slide">
                 <h2>Knowledge Assessment Quiz</h2>
-                <p>Test your understanding of UPS systems. Select the best answer for each question:</p>
+                <p>Test your understanding of Electrical Testing Procedures. Select the best answer for each question:</p>
 
                 <form id="quizForm">
                     <div class="quiz-question">
-                        <h4>1. What does UPS stand for?</h4>
+                        <h4>1. What does LOTO stand for in electrical safety procedures?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="a"> Universal Power System</label>
+                            <label><input type="radio" name="q1" value="a"> Load On, Transfer Off</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="b"> Uninterruptible Power Supply</label>
+                            <label><input type="radio" name="q1" value="b"> Lockout/Tagout</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="c"> Unified Protection System</label>
+                            <label><input type="radio" name="q1" value="c"> Low Output, Trip Override</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q1" value="d"> Utility Power Station</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>2. Which type of UPS is recommended for critical data center applications?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="a"> Standby (Offline) UPS</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="b"> Line-Interactive UPS</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="c"> Double-Conversion (Online) UPS</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q2" value="d"> All types are equally suitable</label>
+                            <label><input type="radio" name="q1" value="d"> Line Off, Test On</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>3. What is the transfer time for a double-conversion UPS?</h4>
+                        <h4>2. What is the correct DC test voltage for insulation resistance testing of a 230V AC circuit per BS 7671?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="a"> 4-10 milliseconds</label>
+                            <label><input type="radio" name="q2" value="a"> 250V DC</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="b"> 2-4 milliseconds</label>
+                            <label><input type="radio" name="q2" value="b"> 500V DC</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="c"> Zero (no transfer needed)</label>
+                            <label><input type="radio" name="q2" value="c"> 1000V DC</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q3" value="d"> 15-20 milliseconds</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>4. What configuration provides complete redundancy with two separate UPS systems?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="a"> N configuration</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="b"> N+1 configuration</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="c"> 2N configuration</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q4" value="d"> N-1 configuration</label>
+                            <label><input type="radio" name="q2" value="d"> 110V DC</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>5. What is the optimal temperature for UPS battery rooms?</h4>
+                        <h4>3. What is the minimum acceptable insulation resistance for a low voltage circuit tested at 500V DC per BS 7671?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="a"> 65°F (18°C)</label>
+                            <label><input type="radio" name="q3" value="a"> 0.1 MΩ</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="b"> 77°F (25°C)</label>
+                            <label><input type="radio" name="q3" value="b"> 0.5 MΩ</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="c"> 85°F (29°C)</label>
+                            <label><input type="radio" name="q3" value="c"> 1.0 MΩ</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q5" value="d"> 95°F (35°C)</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>6. Which component converts AC power to DC power in a UPS?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="a"> Inverter</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="b"> Battery</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="c"> Rectifier</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q6" value="d"> Static switch</label>
+                            <label><input type="radio" name="q3" value="d"> 10.0 MΩ</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>7. What is the typical runtime for data center UPS systems at full load?</h4>
+                        <h4>4. What type of testing involves injecting high current through a circuit breaker to verify its trip unit operates within specification?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="a"> 1-2 hours</label>
+                            <label><input type="radio" name="q4" value="a"> Secondary injection testing</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="b"> 5-30 minutes</label>
+                            <label><input type="radio" name="q4" value="b"> Insulation resistance testing</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="c"> 2-4 hours</label>
+                            <label><input type="radio" name="q4" value="c"> Primary injection testing</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q7" value="d"> 8-12 hours</label>
-                        </div>
-                    </div>
-
-                    <div class="quiz-question">
-                        <h4>8. How often should battery impedance testing be performed?</h4>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="a"> Daily</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="b"> Monthly</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="c"> Quarterly</label>
-                        </div>
-                        <div class="quiz-option">
-                            <label><input type="radio" name="q8" value="d"> Annually</label>
+                            <label><input type="radio" name="q4" value="d"> Earth loop impedance testing</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>9. What is the average cost of data center downtime?</h4>
+                        <h4>5. What is the maximum acceptable Total Harmonic Distortion (THD-V) for voltage at the point of common coupling per IEEE 519?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="a"> $100 per minute</label>
+                            <label><input type="radio" name="q5" value="a"> 1%</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="b"> $500 per minute</label>
+                            <label><input type="radio" name="q5" value="b"> 3%</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="c"> $5,600 per minute</label>
+                            <label><input type="radio" name="q5" value="c"> 5%</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q9" value="d"> $10,000 per minute</label>
+                            <label><input type="radio" name="q5" value="d"> 10%</label>
                         </div>
                     </div>
 
                     <div class="quiz-question">
-                        <h4>10. What does EPO stand for in UPS systems?</h4>
+                        <h4>6. What is the minimum ΔT (temperature difference) that triggers an "immediate action" classification in an infrared thermographic survey?</h4>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="a"> Electric Power Output</label>
+                            <label><input type="radio" name="q6" value="a"> 5°C</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="b"> Emergency Power Off</label>
+                            <label><input type="radio" name="q6" value="b"> 10°C</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="c"> Extended Power Operation</label>
+                            <label><input type="radio" name="q6" value="c"> 25°C</label>
                         </div>
                         <div class="quiz-option">
-                            <label><input type="radio" name="q10" value="d"> Electrical Protection Override</label>
+                            <label><input type="radio" name="q6" value="d"> 35°C</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>7. What is the purpose of earth fault loop impedance (Zs) testing?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="a"> To measure the insulation resistance between live conductors</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="b"> To verify that sufficient fault current will flow to operate the protective device within the required disconnection time</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="c"> To measure the total harmonic distortion on the circuit</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q7" value="d"> To confirm the circuit breaker rating is correct for the load</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>8. What minimum load level must equipment be operating at during an infrared thermographic survey to produce meaningful results?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="a"> 10% of rated load</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="b"> 30% of rated load</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="c"> 50% of rated load</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q8" value="d"> 100% of rated load</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>9. What approximate percentage of electrical failures in data center distribution systems are attributable to loose connections?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="a"> 10%</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="b"> 20%</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="c"> 30%</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q9" value="d"> 50%</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>10. Which of the following must be completed before any electrical testing work begins on isolated equipment?</h4>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="a"> Notify the building manager</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="b"> Complete a visual inspection only</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="c"> Apply LOTO, then prove dead with an approved voltage indicator</label>
+                        </div>
+                        <div class="quiz-option">
+                            <label><input type="radio" name="q10" value="d"> Check that the test instrument has a valid calibration sticker</label>
                         </div>
                     </div>
 
@@ -919,6 +944,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -935,38 +961,83 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',
-            q2: 'c',
-            q3: 'c',
-            q4: 'c',
-            q5: 'b',
-            q6: 'c',
-            q7: 'b',
-            q8: 'c',
-            q9: 'c',
-            q10: 'b'
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What does LOTO stand for in electrical safety procedures?',
+                correctLabel: 'Lockout/Tagout',
+                explanation: 'LOTO stands for Lockout/Tagout — the mandatory energy isolation safety procedure governed by OSHA 29 CFR 1910.147 and reflected in IET Guidance Note 3. Before any testing or maintenance work on electrical equipment, all energy sources must be identified, isolated, locked in the de-energised position with a physical padlock (Lockout), and labelled with a danger tag identifying the worker (Tagout). Critically, each technician applies their own personal lock — the equipment cannot be re-energised until every worker\'s lock has been removed. After applying LOTO, the worker must always verify zero energy using an approved voltage indicator (prove dead) before treating the equipment as safe to work on. LOTO is the single most important safeguard against accidental re-energisation during testing.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What is the correct DC test voltage for insulation resistance testing of a 230V AC circuit per BS 7671?',
+                correctLabel: '500V DC',
+                explanation: 'BS 7671 Table 61 specifies that circuits operating at low voltage up to 500V AC (including standard 230V single-phase and 400V three-phase circuits) must be insulation resistance tested using a 500V DC test voltage. The minimum acceptable insulation resistance at this test voltage is 1.0 MΩ. A 250V DC test voltage is reserved for SELV and PELV circuits operating at 50V AC or below, where a higher test voltage could damage the connected equipment. A 1000V DC test voltage applies to circuits rated between 500V and 1000V AC. Using the correct test voltage is essential — too low a voltage may not stress the insulation sufficiently to detect degradation, while too high a voltage risks damaging healthy insulation or connected equipment.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'What is the minimum acceptable insulation resistance for a low voltage circuit tested at 500V DC per BS 7671?',
+                correctLabel: '1.0 MΩ',
+                explanation: 'BS 7671 Table 61 sets the minimum acceptable insulation resistance for low voltage circuits (tested at 500V DC) at 1.0 MΩ. This is a minimum threshold — in practice, new installations typically exhibit values of 100 MΩ or more, and readings in the tens or hundreds of megaohms are normal for healthy circuits. A reading approaching the 1.0 MΩ limit indicates significant insulation degradation and should be investigated immediately, even if technically a "pass". Insulation resistance measurements should always be trended over time: a reading that has dropped from 500 MΩ to 5 MΩ between inspections is a serious warning sign even though it still exceeds the minimum, because the rate of deterioration indicates imminent failure.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'What type of testing involves injecting high current through a circuit breaker to verify its trip unit operates within specification?',
+                correctLabel: 'Primary injection testing',
+                explanation: 'Primary injection testing passes a high test current directly through the circuit breaker at primary level — through the same current path as normal load current. This tests the complete protection chain including the primary conductors, current transformers (if fitted), trip unit electronics, and mechanical trip mechanism in a single test. It is the only method that verifies the current transformer accuracy and the end-to-end protection performance. Primary injection is typically required at commissioning and every 3–5 years for critical distribution breakers. Secondary injection, by contrast, injects a low-level signal directly into the trip unit electronics, bypassing the current transformer — it is quicker and lower risk but does not verify the full protection chain.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'What is the maximum acceptable Total Harmonic Distortion (THD-V) for voltage at the point of common coupling per IEEE 519?',
+                correctLabel: '5%',
+                explanation: 'IEEE Standard 519 (Recommended Practice and Requirements for Harmonic Control in Electric Power Systems) limits voltage Total Harmonic Distortion (THD-V) to less than 5% at the point of common coupling for systems up to 69kV. In data centers, non-linear loads — particularly switched-mode power supplies in servers, UPS rectifiers, and variable frequency drives — inject harmonic currents that distort the supply voltage waveform. Excessive THD-V causes overheating in transformers and motors, nuisance tripping of sensitive equipment, metering errors, and interference with communications. Data center power quality surveys routinely measure THD-V at the incoming supply, UPS input/output, and at PDU outputs to identify sources of distortion and verify compliance.'
+            },
+            q6: {
+                answer: 'd',
+                question: 'What is the minimum ΔT (temperature difference) that triggers an "immediate action" classification in an infrared thermographic survey?',
+                correctLabel: '35°C',
+                explanation: 'The standard temperature difference (ΔT) classification used in thermographic surveys categorises findings into three action levels: a ΔT of less than 10°C between the suspect component and a similar reference component indicates "monitor at next survey"; a ΔT of 10–35°C indicates "plan remediation within a defined timeframe" (typically the next maintenance window); and a ΔT exceeding 35°C requires immediate action — the component presents a fire and failure risk and must be taken out of service and repaired as a matter of urgency. These thresholds are consistent with guidance from the Infrared Training Center (ITC) and NETA (International Electrical Testing Association) standards. In critical data center infrastructure, even borderline findings in the 10–35°C range are often escalated due to the consequences of failure.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What is the purpose of earth fault loop impedance (Zs) testing?',
+                correctLabel: 'To verify that sufficient fault current will flow to operate the protective device within the required disconnection time',
+                explanation: 'Earth fault loop impedance (Zs) testing verifies that the total impedance of the earth fault loop — from the source, through the phase conductor, through the fault, back through the protective conductor to the source — is low enough that in the event of a phase-to-earth fault, sufficient fault current will flow to operate the overcurrent protective device (fuse or circuit breaker) within the disconnection time required by BS 7671. The maximum permitted Zs for each protective device type and rating is tabulated in BS 7671 Appendix 3. If Zs is too high, the protective device may not operate quickly enough to prevent dangerous touch voltages persisting on exposed metalwork, creating a lethal electric shock hazard. Zs is measured by a loop impedance tester and compared against the tabulated maximum for the installed protective device.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'What minimum load level must equipment be operating at during an infrared thermographic survey to produce meaningful results?',
+                correctLabel: '30% of rated load',
+                explanation: 'Infrared thermography detects heat generated by electrical resistance in conductors and connections — and since heat generation is proportional to the square of the current (P = I²R), low load conditions produce very little temperature differential at problem connections, making them impossible to detect. Industry guidance (ITC and NETA) requires equipment to be operating at a minimum of 30% of rated load during a thermographic survey to produce meaningful and reportable results. For the most reliable surveys, 40–60% or higher is preferred. Performing a thermographic survey on lightly loaded equipment and declaring it "clear" when it is actually running below the detection threshold is a common and dangerous error. Surveyors should record the load level at the time of each scan as part of their report.'
+            },
+            q9: {
+                answer: 'c',
+                question: 'What approximate percentage of electrical failures in data center distribution systems are attributable to loose connections?',
+                correctLabel: '30%',
+                explanation: 'Loose electrical connections are responsible for approximately 30% of electrical failures in power distribution systems — making them the single largest preventable cause of electrical faults in data centers. Loose connections create resistance at the joint, which generates heat proportional to I²R. This localised heating accelerates insulation degradation, causes further oxidation and loosening in a self-reinforcing cycle, and can eventually result in arcing, fire, and catastrophic failure. Infrared thermographic surveys are the primary tool for detecting loose connections under load before failure occurs. During de-energised maintenance, torque verification of all bolted connections to the manufacturer\'s specification is the preventive measure. NFPA 70B recommends annual thermographic surveys of all energised electrical distribution equipment in critical facilities.'
+            },
+            q10: {
+                answer: 'c',
+                question: 'Which of the following must be completed before any electrical testing work begins on isolated equipment?',
+                correctLabel: 'Apply LOTO, then prove dead with an approved voltage indicator',
+                explanation: 'Before any testing work begins on isolated electrical equipment, two steps are both mandatory and must be completed in sequence: first, apply full Lockout/Tagout (LOTO) isolation to all energy sources serving the equipment; second, prove dead by testing with an approved voltage indicator (a device specifically designed and certified for this purpose, such as a two-pole voltage tester to GS38). The voltage indicator must be tested on a known live source before and after proving dead (the "test-before-test" principle) to confirm the instrument itself is functioning correctly. This sequence — isolate, lock, tag, prove dead — must never be shortcut or assumed. Relying on a circuit breaker being in the open position, or a switch being labelled "off", is not sufficient — only a confirmed voltage reading of zero after LOTO allows work to proceed safely.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -976,49 +1047,97 @@
             showSlide(currentSlide);
         }
 
-        // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of UPS systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Electrical Testing Procedures.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#1e3c72; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #1e3c72; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
-        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowLeft' && currentSlide > 0) {
                 changeSlide(-1);
@@ -1027,7 +1146,6 @@
             }
         });
 
-        // Initialize
         showSlide(currentSlide);
     </script>
 </body>
