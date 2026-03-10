@@ -1310,6 +1310,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1326,38 +1327,83 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Video Management System
-            q2: 'b',  // 30-90 days
-            q3: 'c',  // Corridor mode
-            q4: 'b',  // Wide Dynamic Range
-            q5: 'c',  // H.265
-            q6: 'b',  // Process video intelligence at the camera
-            q7: 'b',  // PoE (Power over Ethernet)
-            q8: 'b',  // Thermal cameras with analytics
-            q9: 'a',  // Below 50%
-            q10: 'd'  // Quarterly
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What does VMS stand for in surveillance systems?',
+                correctLabel: 'Video Management System',
+                explanation: 'VMS stands for Video Management System — the software platform that serves as the central management, recording, and operator interface layer for an IP video surveillance infrastructure. A VMS connects to IP cameras across the network, manages live video streaming to operator workstations, controls and schedules video recording to storage, enables playback and forensic search of recorded footage, manages camera configurations, and integrates with other security systems such as access control, intrusion detection, and PSIM platforms. Leading VMS platforms used in data center environments include Milestone XProtect, Genetec Security Center, Avigilon Control Center, Hanwha Wisenet WAVE, and Bosch Video Management System. The VMS is distinct from the DVR (Digital Video Recorder) and NVR (Network Video Recorder) used in smaller or legacy CCTV systems — while a DVR/NVR is a combined hardware/software appliance designed for a fixed number of cameras, a VMS is an enterprise software platform that can scale to thousands of cameras across multiple sites and servers. For data center surveillance, a VMS typically runs on redundant server infrastructure to ensure continuous recording availability, and is configured with event-driven recording rules, camera tours for operator monitoring, and integration triggers from the access control system for linked video review.'
+            },
+            q2: {
+                answer: 'b',
+                question: 'What is the typical retention period for data center surveillance footage?',
+                correctLabel: '30-90 days',
+                explanation: 'A retention period of 30–90 days is the standard for data center surveillance footage, balancing compliance requirements, incident investigation needs, and storage cost. This range reflects the requirements of the key compliance frameworks governing data center physical security: PCI DSS requires that physical access logs (including video records of access to cardholder data environments) be retained for a minimum of 3 months (90 days) and reviewed regularly; SOC 2 auditors expect evidence of continuous surveillance coverage with sufficient retention to support incident investigation; and ISO 27001 physical security controls require that access records be maintained for an appropriate period to support investigations. From a practical investigation perspective, the 30–90 day window covers the typical lag between a security incident occurring and its discovery — most insider threats, equipment theft, or suspicious access patterns are identified within weeks rather than months, meaning footage beyond 90 days has diminishing investigative value relative to its storage cost. 7–14 days is generally insufficient for compliance and investigation purposes. 6–12 months or 1–2 years may be required for specific high-security zones (such as currency vaults or government facilities) but significantly increases storage requirements and cost — a 100-camera system recording continuously at moderate quality can generate 50–100 TB of data over 90 days, making longer retention periods a major infrastructure investment.'
+            },
+            q3: {
+                answer: 'c',
+                question: 'Which camera feature is most important for data center aisle monitoring?',
+                correctLabel: 'Corridor mode',
+                explanation: 'Corridor mode (also called vertical mode or 9:16 format) is the most important camera feature for data center server aisle monitoring because it rotates the camera sensor orientation 90 degrees to produce a tall, narrow field of view that precisely matches the physical geometry of a server aisle. A standard data center hot aisle or cold aisle is typically 1.2–1.5 metres wide and 20–40 metres long — a dramatically vertical rectangular shape when viewed from the end. A conventional 16:9 widescreen camera image wastes the majority of its pixels on the ceiling and floor when pointing down an aisle, leaving only a narrow horizontal band of useful coverage at the level where people and equipment are actually located. Corridor mode eliminates this waste by capturing the full height of the aisle in a 9:16 portrait-format image — maximising the resolution dedicated to the critical monitoring zone, improving the ability to identify individuals and read equipment labels along the full aisle length, and reducing the number of cameras required to achieve full coverage compared to standard landscape-orientation cameras. This makes corridor mode a significant operational advantage specific to the aisle-based layout of data centers. PTZ capability is useful for wide-area overview cameras but requires active operator control and leaves gaps when panning away. Thermal imaging is valuable for perimeter and temperature monitoring. 360° fisheye cameras cover wide open areas efficiently but introduce distortion that complicates aisle identification.'
+            },
+            q4: {
+                answer: 'b',
+                question: 'What does WDR stand for in camera specifications?',
+                correctLabel: 'Wide Dynamic Range',
+                explanation: 'WDR stands for Wide Dynamic Range — a camera technology that enables high-quality imaging in scenes with extreme contrast between very bright and very dark areas simultaneously. In a standard camera sensor, the exposure is optimised for either the bright areas (causing dark areas to appear as black shadow with no detail) or the dark areas (causing bright areas to appear as blown-out white with no detail) — making it impossible to see both simultaneously in high-contrast scenes. WDR technology overcomes this limitation by capturing multiple exposures of the same frame at different shutter speeds and combining them using tone-mapping algorithms (or in more advanced implementations, using separate pixels for highlights and shadows) to produce a single image where both the brightest and darkest regions retain detail and usable colour. In data center surveillance, WDR is critical at locations where cameras face windows, glass doors, or bright exterior lighting while also needing to capture interior details — such as entry doors where an exterior-facing camera must identify a person standing with bright daylight behind them, or lobby cameras covering both glass facades and darker interior spaces. WDR performance is measured in decibels (dB) — cameras with 120 dB or higher WDR are considered high-performance and suitable for challenging data center entry points. Wide Distance Range and Water Damage Resistance are not standard camera specification terms, and Wireless Data Recording is a different technology category.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'Which video compression standard typically provides 50% better compression than H.264?',
+                correctLabel: 'H.265',
+                explanation: 'H.265 (also known as HEVC — High Efficiency Video Coding) typically achieves approximately 40–50% better compression efficiency than H.264 (AVC — Advanced Video Coding) at equivalent visual quality, meaning it produces video of the same perceived quality at roughly half the file size and bitrate. This compression improvement has significant practical implications for data center surveillance: a system running 100 cameras that required 10 Gbps of network bandwidth and 100 TB of storage for 90-day retention under H.264 would require approximately 5 Gbps and 50 TB under H.265 — a substantial reduction in both network infrastructure requirements and storage hardware costs. H.265 achieves its efficiency through more sophisticated encoding techniques including larger coding tree units (CTUs up to 64×64 pixels vs H.264\'s 16×16 macroblocks), improved intra-prediction, better motion compensation, and more efficient entropy coding. The trade-off is higher computational requirements for encoding (at the camera) and decoding (at the VMS server and operator workstations), meaning H.265 support requires more capable hardware throughout the system. MJPEG (Motion JPEG) encodes each frame independently as a JPEG image, offering excellent editing flexibility but no inter-frame compression — resulting in file sizes far larger than either H.264 or H.265. MPEG-4 is an older standard offering better compression than MJPEG but significantly worse than H.264. AVI is a container format, not a compression codec.'
+            },
+            q6: {
+                answer: 'b',
+                question: 'What is the primary purpose of edge analytics in surveillance?',
+                correctLabel: 'Process video intelligence at the camera',
+                explanation: 'Edge analytics in surveillance means processing video intelligence directly at the camera itself — running computer vision algorithms on the camera\'s embedded processor to detect events, classify objects, and generate metadata without sending raw video to a central server for analysis. The "edge" in edge analytics refers to the network edge where cameras are located, as opposed to centralised processing at a server or cloud platform. Modern IP cameras with edge analytics capabilities contain dedicated AI inference chips (such as those from NVIDIA, Ambarella, or proprietary silicon) that can run deep learning models for object detection, person classification, licence plate recognition, loitering detection, line crossing, direction of travel, crowd counting, and face detection — all locally within the camera. The primary benefits of this architecture are significant: bandwidth efficiency is dramatically improved because instead of transmitting full-resolution video continuously, the camera only sends metadata events and video clips triggered by detected objects or behaviours; server processing load is reduced because the centralised VMS receives pre-processed intelligence rather than needing to analyse raw streams from hundreds of cameras; response latency is minimised because detection and alerting happen within milliseconds at the camera without a network round-trip; and the system scales more cost-effectively because adding cameras adds proportional compute capacity at the edge. While edge analytics cameras often include onboard SD card storage as well, that is a secondary benefit, not the defining purpose.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What network feature is critical for IP surveillance systems?',
+                correctLabel: 'PoE (Power over Ethernet)',
+                explanation: 'Power over Ethernet (PoE) is the critical network feature that makes IP surveillance system deployment practical at scale in data centers. PoE delivers electrical power to connected devices (cameras, access readers, intercoms, wireless access points) over the same Cat5e/Cat6 Ethernet cable that carries network data — eliminating the need for a separate power cable and local power outlet at each camera location. This has profound practical implications: cameras can be mounted in optimal positions throughout the data center without being constrained by the proximity of electrical outlets; installation cost and time are reduced because only a single cable run is required per camera; and cameras can be powered from a centralised PoE switch connected to the UPS, providing battery-backed power that keeps cameras operational during mains power interruptions. PoE is standardised under IEEE 802.3af (15.4W per port, for standard cameras), IEEE 802.3at (30W per port — "PoE+" for PTZ cameras and heated housings), and IEEE 802.3bt (60W/90W per port — "PoE++" for high-power devices). In a data center surveillance design, PoE switches are typically located in the IDF/MDF rooms on each floor, with PoE budget and port count carefully calculated to match the camera deployment plan. Bluetooth is not used for IP surveillance infrastructure. Dial-up backup has no role in modern surveillance networks. Token ring is an obsolete LAN protocol replaced by Ethernet decades ago.'
+            },
+            q8: {
+                answer: 'b',
+                question: 'Which camera type is best for perimeter detection?',
+                correctLabel: 'Thermal cameras with analytics',
+                explanation: 'Thermal cameras combined with video analytics are the best-suited technology for data center perimeter detection because they overcome the fundamental limitations of standard visible-light cameras in outdoor perimeter environments. Thermal cameras detect infrared radiation emitted by warm objects (humans, vehicles) rather than reflected visible light, making them completely independent of lighting conditions — they produce clear, consistent imagery in total darkness, through fog, rain, and smoke, and eliminate the blinding effect of direct sunlight, headlights, and other bright light sources that regularly impair visible-light cameras in outdoor environments. This means a thermal camera monitoring a perimeter fence line at 3 AM in complete darkness detects an intruder as reliably as at midday — a property that visible-light cameras (even with IR illuminators) cannot match at long ranges in adverse conditions. When combined with video analytics, thermal cameras automatically detect human-shaped heat signatures crossing virtual trip-wire boundaries, loitering in exclusion zones, or climbing perimeter fences — generating immediate alerts with the precise camera and location of the intrusion without requiring continuous operator monitoring. Standard thermal cameras have lower resolution than optical cameras (making them unsuitable for face recognition or licence plate capture), but for perimeter detection the goal is presence detection and alert generation, not identification — making resolution secondary to detection reliability. Fixed dome cameras, indoor box cameras, and covert cameras are all designed for indoor environments with controlled lighting and are not optimised for outdoor perimeter detection.'
+            },
+            q9: {
+                answer: 'a',
+                question: 'What is the recommended network utilization for surveillance systems?',
+                correctLabel: 'Below 50%',
+                explanation: 'Keeping network utilisation below 50% is the recommended design target for IP surveillance network segments — a conservative headroom allowance that accounts for traffic bursts, system growth, and the real-time performance requirements of video streaming. Video surveillance generates traffic with a very different profile from typical IT workloads: while office network traffic tends to be bursty with low average utilisation, surveillance cameras generate relatively constant, sustained high-bandwidth streams — a 4K camera running at 20 fps with H.265 compression may consume 8–15 Mbps continuously, and a motion event or alarm condition can simultaneously trigger multiple cameras to increase their frame rate or switch to higher quality, creating sudden bandwidth spikes that can push utilisation significantly above average levels. Designing for below 50% average utilisation ensures sufficient headroom to absorb these burst peaks without causing packet loss, retransmission, or frame drops that would degrade recording quality. It also provides capacity for system growth — adding cameras to a network already running at 75–80% utilisation rapidly depletes remaining headroom and may require network upgrades. Additionally, surveillance traffic must be segregated on dedicated VLANs with QoS policies that prioritise video streams over background management traffic, and the sub-50% target applies to each individual network segment (camera VLANs, recording server segments) rather than the aggregate facility network. Networks running at 90–95% or 100% utilisation would experience severe performance degradation and recording failures during any demand spike.'
+            },
+            q10: {
+                answer: 'd',
+                question: 'How often should camera lenses be cleaned in a data center environment?',
+                correctLabel: 'Quarterly',
+                explanation: 'Quarterly lens cleaning — every three months — is the recommended maintenance interval for camera lenses in data center environments, balancing image quality preservation against the relatively clean, controlled conditions of an indoor data center facility. Camera lenses accumulate dust, particulates, and in some locations condensation residue or airborne contamination over time, gradually degrading image clarity and potentially creating dark spots or haze that reduce identification capability. Data centers maintain positive pressure and HEPA-filtered air supply to control particulate contamination for equipment protection — this controlled environment means camera lenses accumulate dust more slowly than outdoor or industrial cameras, making quarterly cleaning appropriate rather than the more frequent maintenance required in dusty construction sites, outdoor environments, or manufacturing facilities. The quarterly maintenance visit should include: visual inspection of each camera\'s field of view on the VMS for image quality degradation; gentle cleaning of lens surfaces with appropriate optical cleaning materials (lint-free cloths and lens cleaning solution — never abrasive materials that could scratch coatings); inspection of housing seals and mounting hardware; and verification of focus, field of view alignment, and exposure settings. Quarterly camera maintenance is typically integrated into broader quarterly physical security system inspections that also cover access reader cleaning, door hardware checks, and intrusion sensor testing. Daily or weekly cleaning would be unnecessarily disruptive and risks lens damage from over-cleaning. Monthly cleaning may be appropriate for cameras in particularly contaminated locations but is excessive for standard data center indoor environments.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1370,43 +1416,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Surveillance Systems.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Surveillance Systems.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#2c3e50; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #2c3e50; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
