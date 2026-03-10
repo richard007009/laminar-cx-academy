@@ -1428,6 +1428,7 @@
                         <p id="resultMessage"></p>
                         <button onclick="retakeQuiz()" class="nav-button" style="margin-top: 20px;">Retake Quiz</button>
                     </div>
+                    <div id="answerReview" style="margin-top: 30px;"></div>
                 </div>
             </div>
         </div>
@@ -1444,38 +1445,83 @@
         const slides = document.getElementsByClassName('slide');
         const totalSlides = slides.length;
 
-        // Quiz answers
-        const correctAnswers = {
-            q1: 'b',  // Never trust, always verify
-            q2: 'c',  // Physical security only
-            q3: 'b',  // Security Information and Event Management
-            q4: 'c',  // USB drop attack
-            q5: 'c',  // AES-256
-            q6: 'c',  // Prevention (not part of NIST cycle)
-            q7: 'b',  // Contain breaches and limit lateral movement
-            q8: 'c',  // PCI DSS
-            q9: 'b',  // Mean Time to Detect
-            q10: 'b'  // DevSecOps
+        const quizData = {
+            q1: {
+                answer: 'b',
+                question: 'What is the primary principle of Zero Trust architecture?',
+                correctLabel: 'Never trust, always verify',
+                explanation: 'The foundational principle of Zero Trust architecture is "never trust, always verify" — a security model codified in NIST Special Publication 800-207 that eliminates the concept of implicit trust based on network location or prior authentication. Traditional perimeter-based security operated on the assumption that everything inside the corporate network firewall was trustworthy; Zero Trust rejects this entirely. In a Zero Trust model, every access request — regardless of whether it originates from inside or outside the network perimeter, from a corporate device or a personal one, from a known user or an unknown one — must be explicitly authenticated, authorised, and continuously validated before access is granted. This means verifying user identity with strong multi-factor authentication, validating device health and compliance posture, applying least-privilege access policies that grant only the minimum permissions required for the specific task, and continuously monitoring all sessions for anomalous behaviour even after initial authentication. For data centers, Zero Trust is particularly important because the traditional network perimeter has dissolved with cloud adoption, remote access, third-party integrations, and supply chain connections — any of which can serve as an attacker entry point. Trusting internal network traffic by default, trusting verified users indefinitely, or granting trust based on network location are all characteristics of the legacy perimeter model that Zero Trust specifically replaces.'
+            },
+            q2: {
+                answer: 'c',
+                question: 'Which layer is NOT part of defense-in-depth architecture?',
+                correctLabel: 'Physical security only',
+                explanation: 'Defense-in-depth (also called layered security) is an architecture strategy that deploys multiple independent security controls at different layers, so that an attacker who defeats one layer still faces additional barriers before reaching the target. "Physical security only" is not a layer of defense-in-depth — it is a single-layer approach that this architecture specifically moves beyond. The defense-in-depth model for a data center typically includes: perimeter security (firewalls, border routers, DMZ zones, DDoS mitigation); network segmentation (VLANs, microsegmentation, internal firewalls, access control lists separating IT from OT networks and different security zones); endpoint security (antivirus, EDR agents, host-based firewalls, application whitelisting on servers); identity and access management (MFA, privileged access management, role-based access control); data security (encryption at rest and in transit, data loss prevention, database activity monitoring); application security (WAFs, input validation, secure coding practices); and monitoring and response (SIEM, SOC operations, incident response plans). Physical security is an important component within the defense-in-depth model — but treating it as the only layer leaves all the other layers unprotected. The power of defense-in-depth lies precisely in the combination of all layers, so that compromise of any single layer does not result in a complete security failure.'
+            },
+            q3: {
+                answer: 'b',
+                question: 'What does SIEM stand for?',
+                correctLabel: 'Security Information and Event Management',
+                explanation: 'SIEM stands for Security Information and Event Management — a platform that combines two previously separate capabilities (Security Information Management and Security Event Management) into a unified system for real-time security monitoring, threat detection, and compliance reporting. A SIEM collects log and event data from across the entire IT and OT infrastructure — firewalls, servers, endpoints, network devices, applications, identity systems, access control systems, and building automation systems — and aggregates, normalises, correlates, and analyses this data to identify security incidents, compliance violations, and anomalous behaviours that would not be visible by examining any single system in isolation. In a data center context, the SIEM might correlate an unusual after-hours physical access event (from the access control system) with a simultaneous privileged login to a critical server (from Active Directory logs) and an outbound data transfer to an unknown IP address (from firewall logs) — generating a high-priority security alert that none of these events would have triggered individually. SIEM platforms such as Splunk, IBM QRadar, Microsoft Sentinel, and Exabeam provide dashboards, alerting rules, threat intelligence integration, and automated response capabilities. They are also essential for compliance reporting — PCI DSS, HIPAA, SOC 2, and ISO 27001 all require log collection, retention, and review processes that SIEMs directly support.'
+            },
+            q4: {
+                answer: 'c',
+                question: 'Which attack type involves physical access to plant malware?',
+                correctLabel: 'USB drop attack',
+                explanation: 'A USB drop attack (also called a USB baiting attack) is a social engineering and physical security attack technique in which an attacker deliberately leaves one or more malware-infected USB drives in locations where targeted individuals are likely to find them — car parks, reception areas, common areas, or even mailed directly to employees — and relies on human curiosity or helpfulness to cause the target to plug the device into a networked computer. When the USB drive is connected, malware automatically executes (exploiting Windows AutoRun features or disguised as legitimate files) and installs backdoors, ransomware, keyloggers, or remote access tools that give the attacker a foothold inside the network. This attack is particularly relevant to data center security because: data center staff may find USB drives in the facility and plug them into administrative workstations or KVM consoles connected to critical infrastructure; and isolated OT/ICS networks that are physically air-gapped from the internet can only be compromised through physical media — making USB drops one of the primary attack vectors against air-gapped industrial control systems. The Stuxnet attack against Iranian nuclear centrifuges, arguably the most sophisticated cyberattack ever discovered, was introduced via USB drives into an air-gapped facility. DDoS attacks exploit network bandwidth or application vulnerabilities remotely. Phishing attacks use deceptive emails to steal credentials. SQL injection exploits database input validation vulnerabilities — all remote techniques that do not require physical presence.'
+            },
+            q5: {
+                answer: 'c',
+                question: 'What is the recommended encryption standard for data at rest?',
+                correctLabel: 'AES-256',
+                explanation: 'AES-256 (Advanced Encryption Standard with 256-bit key length) is the universally recommended and regulatory-mandated encryption standard for protecting data at rest in data center environments. AES was selected by NIST in 2001 following an open international competition as the replacement for the ageing DES standard, and the 256-bit key variant provides the highest security level of the AES specification. AES-256 is symmetric encryption — the same key encrypts and decrypts data — and is implemented in hardware acceleration circuits on modern processors (Intel AES-NI, AMD equivalent), making it extremely fast with negligible performance overhead for disk encryption. AES-256 is mandated or strongly recommended by virtually all major security frameworks: PCI DSS requires strong cryptography for stored cardholder data; HIPAA requires encryption of PHI at rest; FIPS 140-2/140-3 (the US federal cryptographic standard) certifies AES implementations; and SOC 2, ISO 27001, and FedRAMP all reference AES-256 as the appropriate standard. DES (Data Encryption Standard) was the predecessor to AES and is now broken — its 56-bit key can be brute-forced in hours with modern hardware and it must never be used for new implementations. MD5 is a hash function, not an encryption algorithm, and is cryptographically broken. ROT13 is a trivial letter substitution cipher with zero cryptographic security, used only for casual text obfuscation.'
+            },
+            q6: {
+                answer: 'c',
+                question: 'Which phase is NOT part of the NIST Incident Response lifecycle?',
+                correctLabel: 'Prevention',
+                explanation: 'Prevention is not a phase in the NIST Incident Response lifecycle as defined in NIST Special Publication 800-61 (Computer Security Incident Handling Guide). The four phases of the NIST IR lifecycle are: Preparation (establishing the incident response capability, building the team, developing playbooks, acquiring tools, and conducting training before incidents occur); Detection and Analysis (identifying potential incidents through monitoring and alerts, analysing events to confirm an incident has occurred, determining its scope and impact, and prioritising the response); Containment, Eradication, and Recovery (stopping the incident from spreading, removing the threat from affected systems, and restoring systems to normal operation); and Post-Incident Activity (conducting lessons-learned reviews, updating detection capabilities and playbooks based on findings, and formally closing the incident). Prevention is critically important in cybersecurity but it belongs to the broader security programme — risk management, vulnerability management, security hardening, and awareness training — not within the incident response lifecycle itself, which begins only after a potential incident has been identified. The distinction matters operationally: the IR lifecycle describes what the incident response team does when responding to an active incident, while prevention activities are ongoing programme functions. Confusing prevention with IR phases is a common error that the NIST framework specifically clarifies by scoping IR to the four defined phases.'
+            },
+            q7: {
+                answer: 'b',
+                question: 'What is the purpose of network segmentation?',
+                correctLabel: 'Contain breaches and limit lateral movement',
+                explanation: 'The primary security purpose of network segmentation is to contain breaches and limit lateral movement — preventing an attacker who has compromised one system or network zone from freely moving through the entire network to reach additional targets. In a flat (unsegmented) network, an attacker who gains access to any single endpoint through phishing, an unpatched vulnerability, or a compromised credential can immediately probe and attack any other system on the network — escalating privileges, pivoting to adjacent systems, and eventually reaching the highest-value targets such as domain controllers, database servers, and backup systems. Network segmentation divides the environment into isolated zones with controlled communication paths between them: firewalls and access control lists enforce that systems in one zone can only communicate with systems in other zones via specific permitted protocols and ports, and any traffic crossing zone boundaries is inspected and logged. In a data center, critical segmentation boundaries typically include: IT production networks separated from management/out-of-band networks; server zones separated from client access zones; OT/BMS control networks physically or logically isolated from corporate IT networks; payment card processing environments isolated in a PCI DSS cardholder data environment; and development/test environments separated from production. While network segmentation can also improve performance (by reducing broadcast domains) and simplify management in some contexts, these are secondary benefits — the primary driver for implementing segmentation in security architecture is always threat containment and blast radius reduction.'
+            },
+            q8: {
+                answer: 'c',
+                question: 'Which compliance framework is specific to payment card data?',
+                correctLabel: 'PCI DSS',
+                explanation: 'PCI DSS (Payment Card Industry Data Security Standard) is the compliance framework specifically governing the security of payment card data — created and maintained by the PCI Security Standards Council, which was founded jointly by American Express, Discover, JCB, Mastercard, and Visa. PCI DSS applies to any organisation that stores, processes, or transmits cardholder data (credit card numbers, CVV codes, PINs, expiry dates) — including merchants, payment processors, acquiring banks, service providers, and data centers that host payment processing infrastructure. The standard defines 12 high-level requirements covering network security, data protection, vulnerability management, access control, monitoring, and information security policy — with detailed sub-requirements and testing procedures. Non-compliance can result in fines, increased transaction fees, loss of card acceptance privileges, and mandatory forensic investigations following breaches. The other options govern different data types: HIPAA (Health Insurance Portability and Accountability Act) protects US healthcare data (Protected Health Information); GDPR (General Data Protection Regulation) is the EU framework governing all personal data of EU residents, not specifically payment card data; SOC 2 (Service Organization Control 2) is a voluntary auditing framework for service providers based on AICPA Trust Services Criteria covering security, availability, processing integrity, confidentiality, and privacy — applicable broadly, not specifically to payment data.'
+            },
+            q9: {
+                answer: 'b',
+                question: 'What does MTTD stand for in security metrics?',
+                correctLabel: 'Mean Time to Detect',
+                explanation: 'MTTD stands for Mean Time to Detect — a key security operations metric that measures the average time elapsed between when a security incident begins (or when an attacker first gains access) and when the security team first becomes aware of it. MTTD is one of the most important indicators of security programme effectiveness because extended attacker dwell time — the period during which an adversary is operating inside the environment undetected — directly correlates with breach severity, data exfiltration volume, and remediation complexity. Industry research consistently shows that breaches detected quickly (within hours or days) result in significantly less damage than those with dwell times of weeks or months. The Mandiant M-Trends report and Verizon Data Breach Investigations Report (DBIR) track median dwell times as headline metrics for industry progress. MTTD is complemented by MTTR (Mean Time to Respond/Remediate) — the average time from detection to containment and recovery — and together these two metrics define the organisation\'s incident response capability. Improving MTTD requires better detection tooling (SIEM, EDR, NDR, user behaviour analytics), higher-quality threat intelligence, well-tuned alert rules that reduce false positive fatigue, and mature SOC processes for alert triage. A data center security programme targeting world-class performance aims for MTTD measured in hours rather than the industry average of weeks to months.'
+            },
+            q10: {
+                answer: 'b',
+                question: 'Which technology trend involves security integrated into CI/CD pipelines?',
+                correctLabel: 'DevSecOps',
+                explanation: 'DevSecOps (Development, Security, and Operations) is the practice of integrating security controls, testing, and governance directly into the CI/CD (Continuous Integration/Continuous Deployment) software development and delivery pipeline — shifting security left from a post-development gate into an automated, continuous activity throughout the development lifecycle. In a traditional model, security review happened at the end of the development cycle before production deployment, creating bottlenecks, late-stage rework, and pressure to bypass security checks to meet release deadlines. DevSecOps embeds security at every stage: static application security testing (SAST) scans code for vulnerabilities automatically on every commit; dependency scanning checks third-party libraries for known CVEs; infrastructure-as-code (IaC) templates are validated for security misconfigurations before deployment; dynamic application security testing (DAST) runs against deployed test environments; and security policy as code enforces compliance requirements automatically. For data center environments, DevSecOps is particularly relevant for the infrastructure and automation code that configures servers, network devices, and cloud resources — ensuring that security misconfigurations are caught in the pipeline before reaching production. SIEM is a security monitoring platform, not a development pipeline concept. DDoS refers to Distributed Denial of Service attacks. VPN (Virtual Private Network) provides encrypted network tunnels for remote access — none of these describe the integration of security into development pipelines.'
+            }
         };
 
         function showSlide(n) {
             if (n >= totalSlides) { currentSlide = totalSlides - 1; }
             if (n < 0) { currentSlide = 0; }
-            
+
             for (let i = 0; i < slides.length; i++) {
                 slides[i].classList.remove('active');
             }
-            
+
             slides[currentSlide].classList.add('active');
-            
-            // Update navigation
+
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-            
-            // Update slide counter
             document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
-            
-            // Update progress bar
+
             const progress = ((currentSlide + 1) / totalSlides) * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
@@ -1488,43 +1534,94 @@
         // Quiz functionality
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            for (let question in correctAnswers) {
+            const totalQuestions = Object.keys(quizData).length;
+            const userAnswers = {};
+
+            for (let question in quizData) {
                 const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
-                if (selectedAnswer && selectedAnswer.value === correctAnswers[question]) {
+                userAnswers[question] = selectedAnswer ? selectedAnswer.value : null;
+                if (userAnswers[question] === quizData[question].answer) {
                     score++;
                 }
             }
-            
+
             const percentage = Math.round((score / totalQuestions) * 100);
-            
-            // Hide form and show results
+
             document.getElementById('quizForm').style.display = 'none';
             document.getElementById('quizResults').style.display = 'block';
-            
-            // Display score
             document.getElementById('scoreDisplay').textContent = percentage + '%';
-            
-            // Display message based on score
-            let message = '';
+
             if (percentage >= 80) {
-                message = `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Data Center Cybersecurity.`;
+                document.getElementById('resultMessage').textContent =
+                    `Congratulations! You passed with ${score} out of ${totalQuestions} correct answers. You have demonstrated a strong understanding of Data Center Cybersecurity.`;
                 document.getElementById('scoreDisplay').style.color = '#28a745';
             } else {
-                message = `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the material and try again.`;
+                document.getElementById('resultMessage').textContent =
+                    `You scored ${score} out of ${totalQuestions}. You need 80% or higher to pass. Please review the explanations below and try again.`;
                 document.getElementById('scoreDisplay').style.color = '#dc3545';
             }
-            document.getElementById('resultMessage').textContent = message;
+
+            // Build per-question answer review
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '<h3 style="color:#d32f2f; font-size:1.5em; margin-bottom:20px; border-bottom:3px solid #d32f2f; padding-bottom:10px;">Answer Review</h3>';
+
+            let qNum = 1;
+            for (let question in quizData) {
+                const data      = quizData[question];
+                const userAns   = userAnswers[question];
+                const isCorrect = userAns === data.answer;
+
+                let userAnswerLabel = 'No answer selected';
+                if (userAns) {
+                    const selectedInput = document.querySelector(`input[name="${question}"][value="${userAns}"]`);
+                    if (selectedInput) {
+                        userAnswerLabel = selectedInput.closest('label')
+                            ? selectedInput.closest('label').textContent.trim()
+                            : selectedInput.parentElement.textContent.trim();
+                    }
+                }
+
+                const boxStyle = isCorrect
+                    ? 'background:#d4edda; border-left:5px solid #28a745; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;'
+                    : 'background:#f8d7da; border-left:5px solid #dc3545; padding:20px; margin:15px 0; border-radius:0 8px 8px 0;';
+
+                const icon        = isCorrect ? '✅' : '❌';
+                const statusText  = isCorrect ? 'Correct'  : 'Incorrect';
+                const statusColor = isCorrect ? '#28a745'  : '#dc3545';
+
+                let html = `
+                    <div style="${boxStyle}">
+                        <p style="font-size:1.1em; font-weight:bold; color:#333; margin-bottom:10px;">
+                            ${icon} Q${qNum}: ${data.question}
+                        </p>
+                        <p style="margin-bottom:6px; color:${statusColor}; font-weight:bold;">${statusText}</p>`;
+
+                if (!isCorrect) {
+                    html += `<p style="margin-bottom:6px; color:#721c24;"><strong>Your answer:</strong> ${userAnswerLabel}</p>`;
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Correct answer:</strong> ${data.correctLabel}</p>`;
+                } else {
+                    html += `<p style="margin-bottom:10px; color:#155724;"><strong>Your answer:</strong> ${data.correctLabel}</p>`;
+                }
+
+                html += `<p style="color:#555; background:rgba(255,255,255,0.6); padding:10px; border-radius:6px; margin:0;">
+                            <strong>Explanation:</strong> ${data.explanation}
+                         </p>
+                    </div>`;
+
+                reviewContainer.innerHTML += html;
+                qNum++;
+            }
+
+            document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         function retakeQuiz() {
-            // Reset form
             document.getElementById('quizForm').reset();
             document.getElementById('quizForm').style.display = 'block';
             document.getElementById('quizResults').style.display = 'none';
+            document.getElementById('answerReview').innerHTML = '';
         }
 
         // Keyboard navigation
