@@ -378,9 +378,9 @@
                 </ul>
 
                 <div class="diagram">
-                    <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
                         <!-- Title -->
-                        <text x="400" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">Data Center HVAC Overview</text>
+                        <text x="400" y="20" text-anchor="middle" font-size="18" font-weight="bold" fill="#1976d2">Data Center HVAC Overview</text>
                         
                         <!-- CRAH Unit -->
                         <rect x="50" y="100" width="150" height="100" fill="#42a5f5" stroke="#1976d2" stroke-width="2" rx="5"/>
@@ -398,38 +398,40 @@
                         <rect x="500" y="80" width="100" height="140" fill="#4CAF50" stroke="#388E3C" stroke-width="2" rx="5"/>
                         <text x="550" y="110" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Server</text>
                         <text x="550" y="130" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Rack</text>
+                        <text x="550" y="190" text-anchor="middle" fill="white" font-size="12">Heat</text>
+                        <text x="550" y="205" text-anchor="middle" fill="white" font-size="12">Generation</text>
                         
                         <!-- Raised Floor -->
-                        <rect x="30" y="300" width="740" height="40" fill="#757575" stroke="#616161" stroke-width="2"/>
-                        <text x="400" y="325" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Raised Floor Plenum</text>
+                        <rect x="30" y="220" width="740" height="80" fill="#757575" stroke="#616161" stroke-width="2"/>
+                        <text x="250" y="245" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Raised Floor Plenum</text>
                         
                         <!-- Perforated Tiles -->
-                        <rect x="320" y="295" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
-                        <rect x="470" y="295" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
-                        <rect x="590" y="295" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
+                        <rect x="310" y="220" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
+                        <rect x="455" y="220" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
+                        <rect x="600" y="220" width="40" height="10" fill="#FFC107" stroke="#F57C00" stroke-width="1"/>
                         
                         <!-- Air Flow Arrows -->
                         <!-- Cool air down -->
                         <path d="M 125 200 L 125 280" stroke="#3498db" stroke-width="4" marker-end="url(#bluearrow)"/>
-                        <text x="140" y="240" font-size="12" fill="#3498db">Cool Air</text>
+                        <text x="40" y="240" font-size="12" font-weight="bold" fill="#3498db">Cool Air</text>
                         
                         <!-- Cool air up through tiles -->
-                        <path d="M 340 290 L 340 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
-                        <path d="M 490 290 L 490 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
-                        <path d="M 610 290 L 610 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
+                        <path d="M 330 290 L 330 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
+                        <path d="M 475 290 L 475 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
+                        <path d="M 620 290 L 620 230" stroke="#3498db" stroke-width="3" marker-end="url(#bluearrow)"/>
                         
                         <!-- Hot air return -->
-                        <path d="M 400 70 L 400 50 Q 400 30 380 30 L 150 30 Q 125 30 125 50 L 125 100" stroke="#e74c3c" stroke-width="4" marker-end="url(#redarrow)"/>
-                        <path d="M 550 70 L 550 50 Q 550 30 530 30 L 450 30" stroke="#e74c3c" stroke-width="4"/>
-                        <text x="250" y="25" font-size="12" fill="#e74c3c">Hot Air Return</text>
+                        <path d="M 475 70 L 475 50 Q 475 30 455 30 L 150 30 Q 125 30 125 50 L 125 100" stroke="#e74c3c" stroke-width="4" marker-end="url(#redarrow)" fill="none"/>
+                        
+                        <text x="200" y="25" font-size="12" fill="#e74c3c">Hot Air Return</text>
                         
                         <!-- Hot/Cold Aisles Labels -->
-                        <text x="340" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#3498db">Cold Aisle</text>
-                        <text x="475" y="60" text-anchor="middle" font-size="14" font-weight="bold" fill="#e74c3c">Hot Aisle</text>
+                        <text x="400" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#3498db">Cold Aisle</text>
+                        <text x="550" y="60" text-anchor="middle" transform="rotate(90 475 60)" font-size="14" font-weight="bold" fill="#e74c3c">Hot Aisle</text>
                         
                         <!-- Temperature indicators -->
-                        <text x="700" y="150" font-size="12" fill="#e74c3c">80-95°F</text>
-                        <text x="250" y="270" font-size="12" fill="#3498db">64-80°F</text>
+                        <text x="500" y="70" transform="rotate(90 465 70)" font-weight="bold" font-size="12" fill="#e74c3c">80-95°F</text>
+                        <text x="400" y="270" font-weight="bold" font-size="12" fill="#3498db">64-80°F</text>
                         
                         <!-- Humidity Sensor -->
                         <circle cx="650" cy="150" r="20" fill="#9C27B0" stroke="#7B1FA2" stroke-width="2"/>
